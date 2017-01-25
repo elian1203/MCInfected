@@ -1,0 +1,23 @@
+zombie:
+  head: chainmail_helmet
+  chest: chainmail_chestplate
+  legs: chainmail_leggings
+  boots: chainmail_boots
+  items:
+   - wooden_sword
+mother:
+  head: leather_helmet
+  chest: leather_chestplate
+  legs: leather_leggings
+  boots: leather_boots
+  items:
+   - gold_sword
+kits:
+  skeleton:
+    head: chainmail_helmet
+    chest: chainmail_chestplate
+    legs: chainmail_leggings
+    boots: chainmail_boots
+    items:
+     - wooden_sword
+     - bow

@@ -1,0 +1,23 @@
+# Maps #
+lobby:
+  x: 0
+  y: 67
+  z: 0
+  yaw: 0
+  pitch: 0
+  world: lobby
+maps:
+  Terminal:
+    x: 0
+    y: 67
+    z: 0
+    yaw: 0
+    pitch: 0
+    world: terminal
+  Nuketown:
+    x: 0
+    y: 67
+    z: 0
+    yaw: 0
+    pitch: 0
+    world: nuketown

@@ -1,0 +1,5 @@
+streaks:
+  3:
+    repeatable: true
+    items:
+    - apple
