@@ -14,6 +14,7 @@ mother:
    - gold_sword
 kits:
   skeleton:
+    permission: "kits.skeleton"
     head: chainmail_helmet
     chest: chainmail_chestplate
     legs: chainmail_leggings
