@@ -10,15 +10,11 @@ import java.util.List;
 
 public class KillStreakManager {
 
-    private static KillStreakManager instance;
+    private static KillStreakManager instance = new KillStreakManager();
 
     private List<KillStreak> killStreaks;
 
     public static KillStreakManager getInstance() {
-        if (instance == null) {
-            instance = new KillStreakManager();
-        }
-
         return instance;
     }
 
