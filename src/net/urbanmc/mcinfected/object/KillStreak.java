@@ -7,12 +7,12 @@ import java.util.List;
 public class KillStreak {
 
     private int kills;
-    private boolean repeatable;
+    private int[] repeats;
     private List<ItemStack> rewards;
 
-    public KillStreak(int kills, boolean repeatable, List<ItemStack> rewards) {
+    public KillStreak(int kills, int[] repeats, List<ItemStack> rewards) {
         this.kills = kills;
-        this.repeatable = repeatable;
+        this.repeats = repeats;
         this.rewards = rewards;
     }
 
@@ -20,8 +20,8 @@ public class KillStreak {
         return kills;
     }
 
-    public boolean isRepeatable() {
-        return repeatable;
+    public int[] isRepeatable() {
+        return repeats;
     }
 
     public List<ItemStack> getRewards() {

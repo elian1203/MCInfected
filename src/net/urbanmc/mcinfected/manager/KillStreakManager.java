@@ -13,40 +13,45 @@ import java.util.List;
 
 public class KillStreakManager {
 
-    private static KillStreakManager instance = new KillStreakManager();
+	private static KillStreakManager instance = new KillStreakManager();
 
-    private List<KillStreak> killStreaks;
+	private List<KillStreak> killStreaks;
 
-    public static KillStreakManager getInstance() {
-        return instance;
-    }
+	public static KillStreakManager getInstance() {
+		return instance;
+	}
 
-    private KillStreakManager() {
-        loadKillStreaks();
-    }
+	private KillStreakManager() {
+		loadKillStreaks();
+	}
 
-    private void loadKillStreaks() {
-        FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "killstreaks.yml"));
-        ConfigurationSection sect = data.getConfigurationSection("killstreaks");
+	private void loadKillStreaks() {
+		killStreaks = new ArrayList<KillStreak>();
 
-        for (String amount : sect.getKeys(false)) {
-            boolean repeatable = sect.getBoolean(amount + ".repeatable");
-            List<ItemStack> rewards = new ArrayList<ItemStack>();
+		FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "killstreaks.yml"));
+		ConfigurationSection sect = data.getConfigurationSection("streaks");
 
-            for (String item : sect.getStringList(amount + ".items")) {
-                rewards.add(ItemUtil.getItem(item));
-            }
+		for (String amount : sect.getKeys(false)) {
+			List<Integer> list = sect.getIntegerList(amount + ".repeats");
 
-            killStreaks.add(new KillStreak(Integer.parseInt(amount), repeatable, rewards));
-        }
-    }
+			int[] repeats = list.stream().mapToInt(i -> i).toArray();
 
-    public List<KillStreak> getKillStreaks() {
-        return killStreaks;
-    }
+			List<ItemStack> rewards = new ArrayList<ItemStack>();
 
-    public void reloadKillStreaks() {
-        killStreaks.clear();
-        loadKillStreaks();
-    }
+			for (String item : sect.getStringList(amount + ".items")) {
+				rewards.add(ItemUtil.getItem(item));
+			}
+
+			killStreaks.add(new KillStreak(Integer.parseInt(amount), repeats, rewards));
+		}
+	}
+
+	public List<KillStreak> getKillStreaks() {
+		return killStreaks;
+	}
+
+	public void reloadKillStreaks() {
+		killStreaks.clear();
+		loadKillStreaks();
+	}
 }

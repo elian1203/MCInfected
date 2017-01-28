@@ -1,23 +1,10 @@
 # Maps #
+
+# x/y/z/yaw/pitch/world
 lobby:
-  x: 0
-  y: 67
-  z: 0
-  yaw: 0
-  pitch: 0
-  world: lobby
+  spawn: 0/67/0/0/0/lobby
 maps:
   Terminal:
-    x: 0
-    y: 67
-    z: 0
-    yaw: 0
-    pitch: 0
-    world: terminal
+    spawn: 0/67/0/0/0/terminal
   Nuketown:
-    x: 0
-    y: 67
-    z: 0
-    yaw: 0
-    pitch: 0
-    world: nuketown
+    spawn: 0/67/0/0/0/nuketown

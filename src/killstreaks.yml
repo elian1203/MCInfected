@@ -1,5 +1,5 @@
 streaks:
   3:
-    repeatable: true
+    repeats: 11, 21
     items:
     - apple
