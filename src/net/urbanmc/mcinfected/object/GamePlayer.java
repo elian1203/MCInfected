@@ -10,6 +10,7 @@ public class GamePlayer {
     private int kills, deaths, killStreak;
     private Rank rank;
     private Kit kit;
+    private boolean voted = false;
 
     public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, Rank rank) {
         this.uuid = uuid;
@@ -86,5 +87,13 @@ public class GamePlayer {
 
     public void setKillStreak(int killStreak) {
         this.killStreak = killStreak;
+    }
+    
+    public boolean hasVoted() {
+    	return voted;
+    }
+    
+    public void setVoted(boolean voted) {
+    	this.voted = voted;
     }
 }
