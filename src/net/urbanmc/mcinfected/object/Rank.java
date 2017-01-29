@@ -1,36 +1,48 @@
 package net.urbanmc.mcinfected.object;
 
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class Rank {
 
-    private String name;
     private int level;
-    private List<ItemStack> armor;
-    private List<ItemStack> items;
+    private String name;
+    private ChatColor color;
+    private long cost;
+    private List<ItemStack> armor, items;
 
-    public Rank(String name, int level, List<ItemStack> armor, List<ItemStack> items) {
-        this.name = name;
+    public Rank(int level, String name, ChatColor color, long cost, List<ItemStack> items, List<ItemStack> armor) {
         this.level = level;
-        this.armor = armor;
+        this.name = name;
+        this.color = color;
+        this.cost = cost;
         this.items = items;
-    }
-
-    public String getName() {
-        return name;
+        this.armor = armor;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public List<ItemStack> getArmor() {
-        return armor;
+    public String getName() {
+        return name;
+    }
+
+    public ChatColor getColor() {
+        return color;
+    }
+
+    public long getCost() {
+        return cost;
     }
 
     public List<ItemStack> getItems() {
         return items;
+    }
+
+    public List<ItemStack> getArmor() {
+        return armor;
     }
 }

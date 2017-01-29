@@ -6,10 +6,8 @@ import java.util.List;
 
 public class Kit {
 
-    private String name;
-    private String permission;
-    private List<ItemStack> armor;
-    private List<ItemStack> items;
+    private String name, permission;
+    private List<ItemStack> armor, items;
 
     public Kit(String name, String permission, List<ItemStack> armor, List<ItemStack> items) {
         this.name = name;

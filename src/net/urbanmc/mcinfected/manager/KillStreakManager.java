@@ -36,11 +36,7 @@ public class KillStreakManager {
 
 			int[] repeats = list.stream().mapToInt(i -> i).toArray();
 
-			List<ItemStack> rewards = new ArrayList<ItemStack>();
-
-			for (String item : sect.getStringList(amount + ".items")) {
-				rewards.add(ItemUtil.getItem(item));
-			}
+			List<ItemStack> rewards = ItemUtil.getItemList(sect.getStringList(amount + ".items"));
 
 			killStreaks.add(new KillStreak(Integer.parseInt(amount), repeats, rewards));
 		}
@@ -48,10 +44,5 @@ public class KillStreakManager {
 
 	public List<KillStreak> getKillStreaks() {
 		return killStreaks;
-	}
-
-	public void reloadKillStreaks() {
-		killStreaks.clear();
-		loadKillStreaks();
 	}
 }

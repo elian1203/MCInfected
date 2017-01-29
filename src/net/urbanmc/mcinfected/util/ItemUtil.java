@@ -2,11 +2,16 @@ package net.urbanmc.mcinfected.util;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ItemUtil {
 
@@ -58,5 +63,28 @@ public class ItemUtil {
         }
 
         return is;
+    }
+
+    public static List<ItemStack> getItemList(List<String> list) {
+        List<ItemStack> items = new ArrayList<>();
+
+        for (String s : list) {
+            items.add(getItem(s));
+        }
+
+        return items;
+    }
+
+    public static void equipPlayer(Player p, List<ItemStack> items, List<ItemStack> armor) {
+        for (ItemStack item : items) {
+            p.getInventory().addItem(item);
+        }
+
+        Collections.reverse(armor);
+
+        ItemStack[] array = new ItemStack[4];
+        array = armor.toArray(array);
+
+        p.getInventory().setArmorContents(array);
     }
 }
