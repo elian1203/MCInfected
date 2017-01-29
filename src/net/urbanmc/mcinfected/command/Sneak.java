@@ -5,7 +5,7 @@ import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.command.CommandSender;
 
-public class Sneak extends Command{
+public class Sneak extends Command {
 
     public Sneak() {
         super("sneak", "command.sneak", true);
@@ -13,13 +13,14 @@ public class Sneak extends Command{
 
     @Override
     public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-        if(p.isSneaking()) {
+        if (p.isSneaking()) {
             p.setSneaking(false);
-            messagePlayer(p, ChatColor.GOLD +"You have stopped sneaking!");
-        }
-        else {
+
+            messagePlayer(p, ChatColor.GOLD + "You have enabled auto-sneak!");
+        } else {
             p.setSneaking(true);
-            messagePlayer(p, ChatColor.GOLD +"You have started sneaking!");
+
+            messagePlayer(p, ChatColor.GOLD + "You have disabled auto-sneak!");
         }
     }
 }

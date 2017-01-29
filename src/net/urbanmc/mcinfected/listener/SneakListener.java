@@ -6,13 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
-public class SneakListener implements Listener{
+public class SneakListener implements Listener {
 
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
-        GamePlayer gPlayer= GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
+        GamePlayer gPlayer = GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
 
-        if(gPlayer == null) return;
-        if(gPlayer.isSneaking()) e.getPlayer().setSneaking(true);
+        if (gPlayer == null) return;
+
+        if (gPlayer.isSneaking()) e.getPlayer().setSneaking(true);
     }
 }

@@ -4,10 +4,10 @@ import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.command.CommandSender;
 
-public class Shop extends Command{
+public class Shop extends Command {
 
     public Shop() {
-        super("shop" ,"command.shop", true);
+        super("shop", "command.shop", true);
     }
 
     @Override
