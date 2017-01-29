@@ -40,6 +40,8 @@ public class MapManager {
 	}
 
 	private void loadMaps() {
+		maps = new ArrayList<>();
+
 		ConfigurationSection sect = data.getConfigurationSection("maps");
 
 		for (String name : sect.getKeys(false)) {
@@ -58,9 +60,11 @@ public class MapManager {
 	}
 
 	public List<String> getMapNames() {
-		List<String> names = new ArrayList<String>();
+		List<String> names = new ArrayList<>();
 
-		maps.stream().forEach(m -> names.add(m.getName()));
+		for (Map map : MapManager.getInstance().getMaps()) {
+			names.add(map.getName());
+		}
 
 		Collections.sort(names);
 
@@ -69,8 +73,7 @@ public class MapManager {
 
 	public Map getMapByName(String name) {
 		for (Map map : maps) {
-			if (map.getName().equalsIgnoreCase(name))
-				return map;
+			if (map.getName().equalsIgnoreCase(name)) return map;
 		}
 
 		return null;
