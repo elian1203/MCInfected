@@ -6,10 +6,7 @@ import net.urbanmc.mcinfected.object.GamePlayerList;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class GamePlayerManager {
 
@@ -56,5 +53,14 @@ public class GamePlayerManager {
     
     public List<GamePlayer> getPlayers() {
     	return players;
+    }
+
+    public GamePlayer getGamePlayerByUniqueId(UUID uuid) {
+        for (GamePlayer p : players) {
+            if (p.getUniqueId().equals(uuid))
+                return p;
+        }
+
+        return null;
     }
 }

@@ -13,6 +13,14 @@ public abstract class Command {
 		this.onlyPlayer = onlyPlayer;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public String getPermission() {
+		return permission;
+	}
+
 	public boolean isOnlyPlayer() {
 		return onlyPlayer;
 	}

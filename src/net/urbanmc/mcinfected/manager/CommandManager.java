@@ -2,7 +2,11 @@ package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.command.Vote;
 import net.urbanmc.mcinfected.object.Command;
+import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,42 @@ public class CommandManager {
 		commands.add(new Vote());
 	}
 
-	public void onExecute(CommandSender sender, String message) {
-		
+	public List<Command> getCommands() {
+		return commands;
+	}
+
+	public Command getCommandByName(String name) {
+		for (Command command : commands) {
+			if (command.getName().equalsIgnoreCase(name)) return command;
+		}
+
+		return null;
+	}
+
+	public boolean onExecute(CommandSender sender, String message) {
+		String label = message.split(" ")[0];
+
+		Command command = getCommandByName(label);
+
+		if (command == null) return false;
+
+		if (command.isOnlyPlayer() && !(sender instanceof Player)) {
+			sender.sendMessage("Error: not player");
+			return true;
+		}
+
+		if (!command.getPermission().equals("") && !sender.hasPermission(command.getPermission())) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+			return true;
+		}
+
+		String[] args = message.substring(label.length()).split(" ");
+
+		GamePlayer p = command.isOnlyPlayer() ? GamePlayerManager.getInstance().getGamePlayerByUniqueId(Bukkit
+				.getPlayer(sender.getName()).getUniqueId()) : null;
+
+		command.execute(sender, label, args, p);
+
+		return true;
 	}
 }
