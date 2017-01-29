@@ -5,6 +5,7 @@ import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.object.Map;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +29,7 @@ public class Vote implements CommandExecutor {
 
 		if (args.length != 1) {
 			p.sendMessage(ChatColor.GOLD + "Maps you can vote for:\n");
-			String mapList = MapManager.getInstance().getMapNames().toString().replace("[", "").replace("]", "");
+			String mapList = StringUtils.join(MapManager.getInstance().getMapNames(), ", ");
 			p.sendMessage(ChatColor.GOLD + mapList);
 		}
 		
