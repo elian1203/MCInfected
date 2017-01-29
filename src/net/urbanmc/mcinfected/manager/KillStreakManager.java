@@ -26,7 +26,7 @@ public class KillStreakManager {
 	}
 
 	private void loadKillStreaks() {
-		killStreaks = new ArrayList<KillStreak>();
+		killStreaks = new ArrayList<>();
 
 		FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "killstreaks.yml"));
 		ConfigurationSection sect = data.getConfigurationSection("streaks");

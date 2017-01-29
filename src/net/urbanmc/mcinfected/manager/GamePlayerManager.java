@@ -47,7 +47,7 @@ public class GamePlayerManager {
                 ex.printStackTrace();
             }
 
-            players = new ArrayList<GamePlayer>();
+            players = new ArrayList<>();
         }
     }
     

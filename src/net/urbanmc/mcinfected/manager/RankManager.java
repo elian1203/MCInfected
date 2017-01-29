@@ -27,7 +27,7 @@ public class RankManager {
 	}
 
 	private void loadRanks() {
-		ranks = new ArrayList<Rank>();
+		ranks = new ArrayList<>();
 
 		FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "ranks.yml"));
 		ConfigurationSection sect = data.getConfigurationSection("ranks");

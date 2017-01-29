@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
+import net.urbanmc.mcinfected.util.VoteUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
@@ -18,7 +19,12 @@ public class Vote extends Command {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 		if (!GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
-			messagePlayer(p, ChatColor.RED + "The map has already been decided!");
+			messagePlayer(p, ChatColor.RED + "The map has already been decided.");
+			return;
+		}
+
+		if (p.hasVoted()) {
+			messagePlayer(p, ChatColor.RED + "You have already voted for a map.");
 			return;
 		}
 
@@ -31,9 +37,16 @@ public class Vote extends Command {
 			return;
 		}
 
-		Map map = MapManager.getInstance().getMapByName(args[0]);
-		map.setVotes(map.getVotes() + 1);
+		Map map = MapManager.getInstance().getSpecificByName(args[0]);
 
-		messagePlayer(p, ChatColor.GOLD + "You have voted for " + map.getName() + "!");
+		if (map == null) {
+			messagePlayer(p, ChatColor.RED + "Map not found.");
+		}
+
+		VoteUtil.addVotes(map, 1);
+
+		p.setVoted(true);
+
+		messagePlayer(p, ChatColor.GOLD + "You have voted for " + map.getName() + ".");
 	}
 }

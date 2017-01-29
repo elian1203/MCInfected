@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MapManager {
 
@@ -19,8 +20,8 @@ public class MapManager {
 
 	private FileConfiguration data;
 
-	private Map lobby;
-	private List<Map> maps;
+	private Map lobby, random;
+	private List<Map> maps, specific;
 
 	public static MapManager getInstance() {
 		return instance;
@@ -31,6 +32,7 @@ public class MapManager {
 
 		loadLobby();
 		loadMaps();
+		loadSpecific();
 	}
 
 	private void loadLobby() {
@@ -51,12 +53,43 @@ public class MapManager {
 		}
 	}
 
+	private void loadRandom() {
+		Random r = new Random();
+
+		random = maps.get(r.nextInt(maps.size()) - 1);
+	}
+
+	private void loadSpecific() {
+		specific = new ArrayList<>();
+
+		Random r = new Random();
+
+		int size = maps.size();
+
+		for (int i = 0; i < (size < 5 ? size : 5); i++) {
+			int temp = r.nextInt(size);
+
+			Map map = maps.get(temp - 1);
+
+			if (specific.contains(map)) {
+				i--;
+				continue;
+			}
+
+			specific.add(map);
+		}
+	}
+
 	public Map getLobby() {
 		return lobby;
 	}
 
 	public List<Map> getMaps() {
 		return maps;
+	}
+
+	public List<Map> getSpecific() {
+		return specific;
 	}
 
 	public List<String> getMapNames() {
@@ -73,7 +106,17 @@ public class MapManager {
 
 	public Map getMapByName(String name) {
 		for (Map map : maps) {
-			if (map.getName().equalsIgnoreCase(name)) return map;
+			if (map.getName().equalsIgnoreCase(name))
+				return map;
+		}
+
+		return null;
+	}
+
+	public Map getSpecificByName(String name) {
+		for (Map map : specific) {
+			if (map.getName().equalsIgnoreCase(name))
+				return map;
 		}
 
 		return null;
