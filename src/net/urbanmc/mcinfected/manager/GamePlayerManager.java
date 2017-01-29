@@ -53,4 +53,8 @@ public class GamePlayerManager {
             players = new ArrayList<GamePlayer>();
         }
     }
+    
+    public List<GamePlayer> getPlayers() {
+    	return players;
+    }
 }
