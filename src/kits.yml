@@ -1,24 +1,35 @@
 zombie:
-  head: chainmail_helmet
-  chest: chainmail_chestplate
-  legs: chainmail_leggings
-  boots: chainmail_boots
   items:
-   - wooden_sword
+  - wooden_sword
+  armor:
+  - chainmail_helmet
+  - chainmail_chestplate
+  - chainmail_leggings
+  - chainmail_boots
 mother:
   head: leather_helmet
   chest: leather_chestplate
   legs: leather_leggings
   boots: leather_boots
   items:
-   - gold_sword
+  - 'gold_sword enchant:sharpness'
+  armor:
+  - chainmail_helmet
+  - chainmail_chestplate
+  - chainmail_leggings
+  - chainmail_boots
 kits:
   skeleton:
+    name: Skeleton
     permission: "kits.skeleton"
-    head: chainmail_helmet
-    chest: chainmail_chestplate
-    legs: chainmail_leggings
-    boots: chainmail_boots
+    head: leather_helmet
+    chest: leather_chestplate
+    legs: leather_leggings
+    boots: leather_boots
     items:
-     - wooden_sword
-     - bow
+    - 'bow enchant:power/2 enchant:punch enchant:sharpness'
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - leather_boots
