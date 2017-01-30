@@ -3,10 +3,7 @@ package net.urbanmc.mcinfected.util;
 import net.urbanmc.mcinfected.manager.MapManager;
 import org.bukkit.ChatColor;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class VoteUtil {
@@ -40,6 +37,20 @@ public class VoteUtil {
 		builder.setLength(builder.length() - 1);
 
 		return builder.toString();
+	}
+
+	public static net.urbanmc.mcinfected.object.Map getTopVotedMap() {
+		Map<net.urbanmc.mcinfected.object.Map, Integer> specificMap = new LinkedHashMap<>();
+
+		for (net.urbanmc.mcinfected.object.Map map : MapManager.getInstance().getSpecific()) {
+			specificMap.put(map, map.getVotes());
+		}
+
+		specificMap = sortByValue(specificMap);
+
+		List<net.urbanmc.mcinfected.object.Map> list = new ArrayList<>(specificMap.keySet());
+
+		return list.get(0);
 	}
 
 	private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {

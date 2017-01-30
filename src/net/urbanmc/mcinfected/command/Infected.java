@@ -11,46 +11,47 @@ import org.bukkit.entity.Player;
 
 public class Infected extends Command {
 
-    public Infected() {
-        super("infected", "command.infected", true);
-    }
+	public Infected() {
+		super("infected", "command.infected", true);
+	}
 
-    @Override
-    public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+	@Override
+	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 
-        if (GameManager.getInstance().getGameState() == GameManager.GameState.LOBBY) {
-            messagePlayer(p, ChatColor.RED + "The game hasn't started yet!");
-            return;
-        }
+		if (GameManager.getInstance().getGameState() != GameManager.GameState.RUNNING) {
+			messagePlayer(p, ChatColor.RED + "The game hasn't started yet!");
+			return;
+		}
 
-        if (args.length > 2) {
-            messagePlayer(p, ChatColor.RED + "Usage: /infected [playername]");
-            return;
-        }
+		if (args.length > 1) {
+			messagePlayer(p, ChatColor.RED + "Usage: /infected [playername]");
+			return;
+		}
 
-        if (args.length == 0) {
-            String infected = p.isInfected() ? "You are infected!" : "You are not infected!";
-            messagePlayer(p, ChatColor.GOLD + infected);
-            return;
-        }
+		if (args.length == 0) {
+			String infected = p.isInfected() ? "You are infected!" : "You are not infected!";
+			messagePlayer(p, ChatColor.GOLD + infected);
+			return;
+		}
 
-        if (args.length == 1) {
-            Player targetPlayer = Bukkit.getPlayer(args[0]);
+		if (args.length == 1) {
+			Player targetPlayer = Bukkit.getPlayer(args[0]);
 
-            if (targetPlayer == null) {
-                messagePlayer(p, ChatColor.RED + "Invalid Player Name!");
-                return;
-            }
+			if (targetPlayer == null) {
+				messagePlayer(p, ChatColor.RED + "Player not found.");
+				return;
+			}
 
-            String infected = targetPlayer.getName() + "is" +
-                    (GamePlayerManager.getInstance().getGamePlayerByUniqueId(targetPlayer.getUniqueId()).isInfected() ? "infected. Run!!" : "not infected");
+			GamePlayer tp = GamePlayerManager.getInstance().getGamePlayerByUniqueId(targetPlayer.getUniqueId());
 
-            messagePlayer(p, ChatColor.DARK_RED + infected);
+			String infected = targetPlayer.getName() + "is" + (tp.isInfected() ? "infected. Run!!" : "not infected.");
 
-            return;
-        }
+			messagePlayer(p, ChatColor.DARK_RED + infected);
+
+			return;
+		}
 
 
-    }
+	}
 
 }

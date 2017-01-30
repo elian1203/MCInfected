@@ -7,7 +7,6 @@ import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.util.VoteUtil;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
 public class Vote extends Command {
@@ -29,11 +28,7 @@ public class Vote extends Command {
 		}
 
 		if (args.length == 0) {
-			String mapList = StringUtils.join(MapManager.getInstance().getMapNames(), ", ");
-
-			messagePlayer(p, ChatColor.GOLD + "Maps you can vote for:\n");
-			messagePlayer(p, ChatColor.GOLD + mapList);
-
+			messagePlayer(p, ChatColor.GOLD + "Maps you can vote for:\n" + VoteUtil.getFormattedSpecific());
 			return;
 		}
 

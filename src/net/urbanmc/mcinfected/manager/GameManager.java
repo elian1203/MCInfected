@@ -23,6 +23,6 @@ public class GameManager {
 	}
 
 	public enum GameState {
-		RUNNING, INFECTION, COUNTDOWN, LOBBY;
+		LOBBY, COUNTDOWN, INFECTION, RUNNING;
 	}
 }

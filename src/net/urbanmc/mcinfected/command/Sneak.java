@@ -7,20 +7,22 @@ import org.bukkit.command.CommandSender;
 
 public class Sneak extends Command {
 
-    public Sneak() {
-        super("sneak", "command.sneak", true);
-    }
+	public Sneak() {
+		super("sneak", "command.sneak", true);
+	}
 
-    @Override
-    public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-        if (p.isSneaking()) {
-            p.setSneaking(false);
+	@Override
+	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+		if (p.isSneaking()) {
+			p.setSneaking(false);
+			p.getOnlinePlayer().setSneaking(false);
 
-            messagePlayer(p, ChatColor.GOLD + "You have enabled auto-sneak!");
-        } else {
-            p.setSneaking(true);
+			messagePlayer(p, ChatColor.GOLD + "You have enabled auto-sneak!");
+		} else {
+			p.setSneaking(true);
+			p.getOnlinePlayer().setSneaking(true);
 
-            messagePlayer(p, ChatColor.GOLD + "You have disabled auto-sneak!");
-        }
-    }
+			messagePlayer(p, ChatColor.GOLD + "You have disabled auto-sneak!");
+		}
+	}
 }

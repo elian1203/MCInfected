@@ -8,12 +8,12 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 public class SneakListener implements Listener {
 
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent e) {
-        GamePlayer gPlayer = GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
+	@EventHandler
+	public void onSneak(PlayerToggleSneakEvent e) {
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
 
-        if (gPlayer == null) return;
-
-        if (gPlayer.isSneaking()) e.getPlayer().setSneaking(true);
-    }
+		if (p.isSneaking()) {
+			e.setCancelled(true);
+		}
+	}
 }

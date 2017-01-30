@@ -1,6 +1,6 @@
 package net.urbanmc.mcinfected.manager;
 
-import net.urbanmc.mcinfected.command.Vote;
+import net.urbanmc.mcinfected.command.*;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.Bukkit;
@@ -28,6 +28,10 @@ public class CommandManager {
 	private void loadCommands() {
 		commands = new ArrayList<>();
 
+		commands.add(new About());
+		commands.add(new Infected());
+		commands.add(new Shop());
+		commands.add(new Sneak());
 		commands.add(new Vote());
 	}
 
@@ -37,7 +41,8 @@ public class CommandManager {
 
 	public Command getCommandByName(String name) {
 		for (Command command : commands) {
-			if (command.getName().equalsIgnoreCase(name)) return command;
+			if (command.getName().equalsIgnoreCase(name))
+				return command;
 		}
 
 		return null;
@@ -48,7 +53,8 @@ public class CommandManager {
 
 		Command command = getCommandByName(label);
 
-		if (command == null) return false;
+		if (command == null)
+			return false;
 
 		if (command.isOnlyPlayer() && !(sender instanceof Player)) {
 			sender.sendMessage("Error: not player");

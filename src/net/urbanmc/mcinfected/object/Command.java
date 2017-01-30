@@ -1,6 +1,8 @@
 package net.urbanmc.mcinfected.object;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public abstract class Command {
 
@@ -26,6 +28,10 @@ public abstract class Command {
 	}
 
 	public void messageSender(CommandSender sender, String message) {
+		if (!(sender instanceof Player)) {
+			message = ChatColor.stripColor(message);
+		}
+
 		sender.sendMessage(message);
 	}
 

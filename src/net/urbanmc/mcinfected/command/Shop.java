@@ -14,7 +14,6 @@ public class Shop extends Command {
     public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 
     }
-
 }
 
 
