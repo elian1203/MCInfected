@@ -15,6 +15,7 @@ public class GamePlayer {
     private Kit kit;
     private boolean voted = false;
     private boolean sneaking;
+    private boolean infected;
 
     public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, Rank rank) {
         this.uuid = uuid;
@@ -111,5 +112,13 @@ public class GamePlayer {
 
     public Player getOnlinePlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public boolean isInfected() {
+        return infected;
+    }
+
+    public void setInfected(boolean infected) {
+        this.infected = infected;
     }
 }
