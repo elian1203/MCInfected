@@ -1,9 +1,7 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.Map;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,13 +30,14 @@ public class MapManager {
 
 		loadLobby();
 		loadMaps();
+		loadRandom();
 		loadSpecific();
 	}
 
 	private void loadLobby() {
 		String loc = data.getString("lobby.spawn");
 
-		lobby = new Map("#lobby", getLocation(loc));
+		lobby = new Map("#lobby", loc);
 	}
 
 	private void loadMaps() {
@@ -49,7 +48,7 @@ public class MapManager {
 		for (String name : sect.getKeys(false)) {
 			String loc = sect.getString(name + ".spawn");
 
-			maps.add(new Map(name, getLocation(loc)));
+			maps.add(new Map(name, loc));
 		}
 	}
 
@@ -80,6 +79,13 @@ public class MapManager {
 		}
 	}
 
+	public void setLobbyChars() {
+		World world = Bukkit.getWorld("lobby");
+
+		world.setPVP(false);
+		world.setGameRuleValue("doMobSpawning", "false");
+	}
+
 	public Map getLobby() {
 		return lobby;
 	}
@@ -90,6 +96,10 @@ public class MapManager {
 
 	public List<Map> getSpecific() {
 		return specific;
+	}
+
+	public Map getRandom() {
+		return random;
 	}
 
 	public List<String> getMapNames() {
@@ -114,6 +124,9 @@ public class MapManager {
 	}
 
 	public Map getSpecificByName(String name) {
+		if (name.equalsIgnoreCase("random"))
+			return random;
+
 		for (Map map : specific) {
 			if (map.getName().equalsIgnoreCase(name))
 				return map;
@@ -122,13 +135,18 @@ public class MapManager {
 		return null;
 	}
 
-	private Location getLocation(String loc) {
-		String[] split = loc.split("/");
+	public void loadMap(Map map) {
+		WorldCreator creator = new WorldCreator(map.getWorld());
 
-		double x = Double.parseDouble(split[0]), y = Double.parseDouble(split[1]), z = Double.parseDouble(split[2]);
-		float yaw = Float.parseFloat(split[3]), pitch = Float.parseFloat(split[4]);
-		World world = Bukkit.getWorld(split[5]);
+		creator.createWorld();
 
-		return new Location(world, x, y, z, yaw, pitch);
+		World world = Bukkit.getWorld(map.getWorld());
+
+		world.setPVP(true);
+		world.setDifficulty(Difficulty.HARD);
+
+		world.setGameRuleValue("doMobSpawning", "false");
+		world.setGameRuleValue("doMobLoot", "false");
+		world.setGameRuleValue("doDaylightCycle", "true");
 	}
 }

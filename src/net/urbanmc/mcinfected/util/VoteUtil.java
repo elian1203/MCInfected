@@ -19,6 +19,10 @@ public class VoteUtil {
 			specificMap.put(map.getName(), map.getVotes());
 		}
 
+		net.urbanmc.mcinfected.object.Map random = MapManager.getInstance().getRandom();
+
+		specificMap.put(random.getName(), random.getVotes());
+
 		specificMap = sortByValue(specificMap);
 
 		StringBuilder builder = new StringBuilder();
@@ -45,6 +49,10 @@ public class VoteUtil {
 		for (net.urbanmc.mcinfected.object.Map map : MapManager.getInstance().getSpecific()) {
 			specificMap.put(map, map.getVotes());
 		}
+
+		net.urbanmc.mcinfected.object.Map random = MapManager.getInstance().getRandom();
+
+		specificMap.put(random, random.getVotes());
 
 		specificMap = sortByValue(specificMap);
 

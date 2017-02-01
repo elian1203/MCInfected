@@ -16,81 +16,85 @@ import java.util.List;
 
 public class ItemUtil {
 
-	public static ItemStack getItem(String name) {
-		String[] split = name.split(" ");
+    public static ItemStack getItem(String name) {
+        String[] split = name.split(" ");
 
-		ItemStack is = new ItemStack(Material.getMaterial(split[0].toUpperCase()));
+        ItemStack is = new ItemStack(Material.getMaterial(split[0].toUpperCase()));
 
-		if (split.length == 0) {
-			return is;
-		}
+        if (split.length == 0) {
+            return is;
+        }
 
-		for (String arg : split) {
-			if (arg.startsWith("amount:")) {
-				int amount = Integer.parseInt(arg.substring(7));
-				is.setAmount(amount);
-				continue;
-			}
+        for (String arg : split) {
+            if (arg.startsWith("amount:")) {
+                int amount = Integer.parseInt(arg.substring(7));
+                is.setAmount(amount);
+                continue;
+            }
 
-			if (arg.startsWith("enchant:")) {
-				String enchant = arg.substring(8);
-				String[] enchantSplit = enchant.split("/");
+            if (arg.startsWith("enchant:")) {
+                String enchant = arg.substring(8);
+                String[] enchantSplit = enchant.split("/");
 
-				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
-				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
+                Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
+                int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
 
-				ItemMeta meta = is.getItemMeta();
+                ItemMeta meta = is.getItemMeta();
 
-				meta.addEnchant(ench, level, true);
+                meta.addEnchant(ench, level, true);
 
-				is.setItemMeta(meta);
-				continue;
-			}
+                is.setItemMeta(meta);
+                continue;
+            }
 
-			if (arg.startsWith("effect:")) {
-				String effect = arg.substring(10);
-				String[] effectSplit = effect.split("/");
+            if (arg.startsWith("effect:")) {
+                String effect = arg.substring(10);
+                String[] effectSplit = effect.split("/");
 
-				PotionEffectType effectType = PotionEffectType.getByName(effectSplit[0].toUpperCase());
-				int level = effectSplit.length < 2 ? 1 : Integer.parseInt(effectSplit[1]);
-				int duration = effectSplit.length < 3 ? 1 : Integer.parseInt(effectSplit[2]);
+                PotionEffectType effectType = PotionEffectType.getByName(effectSplit[0].toUpperCase());
+                int level = effectSplit.length < 2 ? 1 : Integer.parseInt(effectSplit[1]);
+                int duration = effectSplit.length < 3 ? 1 : Integer.parseInt(effectSplit[2]);
 
-				PotionMeta meta = (PotionMeta) is.getItemMeta();
+                PotionMeta meta = (PotionMeta) is.getItemMeta();
 
-				meta.addCustomEffect(new PotionEffect(effectType, duration, level), true);
+                meta.addCustomEffect(new PotionEffect(effectType, duration, level), true);
 
-				is.setItemMeta(meta);
-			}
-		}
+                is.setItemMeta(meta);
+            }
+        }
 
-		return is;
-	}
+        return is;
+    }
 
-	public static List<ItemStack> getItemList(List<String> list) {
-		List<ItemStack> items = new ArrayList<>();
+    public static List<ItemStack> getItemList(List<String> list) {
+        List<ItemStack> items = new ArrayList<>();
 
-		for (String s : list) {
-			items.add(getItem(s));
-		}
+        for (String s : list) {
+            items.add(getItem(s));
+        }
 
-		return items;
-	}
+        return items;
+    }
 
-	public static void equipPlayer(GamePlayer p) {
-		Kit kit = p.getKit();
+    public static void equipPlayer(GamePlayer p) {
+        Kit kit = p.getKit();
 
-		List<ItemStack> items = kit.getItems();
-		List<ItemStack> armor = kit.getArmor();
+        List<ItemStack> items = kit.getItems();
+        List<ItemStack> armor = kit.getArmor();
 
-		for (ItemStack item : items) {
-			p.getOnlinePlayer().getInventory().addItem(item);
-		}
+        for (ItemStack item : items) {
+            p.getOnlinePlayer().getInventory().addItem(item);
+        }
 
-		Collections.reverse(armor);
+        Collections.reverse(armor);
 
-		ItemStack[] array = new ItemStack[4];
-		array = armor.toArray(array);
+        ItemStack[] array = new ItemStack[4];
+        array = armor.toArray(array);
 
-		p.getOnlinePlayer().getInventory().setArmorContents(array);
-	}
+        p.getOnlinePlayer().getInventory().setArmorContents(array);
+
+        if (kit.hasDisguise()) {
+            DisguiseUtil.disguisePlayerAsEntity(p.getOnlinePlayer(), kit.getDisguise());
+        }
+    }
 }
