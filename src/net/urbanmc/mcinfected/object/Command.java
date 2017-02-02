@@ -39,5 +39,9 @@ public abstract class Command {
 		p.getOnlinePlayer().sendMessage(message);
 	}
 
+	public String color(String message) {
+		return ChatColor.translateAlternateColorCodes('&', message);
+	}
+
 	public abstract void execute(CommandSender sender, String label, String[] args, GamePlayer p);
 }

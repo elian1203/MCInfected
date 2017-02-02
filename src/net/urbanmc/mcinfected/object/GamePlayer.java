@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.object;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -10,19 +11,21 @@ public class GamePlayer {
 
     private UUID uuid;
     private long cookies, gamesPlayed;
-    private int kills, deaths, killStreak;
+    private int kills, deaths, hightestKillStreak, killStreak;
     private Rank rank;
     private Kit kit;
     private boolean voted = false;
     private boolean sneaking;
     private boolean infected;
 
-    public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, Rank rank) {
+    public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, int hightestKillStreak, Rank
+            rank) {
         this.uuid = uuid;
         this.cookies = cookies;
         this.gamesPlayed = gamesPlayed;
         this.kills = kills;
         this.deaths = deaths;
+        this.hightestKillStreak = hightestKillStreak;
         this.rank = rank;
     }
 
@@ -44,6 +47,10 @@ public class GamePlayer {
 
     public int getDeaths() {
         return deaths;
+    }
+
+    public int getHightestKillStreak() {
+        return hightestKillStreak;
     }
 
     public Rank getRank() {
@@ -76,6 +83,10 @@ public class GamePlayer {
 
     public void setDeaths(int deaths) {
         this.deaths = deaths;
+    }
+
+    public void setHightestKillStreak(int hightestKillStreak) {
+        this.hightestKillStreak = hightestKillStreak;
     }
 
     public void setRank(Rank rank) {
@@ -112,6 +123,10 @@ public class GamePlayer {
 
     public Player getOnlinePlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(uuid);
     }
 
     public boolean isInfected() {

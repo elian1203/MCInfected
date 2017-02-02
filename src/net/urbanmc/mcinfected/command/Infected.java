@@ -1,6 +1,5 @@
 package net.urbanmc.mcinfected.command;
 
-import net.md_5.bungee.api.ChatColor;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.Command;
@@ -11,47 +10,41 @@ import org.bukkit.entity.Player;
 
 public class Infected extends Command {
 
-	public Infected() {
-		super("infected", "command.infected", true);
-	}
+    public Infected() {
+        super("infected", "command.infected", true);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+    @Override
+    public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+        if (GameManager.getInstance().getGameState() != GameManager.GameState.RUNNING) {
+            messagePlayer(p, color("&cThe game hasn't started yet!"));
+            return;
+        }
 
-		if (GameManager.getInstance().getGameState() != GameManager.GameState.RUNNING) {
-			messagePlayer(p, ChatColor.RED + "The game hasn't started yet!");
-			return;
-		}
+        if (args.length > 1) {
+            messagePlayer(p, color("&cUsage: /infected [playername]"));
+            return;
+        }
 
-		if (args.length > 1) {
-			messagePlayer(p, ChatColor.RED + "Usage: /infected [playername]");
-			return;
-		}
+        if (args.length == 0) {
+            String infected = p.isInfected() ? "You are infected!" : "You are not infected!";
+            messagePlayer(p, color("&6" + infected));
+            return;
+        }
 
-		if (args.length == 0) {
-			String infected = p.isInfected() ? "You are infected!" : "You are not infected!";
-			messagePlayer(p, ChatColor.GOLD + infected);
-			return;
-		}
+        if (args.length == 1) {
+            Player targetPlayer = Bukkit.getPlayer(args[0]);
 
-		if (args.length == 1) {
-			Player targetPlayer = Bukkit.getPlayer(args[0]);
+            if (targetPlayer == null) {
+                messagePlayer(p, color("&cPlayer not found."));
+                return;
+            }
 
-			if (targetPlayer == null) {
-				messagePlayer(p, ChatColor.RED + "Player not found.");
-				return;
-			}
+            GamePlayer tp = GamePlayerManager.getInstance().getGamePlayerByUniqueId(targetPlayer.getUniqueId());
 
-			GamePlayer tp = GamePlayerManager.getInstance().getGamePlayerByUniqueId(targetPlayer.getUniqueId());
+            String infected = targetPlayer.getName() + "is" + (tp.isInfected() ? "infected. Run!!" : "not infected.");
 
-			String infected = targetPlayer.getName() + "is" + (tp.isInfected() ? "infected. Run!!" : "not infected.");
-
-			messagePlayer(p, ChatColor.DARK_RED + infected);
-
-			return;
-		}
-
-
-	}
-
+            messagePlayer(p, color("&4" + infected));
+        }
+    }
 }

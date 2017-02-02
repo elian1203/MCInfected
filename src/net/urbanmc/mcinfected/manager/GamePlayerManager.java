@@ -3,6 +3,8 @@ package net.urbanmc.mcinfected.manager;
 import com.google.gson.Gson;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.GamePlayerList;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,9 +52,9 @@ public class GamePlayerManager {
             players = new ArrayList<>();
         }
     }
-    
+
     public List<GamePlayer> getPlayers() {
-    	return players;
+        return players;
     }
 
     public GamePlayer getGamePlayerByUniqueId(UUID uuid) {
@@ -62,5 +64,15 @@ public class GamePlayerManager {
         }
 
         return null;
+    }
+
+    @SuppressWarnings("deprecation")
+    public GamePlayer getGamePlayerByName(String name) {
+        OfflinePlayer op = Bukkit.getOfflinePlayer(name);
+
+        if (op == null || op.getUniqueId() == null)
+            return null;
+
+        return getGamePlayerByUniqueId(op.getUniqueId());
     }
 }
