@@ -5,74 +5,101 @@ import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.GamePlayerList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class GamePlayerManager {
 
-    private static GamePlayerManager instance = new GamePlayerManager();
+	private static GamePlayerManager instance = new GamePlayerManager();
 
-    private final File file = new File("plugins/MCInfected", "players.json");
+	private final File file = new File("plugins/MCInfected", "players.json");
 
-    private List<GamePlayer> players;
+	private List<GamePlayer> players;
 
-    public static GamePlayerManager getInstance() {
-        return instance;
-    }
+	public static GamePlayerManager getInstance() {
+		return instance;
+	}
 
-    private GamePlayerManager() {
-        loadFile();
-        loadPlayers();
-    }
+	private GamePlayerManager() {
+		loadFile();
+		loadPlayers();
+	}
 
-    private void loadFile() {
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+	private void loadFile() {
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
 
-    private void loadPlayers() {
-        try {
-            Scanner scanner = new Scanner(file);
+	private void loadPlayers() {
+		try {
+			Scanner scanner = new Scanner(file);
 
-            players = new Gson().fromJson(scanner.nextLine(), GamePlayerList.class).getPlayers();
+			players = new Gson().fromJson(scanner.nextLine(), GamePlayerList.class).getPlayers();
 
-            scanner.close();
-        } catch (Exception ex) {
-            if (!(ex instanceof NoSuchElementException)) {
-                ex.printStackTrace();
-            }
+			scanner.close();
+		} catch (Exception ex) {
+			if (!(ex instanceof NoSuchElementException)) {
+				ex.printStackTrace();
+			}
 
-            players = new ArrayList<>();
-        }
-    }
+			players = new ArrayList<>();
+		}
+	}
 
-    public List<GamePlayer> getPlayers() {
-        return players;
-    }
+	public void savePlayers() {
+		try {
+			PrintWriter writer = new PrintWriter(file);
 
-    public GamePlayer getGamePlayerByUniqueId(UUID uuid) {
-        for (GamePlayer p : players) {
-            if (p.getUniqueId().equals(uuid))
-                return p;
-        }
+			writer.write(new Gson().toJson(new GamePlayerList(players)));
 
-        return null;
-    }
+			writer.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    @SuppressWarnings("deprecation")
-    public GamePlayer getGamePlayerByName(String name) {
-        OfflinePlayer op = Bukkit.getOfflinePlayer(name);
+	public List<GamePlayer> getPlayers() {
+		return players;
+	}
 
-        if (op == null || op.getUniqueId() == null)
-            return null;
+	public void register(Player p) {
+		UUID uuid = p.getUniqueId();
 
-        return getGamePlayerByUniqueId(op.getUniqueId());
-    }
+		if (getGamePlayerByUniqueId(uuid) != null)
+			return;
+
+		GamePlayer gamePlayer = new GamePlayer(uuid, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1));
+
+		players.add(gamePlayer);
+
+		savePlayers();
+	}
+
+	public GamePlayer getGamePlayerByUniqueId(UUID uuid) {
+		for (GamePlayer p : players) {
+			if (p.getUniqueId().equals(uuid))
+				return p;
+		}
+
+		return null;
+	}
+
+	@SuppressWarnings("deprecation")
+	public GamePlayer getGamePlayerByName(String name) {
+		OfflinePlayer op = Bukkit.getOfflinePlayer(name);
+
+		if (op == null || op.getUniqueId() == null)
+			return null;
+
+		return getGamePlayerByUniqueId(op.getUniqueId());
+	}
 }

@@ -1,0 +1,5 @@
+main: net.urbanmc.mcinfected.MCInfected
+name: MCInfected
+version: 0.1
+authors: [Elian, Silverwolfg11]
+depend: [ProtocolLib]

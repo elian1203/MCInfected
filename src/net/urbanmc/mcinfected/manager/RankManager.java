@@ -33,6 +33,7 @@ public class RankManager {
 		ConfigurationSection sect = data.getConfigurationSection("ranks");
 
 		for (String level : sect.getKeys(false)) {
+			System.out.println("loading " + level);
 			String name = sect.getString(level + ".name");
 			ChatColor color = ChatColor.getByChar(sect.getString(level + ".color").charAt(0));
 			long cost = sect.getLong(level + ".cost");
@@ -46,5 +47,14 @@ public class RankManager {
 
 	public List<Rank> getRanks() {
 		return ranks;
+	}
+
+	public Rank getRankByLevel(int level) {
+		for (Rank rank : ranks) {
+			if (rank.getLevel() == level)
+				return rank;
+		}
+
+		return null;
 	}
 }

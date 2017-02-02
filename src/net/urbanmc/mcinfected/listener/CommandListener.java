@@ -10,7 +10,7 @@ public class CommandListener implements Listener {
 
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
-		if (CommandManager.getInstance().onExecute(e.getPlayer(), e.getMessage())) {
+		if (CommandManager.getInstance().onExecute(e.getPlayer(), e.getMessage().substring(1))) {
 			e.setCancelled(true);
 		}
 	}

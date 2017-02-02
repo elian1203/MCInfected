@@ -12,7 +12,7 @@ public class About extends Command {
 
     @Override
     public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-        String message = color("&aThis message was developed by Elian & Silverwolfg11. We do not take any" +
+        String message = color("&aThis plugin was developed by Elian & Silverwolfg11. We do not take any" +
                 " credit for any of the ideas of this plugin, only its code. Any of these ideas were developed by " +
                 "Supertt007. This game is based off Infected from Call of Duty: Modern Warefare 3. For more " +
                 "information, visit the game wiki at http://mcinfected.wikia.com/wiki/MCInfected_Wiki");
