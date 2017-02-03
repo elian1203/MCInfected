@@ -47,6 +47,7 @@ public class KitManager {
         EntityType tempdisguise = null;
 
         if (data.contains(path + ".disguise"))
+            //This might need to be changed to getStringList
             tempdisguise = EntityType.valueOf(data.getString(path + ".disguise"));
 
        Kit kit = new Kit(
@@ -58,6 +59,14 @@ public class KitManager {
         );
 
         return kit;
+    }
+
+    public List<Kit> getKits() {
+        return kits;
+    }
+
+    public static KitManager getInstance() {
+        return instance;
     }
 
 
