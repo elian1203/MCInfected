@@ -47,7 +47,7 @@ public class Stats extends Command {
 		builder.append(color("&aKills: &6" + p.getKills()) + "\n");
 		builder.append(color("&aDeaths: &6" + p.getDeaths()) + "\n");
 		builder.append(color("&aKDR: &6" + p.getKDR()) + "\n");
-		builder.append(color("&aHighest KillStreak: &6" + p.getHightestKillStreak()));
+		builder.append(color("&aHighest KillStreak: &6" + p.getHighestKillStreak()));
 
 		return builder.toString();
 	}

@@ -18,7 +18,8 @@ public class GamePlayer {
 	private boolean sneaking;
 	private boolean infected;
 
-	public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, int highestKillStreak, Rank rank) {
+	public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, int highestKillStreak, Rank
+			rank) {
 		this.uuid = uuid;
 		this.cookies = cookies;
 		this.gamesPlayed = gamesPlayed;
@@ -48,7 +49,7 @@ public class GamePlayer {
 		return deaths;
 	}
 
-	public int getHightestKillStreak() {
+	public int getHighestKillStreak() {
 		return highestKillStreak;
 	}
 
@@ -89,7 +90,7 @@ public class GamePlayer {
 		this.deaths = deaths;
 	}
 
-	public void setHightestKillStreak(int hightestKillStreak) {
+	public void setHighestKillStreak(int hightestKillStreak) {
 		this.highestKillStreak = hightestKillStreak;
 	}
 
