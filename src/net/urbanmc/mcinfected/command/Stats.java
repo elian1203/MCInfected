@@ -41,7 +41,7 @@ public class Stats extends Command {
 
 		Rank rank = p.getRank();
 
-		builder.append(color("&aStats: &6" + p.getOfflinePlayer().getName()));
+		builder.append(color("&aStats: &6" + p.getOfflinePlayer().getName()) + "\n");
 		builder.append(color("&aRank: &6" + rank.getLevel() + " &a// &6" + rank.getName()) + "\n");
 		builder.append(color("&aCookies: &6" + p.getCookies()) + "\n");
 		builder.append(color("&aKills: &6" + p.getKills()) + "\n");
