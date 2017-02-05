@@ -22,7 +22,7 @@ ranks:
     - leather_leggings
     - leather_boots
   3:
-    name: Corporal
+   name: Corporal
    color: 8
    items:
    - stone_sword
