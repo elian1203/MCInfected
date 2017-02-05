@@ -12,101 +12,93 @@ import org.bukkit.entity.Player;
 
 public class GameStart implements Runnable {
 
-    private MCInfected plugin;
-    private int taskId, time;
-    private Map gameMap;
+	private MCInfected plugin;
+	private int taskId, time;
+	private Map gameMap;
 
-    public GameStart(MCInfected plugin) {
-        this.plugin = plugin;
-        this.time = 240;
-    }
+	public GameStart(MCInfected plugin) {
+		this.plugin = plugin;
+		this.time = 240;
+	}
 
-    @Override
-    public void run() {
-        time--;
+	@Override
+	public void run() {
+		time--;
 
-        if (time == 240 || time == 180 || time == 120 || time == 60 || time == 30 || time == 15 || time == 3 || time
-                == 2 || time == 1) {
-            broadcastTime();
-        }
+		if (time == 240 || time == 180 || time == 120 || time == 60 || time == 30 || time == 15 || time == 3 || time
+				== 2 || time == 1) {
+			broadcastTime();
+		}
 
-        boolean enoughPlayers = enoughPlayers();
+		boolean enoughPlayers = enoughPlayers();
 
-        if (time == 25 && !enoughPlayers) {
-            insufficientPlayers();
-            return;
-        }
+		if (time == 15 && !enoughPlayers) {
+			insufficientPlayers();
+			return;
+		} else if (time == 15 && enoughPlayers) {
+			mapSelection();
+			return;
+		}
 
-        if (time == 15 && enoughPlayers)
-            mapSelection();
+		if (time == 0 && enoughPlayers) {
+			preInfection();
+		}
+	}
 
-        if (time == 0 && enoughPlayers) {
-            preInfection();
-            return;
-        }
+	public int getTaskId() {
+		return taskId;
+	}
 
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
 
+	public void sufficientPlayers() {
+		time = 89;
+		plugin.getServer().broadcastMessage(ChatColor.AQUA + "Enough players have joined the game, reducing time to "
+				                                    + "90 seconds.");
+	}
 
-        if (!(time <= 0))
-            return;
+	private void insufficientPlayers() {
+		time = 241;
+		plugin.getServer().broadcastMessage(ChatColor.AQUA + "Not enough players to play. Resetting time to 240 " +
+				                                    "seconds.");
+	}
 
+	private void broadcastTime() {
+		plugin.getServer().broadcastMessage(ChatColor.AQUA + "Game starting in " + time + " seconds.");
+	}
 
-    }
+	private boolean enoughPlayers() {
+		return plugin.getServer().getOnlinePlayers().size() >= 8;
+	}
 
-    public int getTaskId() {
-        return taskId;
-    }
+	private void startInfection() {
+		InfectionStart task = new InfectionStart(plugin);
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
+		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, task, 0, 20);
+		task.setTaskId(taskId);
 
-    public void sufficientPlayers() {
-        time = 89;
-        plugin.getServer().broadcastMessage(ChatColor.AQUA + "Enough players have joined the game, reducing time to " +
-                "90 seconds.");
-    }
+		plugin.getServer().getScheduler().cancelTask(this.taskId);
+	}
 
-    private void insufficientPlayers() {
-        time = 241;
-        plugin.getServer().broadcastMessage(ChatColor.AQUA + "Not enough players to play. Resetting time to 240 " +
-                "seconds.");
-    }
+	private void mapSelection() {
+		GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
 
-    private void broadcastTime() {
-        plugin.getServer().broadcastMessage(ChatColor.AQUA + "Game starting in " + time + " seconds.");
-    }
+		gameMap = VoteUtil.getTopVotedMap();
+		MapManager.getInstance().loadMap(gameMap);
+		Bukkit.broadcastMessage(ChatColor.BLUE + gameMap.getName() + " has won!");
+	}
 
-    private boolean enoughPlayers() {
-        return plugin.getServer().getOnlinePlayers().size() >= 8;
-    }
+	private void preInfection() {
+		Location loc = gameMap.getSpawn();
 
-    private void startInfection() {
-        InfectionStart task = new InfectionStart(plugin);
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			p.teleport(loc);
+		}
 
-        int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, task, 0, 20);
-        task.setTaskId(taskId);
+		GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);
 
-        plugin.getServer().getScheduler().cancelTask(this.taskId);
-    }
-
-    private void mapSelection() {
-        GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
-
-        Map map = VoteUtil.getTopVotedMap();
-        MapManager.getInstance().loadMap(map);
-        Bukkit.broadcastMessage(ChatColor.BLUE + "Map: " + map.getName());
-    }
-
-    private void preInfection() {
-        Location loc = gameMap.getSpawn();
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.teleport(loc);
-        }
-
-        GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);
-
-        startInfection();
-    }
+		startInfection();
+	}
 }
