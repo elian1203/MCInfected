@@ -62,7 +62,11 @@ public class GamePlayer {
     }
 
     public String getKDR() {
-        double kdr = kills / deaths;
+
+        double kdr;
+        if(deaths != 0)
+        kdr = kills / deaths;
+        else kdr = kills;
 
         DecimalFormat df = new DecimalFormat("##.##");
 

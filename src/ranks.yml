@@ -75,7 +75,7 @@ ranks:
    - 'apple amount:2'
    - melon
    armor:
-   - leather_armor
+   - leather_helmet
    - leather_chestplate
    - leather_leggings
    - iron_boots
@@ -88,7 +88,7 @@ ranks:
    - melon
    - slime_ball
    armor:
-   - leather_armor
+   - leather_helmet
    - leather_chestplate
    - leather_leggings
    - iron_boots
@@ -181,7 +181,7 @@ ranks:
    armor:
    - iron_helmet
    - leather_chestplate
-   - iron_pants
+   - iron_leggings
    - iron_boots
   16:
    name: Brigadier General
@@ -197,7 +197,7 @@ ranks:
    armor:
    - iron_helmet
    - leather_chestplate
-   - iron_pants
+   - iron_leggings
    - iron_boots
   17:
    name: Major General
