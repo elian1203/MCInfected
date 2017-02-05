@@ -14,6 +14,7 @@ public class GameStart implements Runnable {
 
     private MCInfected plugin;
     private int taskId, time;
+    private Map gameMap;
 
     public GameStart(MCInfected plugin) {
         this.plugin = plugin;
@@ -36,8 +37,15 @@ public class GameStart implements Runnable {
             return;
         }
 
-        if (time == 0 && enoughPlayers)
+        if (time == 15 && enoughPlayers)
+            mapSelection();
+
+        if (time == 0 && enoughPlayers) {
             preInfection();
+            return;
+        }
+
+
 
         if (!(time <= 0))
             return;
@@ -82,13 +90,16 @@ public class GameStart implements Runnable {
         plugin.getServer().getScheduler().cancelTask(this.taskId);
     }
 
-    private void preInfection() {
+    private void mapSelection() {
         GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
 
         Map map = VoteUtil.getTopVotedMap();
         MapManager.getInstance().loadMap(map);
+        Bukkit.broadcastMessage(ChatColor.BLUE + "Map: " + map.getName());
+    }
 
-        Location loc = map.getSpawn();
+    private void preInfection() {
+        Location loc = gameMap.getSpawn();
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.teleport(loc);
