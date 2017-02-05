@@ -114,8 +114,8 @@ public class GamePlayer {
 		return voted;
 	}
 
-	public void setVoted(boolean voted) {
-		this.voted = voted;
+	public void setVoted() {
+		this.voted = true;
 	}
 
 	public boolean isSneaking() {

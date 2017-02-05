@@ -39,7 +39,7 @@ public class Vote extends Command {
 
         VoteUtil.addVotes(map, 1);
 
-        p.setVoted(true);
+        p.setVoted();
 
         messagePlayer(p, color("&6You have voted for " + map.getName() + "."));
     }
