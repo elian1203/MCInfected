@@ -1,7 +1,14 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.manager.GameManager;
+import net.urbanmc.mcinfected.manager.MapManager;
+import net.urbanmc.mcinfected.object.Map;
+import net.urbanmc.mcinfected.util.VoteUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class GameStart implements Runnable {
 
@@ -28,6 +35,9 @@ public class GameStart implements Runnable {
             insufficientPlayers();
             return;
         }
+
+        if (time == 0 && enoughPlayers)
+            preInfection();
 
         if (!(time <= 0))
             return;
@@ -70,5 +80,22 @@ public class GameStart implements Runnable {
         task.setTaskId(taskId);
 
         plugin.getServer().getScheduler().cancelTask(this.taskId);
+    }
+
+    private void preInfection() {
+        GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
+
+        Map map = VoteUtil.getTopVotedMap();
+        MapManager.getInstance().loadMap(map);
+
+        Location loc = map.getSpawn();
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.teleport(loc);
+        }
+
+        GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);
+
+        startInfection();
     }
 }
