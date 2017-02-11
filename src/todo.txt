@@ -1,0 +1,7 @@
+TODO:
+- No attack cooldown
+- Zombie Infection
+- Grenades
+- Finish messages
+- Game Listener(s)
+- Shop command

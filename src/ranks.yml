@@ -22,240 +22,240 @@ ranks:
     - leather_leggings
     - leather_boots
   3:
-   name: Corporal
-   color: 8
-   items:
-   - stone_sword
-   - apple
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - leather_boots
+    name: Corporal
+    color: 8
+    items:
+    - stone_sword
+    - apple
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - leather_boots
   4:
-   name: Sergeant
-   color: 8
-   items:
-   - stone_sword
-   - apple
-   - melon
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - leather_boots
+    name: Sergeant
+    color: 8
+    items:
+    - stone_sword
+    - apple
+    - melon
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - leather_boots
   5:
-   name: Staff Sergeant
-   color: 8
-   items:
-   - stone_sword
-   - apple
-   - melon
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: Staff Sergeant
+    color: 8
+    items:
+    - stone_sword
+    - apple
+    - melon
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   6:
-   name: Master Sergeant
-   color: e
-   items:
-   - stone_sword
-   - 'apple amount:2'
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: Master Sergeant
+    color: e
+    items:
+    - stone_sword
+    - 'apple amount:2'
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   7:
-   name: 1st Sergeant
-   color: e
-   items:
-   - stone_sword
-   - 'apple amount:2'
-   - melon
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: 1st Sergeant
+    color: e
+    items:
+    - stone_sword
+    - 'apple amount:2'
+    - melon
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   8:
-   name: Sergeant Major
-   color: e
-   items:
-   - stone_sword
-   - 'apple amount:2'
-   - melon
-   - slime_ball
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: Sergeant Major
+    color: e
+    items:
+    - stone_sword
+    - 'apple amount:2'
+    - melon
+    - slime_ball
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   9:
-   name: Command Sergeant Major
-   color: e
-   items:
-   - stone_sword
-   - 'apple amount:3'
-   - slime_ball
-   armor:
-   - leather_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: Command Sergeant Major
+    color: e
+    items:
+    - stone_sword
+    - 'apple amount:3'
+    - slime_ball
+    armor:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   10:
-   name: 2nd Lieutenant
-   color: e
-   items:
-   - stone_sword
-   - 'apple amount:3'
-   - melon
-   - slime_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: 2nd Lieutenant
+    color: e
+    items:
+    - stone_sword
+    - 'apple amount:3'
+    - melon
+    - slime_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   11:
-   name: 1st Lieutenant
-   color: a
-   items:
-   - stone_sword
-   - 'apple amount:3'
-   - melon
-   - slime_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: 1st Lieutenant
+    color: a
+    items:
+    - stone_sword
+    - 'apple amount:3'
+    - melon
+    - slime_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   12:
-   name: Captain
-   color: a
-   items:
-   - stone_sword
-   - 'apple amount:3'
-   - melon
-   - bow
-   - 'arrow amount:3'
-   - slime_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
+    name: Captain
+    color: a
+    items:
+    - stone_sword
+    - 'apple amount:3'
+    - melon
+    - bow
+    - 'arrow amount:3'
+    - slime_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
   13:
-   name: Major
-   color: a
-   items:
-   - stone_sword
-   - 'apple amount:3'
-   - bow
-   - 'arrow amount:5'
-   - slime_ball
+    name: Major
+    color: a
+    items:
+    - stone_sword
+    - 'apple amount:3'
+    - bow
+    - 'arrow amount:5'
+    - slime_ball
   14:
-   name: Lt. Colonel
-   color: a
-   items:
-   - stone_sword
-   - 'apple amount:4'
-   - bow
-   - 'arrow amount:5'
-   - slime_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - leather_leggings
-   - iron_boots
-   - slime_ball
+    name: Lt. Colonel
+    color: a
+    items:
+    - stone_sword
+    - 'apple amount:4'
+    - bow
+    - 'arrow amount:5'
+    - slime_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - leather_leggings
+    - iron_boots
+    - slime_ball
   15:
-   name: Colonel
-   color: a
-   items:
-   - stone_sword
-   - 'apple amount:4'
-   - bow
-   - 'arrow amount:5'
-   - slime_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - iron_leggings
-   - iron_boots
+    name: Colonel
+    color: a
+    items:
+    - stone_sword
+    - 'apple amount:4'
+    - bow
+    - 'arrow amount:5'
+    - slime_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - iron_leggings
+    - iron_boots
   16:
-   name: Brigadier General
-   color: b
-   items:
-   - stone_sword
-   - 'apple amount:4'
-   - melon
-   - bow
-   - 'arrow amount:7'
-   - slime_ball
-   - snow_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - iron_leggings
-   - iron_boots
+    name: Brigadier General
+    color: b
+    items:
+    - stone_sword
+    - 'apple amount:4'
+    - melon
+    - bow
+    - 'arrow amount:7'
+    - slime_ball
+    - snow_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - iron_leggings
+    - iron_boots
   17:
-   name: Major General
-   color: b
-   items:
-   - stone_sword
-   - 'apple amount:5'
-   - bow
-   - 'arrow amount:10'
-   - slime_ball
-   - snow_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - iron_leggings
-   - iron_boots
+    name: Major General
+    color: b
+    items:
+    - stone_sword
+    - 'apple amount:5'
+    - bow
+    - 'arrow amount:10'
+    - slime_ball
+    - snow_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - iron_leggings
+    - iron_boots
   18:
-   name: Lt. General
-   color: b
-   items:
-   - stone_sword
-   - 'apple amount:5'
-   - bow
-   - 'arrow amount:13'
-   - slime_ball
-   - snow_ball
-   armor:
-   - iron_helmet
-   - leather_chestplate
-   - iron_leggings
-   - iron_boots
+     name: Lt. General
+     color: b
+     items:
+     - stone_sword
+     - 'apple amount:5'
+     - bow
+     - 'arrow amount:13'
+     - slime_ball
+     - snow_ball
+     armor:
+     - iron_helmet
+     - leather_chestplate
+     - iron_leggings
+     - iron_boots
   19:
-   name: General
-   color: b
-   items:
-   - stone_sword
-   - 'apple amount:6'
-   - bow
-   - 'arrow amount:20'
-   - slime_ball
-   - snow_ball
-   armor:
-   - iron_helmet
-   - iron_chestplate
-   - iron_leggings
-   - iron_boots
+     name: General
+     color: b
+     items:
+     - stone_sword
+     - 'apple amount:6'
+     - bow
+     - 'arrow amount:20'
+     - slime_ball
+     - snow_ball
+     armor:
+     - iron_helmet
+     - iron_chestplate
+     - iron_leggings
+     - iron_boots
   20:
-   name: Commander
-   color: 5
-   items:
-   - iron_sword
-   - 'apple amount:6'
-   - bow
-   - 'arrow amount:20'
-   - slime_ball
-   - snow_ball
-   armor:
-   - iron_helmet
-   - iron_chestplate
-   - iron_leggings
-   - iron_boots
+    name: Commander
+    color: 5
+    items:
+    - iron_sword
+    - 'apple amount:6'
+    - bow
+    - 'arrow amount:20'
+    - slime_ball
+    - snow_ball
+    armor:
+    - iron_helmet
+    - iron_chestplate
+    - iron_leggings
+    - iron_boots
