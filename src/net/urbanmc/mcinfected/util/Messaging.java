@@ -41,10 +41,7 @@ public class Messaging {
 		message = ChatColor.translateAlternateColorCodes('&', message);
 
 		if (args != null) {
-			MessageFormat formatter = new MessageFormat("");
-			formatter.applyPattern(message.replace("'", "''"));
-
-			message = formatter.format(args);
+			message = MessageFormat.format(message, args);
 		}
 
 		return message;
