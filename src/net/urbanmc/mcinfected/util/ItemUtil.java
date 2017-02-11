@@ -131,7 +131,7 @@ public class ItemUtil {
 
 		Item item = p.getWorld().dropItem(p.getLocation(), is);
 
-		Grenade grenade = parseGrenade(item);
+		Grenade grenade = Grenade.parseGrenade(item);
 
 		item.setVelocity(p.getLocation().getDirection().normalize().multiply(2.5));
 
@@ -140,20 +140,5 @@ public class ItemUtil {
 		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 0, 1);
 
 		runnable.setTaskId(taskId);
-	}
-
-	private static Grenade parseGrenade(Item item) {
-		Material type = item.getItemStack().getType();
-
-		if (type == Material.TRIPWIRE_HOOK)
-			return new ThrowingKnife(item);
-		else if (type == Material.SLIME_BALL)
-			return new StickyGrenade(item);
-		else if (type == Material.SNOW_BALL)
-			return new FlashGrenade(item);
-		else if (type == Material.EGG)
-			return new FragGrenade(item);
-
-		return null;
 	}
 }

@@ -4,7 +4,7 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.object.Map;
-import net.urbanmc.mcinfected.util.Messaging;
+import net.urbanmc.mcinfected.util.Messages;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -55,16 +55,16 @@ public class GameStart implements Runnable {
 
 	public void sufficientPlayers() {
 		time = 89;
-		plugin.getServer().broadcastMessage(Messaging.getInstance().getString("sufficient_players"));
+		plugin.getServer().broadcastMessage(Messages.getInstance().getString("sufficient_players"));
 	}
 
 	private void insufficientPlayers() {
 		time = 241;
-		plugin.getServer().broadcastMessage(Messaging.getInstance().getString("insufficient_players"));
+		plugin.getServer().broadcastMessage(Messages.getInstance().getString("insufficient_players"));
 	}
 
 	private void broadcastTime() {
-		plugin.getServer().broadcastMessage(Messaging.getInstance().getString("game_starting", time));
+		plugin.getServer().broadcastMessage(Messages.getInstance().getString("game_starting", time));
 	}
 
 	private boolean enoughPlayers() {
@@ -85,7 +85,7 @@ public class GameStart implements Runnable {
 
 		gameMap = VoteUtil.getTopVotedMap();
 		MapManager.getInstance().loadMap(gameMap);
-		Bukkit.broadcastMessage(Messaging.getInstance().getString("map_won", gameMap.getName()));
+		Bukkit.broadcastMessage(Messages.getInstance().getString("map_won", gameMap.getName()));
 	}
 
 	private void preInfection() {

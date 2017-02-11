@@ -2,34 +2,25 @@ package net.urbanmc.mcinfected.util;
 
 import org.bukkit.ChatColor;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-public class Messaging {
+public class Messages {
 
-	private static Messaging instance = new Messaging();
+	private static Messages instance = new Messages();
 
 	private ResourceBundle bundle;
 
-	public static Messaging getInstance() {
+	public static Messages getInstance() {
 		return instance;
 	}
 
-	private Messaging() {
+	private Messages() {
 		loadBundle();
 	}
 
 	private void loadBundle() {
-		InputStream input = getClass().getResourceAsStream("messages.properties");
-
-		try {
-			bundle = new PropertyResourceBundle(input);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		bundle = ResourceBundle.getBundle("messages");
 	}
 
 	public String getString(String key, Object... args) {
