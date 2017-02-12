@@ -1,6 +1,8 @@
 package net.urbanmc.mcinfected.util;
 
 import net.urbanmc.mcinfected.manager.MapManager;
+import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.util.*;
@@ -8,8 +10,14 @@ import java.util.stream.Stream;
 
 public class VoteUtil {
 
-	public static void addVotes(net.urbanmc.mcinfected.object.Map map, int amount) {
+	public static void addVotes(GamePlayer p, net.urbanmc.mcinfected.object.Map map, int amount) {
 		map.setVotes(map.getVotes() + amount);
+
+		p.setVoted();
+
+		Bukkit.broadcastMessage(Messages.getInstance().getString("player_voted",
+		                                                         p.getOnlinePlayer().getName(),
+		                                                         map.getName()));
 	}
 
 	public static String getFormattedSpecific() {
@@ -65,8 +73,8 @@ public class VoteUtil {
 		Map<K, V> result = new LinkedHashMap<>();
 		Stream<Map.Entry<K, V>> st = map.entrySet().stream();
 
-		st.sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).forEachOrdered(e -> result.put(e.getKey(), e
-				.getValue()));
+		st.sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).forEachOrdered(e -> result.put(e.getKey(),
+		                                                                                                 e.getValue()));
 
 		return result;
 	}

@@ -8,39 +8,37 @@ import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
+
 public class Vote extends Command {
 
-    public Vote() {
-        super("vote", "command.vote", true);
-    }
+	public Vote() {
+		super("vote", "command.vote", true, Arrays.asList("v"));
+	}
 
-    @Override
-    public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-        if (!GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
-            messagePlayer(p, color("&cThe map has already been decided."));
-            return;
-        }
+	@Override
+	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+		if (!GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
+			messagePlayer(p, color("&cThe map has already been decided."));
+			return;
+		}
 
-        if (p.hasVoted()) {
-            messagePlayer(p, color("&5You have already voted for a map."));
-            return;
-        }
+		if (p.hasVoted()) {
+			messagePlayer(p, color("&5You have already voted for a map."));
+			return;
+		}
 
-        if (args.length == 0) {
-            messagePlayer(p, color("&5Maps you can vote for:\n" + VoteUtil.getFormattedSpecific()));
-            return;
-        }
+		if (args.length == 0) {
+			messagePlayer(p, color("&5Maps you can vote for:\n" + VoteUtil.getFormattedSpecific()));
+			return;
+		}
 
-        Map map = MapManager.getInstance().getSpecificByName(args[0]);
+		Map map = MapManager.getInstance().getSpecificByName(args[0]);
 
-        if (map == null) {
-            messagePlayer(p, color("&4Map not found."));
-        }
+		if (map == null) {
+			messagePlayer(p, color("&4Map not found."));
+		}
 
-        VoteUtil.addVotes(map, 1);
-
-        p.setVoted();
-
-        messagePlayer(p, color("&6You have voted for " + map.getName() + "."));
-    }
+		VoteUtil.addVotes(p, map, 1);
+	}
 }

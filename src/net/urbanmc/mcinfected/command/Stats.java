@@ -4,13 +4,16 @@ import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Rank;
+import net.urbanmc.mcinfected.util.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
 
 public class Stats extends Command {
 
 	public Stats() {
-		super("stats", "command.stats", false);
+		super("stats", "command.stats", false, Collections.emptyList());
 	}
 
 	@Override
@@ -37,18 +40,20 @@ public class Stats extends Command {
 	}
 
 	private String build(GamePlayer p) {
-		StringBuilder builder = new StringBuilder();
-
 		Rank rank = p.getRank();
 
-		builder.append(color("&aStats: &6" + p.getOfflinePlayer().getName()) + "\n");
-		builder.append(color("&aRank: &6" + rank.getLevel() + " &a// &6" + rank.getName()) + "\n");
-		builder.append(color("&aCookies: &6" + p.getCookies()) + "\n");
-		builder.append(color("&aKills: &6" + p.getKills()) + "\n");
-		builder.append(color("&aDeaths: &6" + p.getDeaths()) + "\n");
-		builder.append(color("&aKDR: &6" + p.getKDR()) + "\n");
-		builder.append(color("&aHighest KillStreak: &6" + p.getHighestKillStreak()));
+		String message = Messages.getInstance().getString(
+				"player_stats",
+				p.getOfflinePlayer().getName(),
+				rank.getLevel(),
+				rank.getName(),
+				p.getScores(),
+				p.getCookies(),
+				p.getKills(),
+				p.getDeaths(),
+				p.getKDR(),
+				p.getHighestKillStreak());
 
-		return builder.toString();
+		return message;
 	}
 }

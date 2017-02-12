@@ -23,8 +23,6 @@ public class GameStart implements Runnable {
 
 	@Override
 	public void run() {
-		time--;
-
 		if (time == 240 || time == 180 || time == 120 || time == 60 || time == 30 || time == 15 || time == 3 || time
 				== 2 || time == 1) {
 			broadcastTime();
@@ -34,19 +32,15 @@ public class GameStart implements Runnable {
 
 		if (time == 15 && !enoughPlayers) {
 			insufficientPlayers();
-			return;
 		} else if (time == 15 && enoughPlayers) {
 			mapSelection();
-			return;
 		}
 
 		if (time == 0 && enoughPlayers) {
 			preInfection();
 		}
-	}
 
-	public int getTaskId() {
-		return taskId;
+		this.time--;
 	}
 
 	public void setTaskId(int taskId) {
@@ -59,7 +53,7 @@ public class GameStart implements Runnable {
 	}
 
 	private void insufficientPlayers() {
-		time = 241;
+		time = 240;
 		plugin.getServer().broadcastMessage(Messages.getInstance().getString("insufficient_players"));
 	}
 

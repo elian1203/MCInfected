@@ -77,7 +77,7 @@ public class GamePlayerManager {
 		if (getGamePlayerByUniqueId(uuid) != null)
 			return;
 
-		GamePlayer gamePlayer = new GamePlayer(uuid, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1));
+		GamePlayer gamePlayer = new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1));
 
 		players.add(gamePlayer);
 

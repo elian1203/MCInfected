@@ -10,7 +10,7 @@ import java.util.UUID;
 public class GamePlayer {
 
 	private UUID uuid;
-	private long cookies, gamesPlayed;
+	private long scores, cookies, gamesPlayed;
 	private int kills, deaths, highestKillStreak, killStreak;
 	private Rank rank;
 	private Kit kit;
@@ -18,9 +18,10 @@ public class GamePlayer {
 	private boolean sneaking;
 	private boolean infected;
 
-	public GamePlayer(UUID uuid, long cookies, long gamesPlayed, int kills, int deaths, int highestKillStreak, Rank
+	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths, int highestKillStreak, Rank
 			rank) {
 		this.uuid = uuid;
+		this.scores = scores;
 		this.cookies = cookies;
 		this.gamesPlayed = gamesPlayed;
 		this.kills = kills;
@@ -31,6 +32,10 @@ public class GamePlayer {
 
 	public UUID getUniqueId() {
 		return uuid;
+	}
+
+	public long getScores() {
+		return scores;
 	}
 
 	public long getCookies() {
@@ -72,6 +77,10 @@ public class GamePlayer {
 		DecimalFormat df = new DecimalFormat("##.##");
 
 		return df.format(kdr);
+	}
+
+	public void setScores(long scores) {
+		this.scores = scores;
 	}
 
 	public void setCookies(long cookies) {
