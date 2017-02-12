@@ -215,35 +215,35 @@ ranks:
     - iron_leggings
     - iron_boots
   18:
-     name: Lt. General
-     color: b
-     items:
-     - stone_sword
-     - 'apple amount:5'
-     - bow
-     - 'arrow amount:13'
-     - slime_ball
-     - snow_ball
-     armor:
-     - iron_helmet
-     - leather_chestplate
-     - iron_leggings
-     - iron_boots
+    name: Lt. General
+    color: b
+    items:
+    - stone_sword
+    - 'apple amount:5'
+    - bow
+    - 'arrow amount:13'
+    - slime_ball
+    - snow_ball
+    armor:
+    - iron_helmet
+    - leather_chestplate
+    - iron_leggings
+    - iron_boots
   19:
-     name: General
-     color: b
-     items:
-     - stone_sword
-     - 'apple amount:6'
-     - bow
-     - 'arrow amount:20'
-     - slime_ball
-     - snow_ball
-     armor:
-     - iron_helmet
-     - iron_chestplate
-     - iron_leggings
-     - iron_boots
+    name: General
+    color: b
+    items:
+    - stone_sword
+    - 'apple amount:6'
+    - bow
+    - 'arrow amount:20'
+    - slime_ball
+    - snow_ball
+    armor:
+    - iron_helmet
+    - iron_chestplate
+    - iron_leggings
+    - iron_boots
   20:
     name: Commander
     color: 5
