@@ -4,7 +4,7 @@ import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Rank;
-import net.urbanmc.mcinfected.util.Messages;
+import net.urbanmc.mcinfected.manager.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,7 +23,7 @@ public class Stats extends Command {
 		if (args.length == 0 && sender instanceof Player) {
 			tp = p;
 		} else if (args.length > 0) {
-			tp = GamePlayerManager.getInstance().getGamePlayerByName(args[0]);
+			tp = GamePlayerManager.getInstance().getGamePlayer(args[0]);
 		} else {
 			messageSender(sender, "/stats [player]");
 			return;

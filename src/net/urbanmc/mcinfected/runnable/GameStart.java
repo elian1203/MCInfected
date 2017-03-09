@@ -4,7 +4,7 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.object.Map;
-import net.urbanmc.mcinfected.util.Messages;
+import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,16 +49,16 @@ public class GameStart implements Runnable {
 
 	public void sufficientPlayers() {
 		time = 89;
-		plugin.getServer().broadcastMessage(Messages.getInstance().getString("sufficient_players"));
+		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));
 	}
 
 	private void insufficientPlayers() {
 		time = 240;
-		plugin.getServer().broadcastMessage(Messages.getInstance().getString("insufficient_players"));
+		Bukkit.broadcastMessage(Messages.getInstance().getString("insufficient_players"));
 	}
 
 	private void broadcastTime() {
-		plugin.getServer().broadcastMessage(Messages.getInstance().getString("game_starting", time));
+		Bukkit.broadcastMessage(Messages.getInstance().getString("game_starting", time));
 	}
 
 	private boolean enoughPlayers() {
@@ -68,10 +68,10 @@ public class GameStart implements Runnable {
 	private void startInfection() {
 		InfectionStart task = new InfectionStart(plugin);
 
-		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, task, 0, 20);
+		int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, task, 0, 20);
 		task.setTaskId(taskId);
 
-		plugin.getServer().getScheduler().cancelTask(this.taskId);
+		Bukkit.getScheduler().cancelTask(this.taskId);
 	}
 
 	private void mapSelection() {
@@ -79,6 +79,7 @@ public class GameStart implements Runnable {
 
 		gameMap = VoteUtil.getTopVotedMap();
 		MapManager.getInstance().loadMap(gameMap);
+		MapManager.getInstance().setGameMap(gameMap);
 		Bukkit.broadcastMessage(Messages.getInstance().getString("map_won", gameMap.getName()));
 	}
 
@@ -90,6 +91,8 @@ public class GameStart implements Runnable {
 		}
 
 		GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);
+
+		Bukkit.broadcastMessage(Messages.getInstance().getString("infection_start"));
 
 		startInfection();
 	}

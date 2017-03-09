@@ -24,11 +24,9 @@ public class FlashGrenade extends Grenade {
         effects.add(new PotionEffect(PotionEffectType.BLINDNESS, 10, 1));
 
         for (Entity entity : nearbyEntities) {
-
-            if (entity instanceof Player)
+            if (entity instanceof Player) {
                 ((Player) entity).addPotionEffects(effects);
-
-
+            }
         }
     }
 }

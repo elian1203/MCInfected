@@ -18,7 +18,7 @@ public class MapManager {
 
 	private FileConfiguration data;
 
-	private Map lobby, random;
+	private Map lobby, random, current;
 	private List<Map> maps, specific;
 
 	public static MapManager getInstance() {
@@ -148,5 +148,13 @@ public class MapManager {
 		world.setGameRuleValue("doMobSpawning", "false");
 		world.setGameRuleValue("doMobLoot", "false");
 		world.setGameRuleValue("doDaylightCycle", "true");
+	}
+
+	public Map getGameMap() {
+		return current;
+	}
+
+	public void setGameMap(Map map) {
+		current = map;
 	}
 }

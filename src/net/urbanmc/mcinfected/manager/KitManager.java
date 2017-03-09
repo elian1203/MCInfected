@@ -37,7 +37,6 @@ public class KitManager {
 	}
 
 	private void loadMotherAndZombie() {
-
 		mother = formKit("mother");
 		zombie = formKit("zombie");
 	}
@@ -61,6 +60,14 @@ public class KitManager {
 
 	public List<Kit> getKits() {
 		return kits;
+	}
+
+	public Kit getZombieKit() {
+		return zombie;
+	}
+
+	public Kit getMotherKit() {
+		return mother;
 	}
 
 	public static KitManager getInstance() {

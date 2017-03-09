@@ -82,13 +82,18 @@ public class ItemUtil {
 	}
 
 	public static void equipPlayer(GamePlayer p) {
+		Player player = p.getOnlinePlayer();
+
+		player.getInventory().clear();
+		player.getInventory().setArmorContents(null);
+
 		Kit kit = p.getKit();
 
 		List<ItemStack> items = kit.getItems();
 		List<ItemStack> armor = kit.getArmor();
 
 		for (ItemStack item : items) {
-			p.getOnlinePlayer().getInventory().addItem(item);
+			player.getInventory().addItem(item);
 		}
 
 		Collections.reverse(armor);
@@ -96,10 +101,10 @@ public class ItemUtil {
 		ItemStack[] array = new ItemStack[4];
 		array = armor.toArray(array);
 
-		p.getOnlinePlayer().getInventory().setArmorContents(array);
+		player.getInventory().setArmorContents(array);
 
 		if (kit.hasDisguise()) {
-			DisguiseUtil.disguisePlayerAsEntity(p.getOnlinePlayer(), kit.getDisguise());
+			DisguiseUtil.disguisePlayerAsEntity(player, kit.getDisguise());
 		}
 	}
 

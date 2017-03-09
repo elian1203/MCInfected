@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.util;
 
 import net.urbanmc.mcinfected.manager.MapManager;
+import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

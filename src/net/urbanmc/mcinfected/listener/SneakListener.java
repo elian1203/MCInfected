@@ -10,7 +10,7 @@ public class SneakListener implements Listener {
 
 	@EventHandler
 	public void onSneak(PlayerToggleSneakEvent e) {
-		GamePlayer p = GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
 
 		if (p.isSneaking()) {
 			e.setCancelled(true);

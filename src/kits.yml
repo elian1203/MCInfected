@@ -19,7 +19,8 @@ kits:
     name: Skeleton
     permission: "kits.skeleton"
     items:
-    - 'bow enchant:power/2 enchant:punch enchant:sharpness'
+    - 'bow enchant:power/2 enchant:punch enchant:sharpness enchant:infinity'
+    - arrow
     armor:
     - leather_helmet
     - leather_chestplate

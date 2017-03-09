@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.CommandListener;
+import net.urbanmc.mcinfected.listener.DeathListener;
 import net.urbanmc.mcinfected.listener.JoinListener;
 import net.urbanmc.mcinfected.listener.SneakListener;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
@@ -52,6 +53,7 @@ public class MCInfected extends JavaPlugin {
 		PluginManager pm = this.getServer().getPluginManager();
 
 		pm.registerEvents(new CommandListener(), this);
+		pm.registerEvents(new DeathListener(), this);
 		pm.registerEvents(new JoinListener(), this);
 		pm.registerEvents(new SneakListener(), this);
 	}

@@ -74,7 +74,7 @@ public class GamePlayerManager {
 	public void register(Player p) {
 		UUID uuid = p.getUniqueId();
 
-		if (getGamePlayerByUniqueId(uuid) != null)
+		if (getGamePlayer(uuid) != null)
 			return;
 
 		GamePlayer gamePlayer = new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1));
@@ -84,7 +84,7 @@ public class GamePlayerManager {
 		savePlayers();
 	}
 
-	public GamePlayer getGamePlayerByUniqueId(UUID uuid) {
+	public GamePlayer getGamePlayer(UUID uuid) {
 		for (GamePlayer p : players) {
 			if (p.getUniqueId().equals(uuid))
 				return p;
@@ -94,12 +94,16 @@ public class GamePlayerManager {
 	}
 
 	@SuppressWarnings("deprecation")
-	public GamePlayer getGamePlayerByName(String name) {
+	public GamePlayer getGamePlayer(String name) {
 		OfflinePlayer op = Bukkit.getOfflinePlayer(name);
 
 		if (op == null || op.getUniqueId() == null)
 			return null;
 
-		return getGamePlayerByUniqueId(op.getUniqueId());
+		return getGamePlayer(op.getUniqueId());
+	}
+
+	public GamePlayer getGamePlayer(Player player) {
+		return getGamePlayer(player.getUniqueId());
 	}
 }

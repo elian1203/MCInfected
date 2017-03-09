@@ -12,25 +12,22 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        GamePlayerManager.getInstance().register(e.getPlayer());
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e) {
+		GamePlayerManager.getInstance().register(e.getPlayer());
 
-        GamePlayer p = GamePlayerManager.getInstance().getGamePlayerByUniqueId(e.getPlayer().getUniqueId());
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
 
-        GameManager.getInstance().loadPlayer(p, GameManager.getInstance().getGameState() == GameManager.GameState
-                .RUNNING);
-        disableAttackCooldown(e.getPlayer());
-    }
+		GameManager.getInstance().loadPlayer(p,
+		                                     GameManager.getInstance().getGameState() == GameManager.GameState
+				                                     .RUNNING);
+		disableAttackCooldown(e.getPlayer());
+	}
 
+	private void disableAttackCooldown(Player p) {
+		AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+		attribute.setBaseValue(16);
 
-    private void disableAttackCooldown(Player p) {
-        AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-
-        //At least 16 needed to disable attack cooldown
-        attribute.setBaseValue(16);
-
-        p.saveData();
-    }
-
+		p.saveData();
+	}
 }

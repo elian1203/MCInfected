@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.object;
 
+import net.urbanmc.mcinfected.manager.KitManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,8 +19,8 @@ public class GamePlayer {
 	private boolean sneaking;
 	private boolean infected;
 
-	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths, int highestKillStreak, Rank
-			rank) {
+	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
+	                  int highestKillStreak, Rank rank) {
 		this.uuid = uuid;
 		this.scores = scores;
 		this.cookies = cookies;
@@ -124,7 +125,7 @@ public class GamePlayer {
 	}
 
 	public void setVoted() {
-		this.voted = true;
+		voted = true;
 	}
 
 	public boolean isSneaking() {
@@ -147,7 +148,9 @@ public class GamePlayer {
 		return infected;
 	}
 
-	public void setInfected(boolean infected) {
-		this.infected = infected;
+	public void setInfected() {
+		infected = true;
+
+		kit = KitManager.getInstance().getZombieKit();
 	}
 }

@@ -72,7 +72,7 @@ public class CommandManager {
 		GamePlayer p = null;
 
 		if (sender instanceof Player) {
-			p = GamePlayerManager.getInstance().getGamePlayerByUniqueId(((Player) sender).getUniqueId());
+			p = GamePlayerManager.getInstance().getGamePlayer((Player) sender);
 		}
 
 		command.execute(sender, label, args, p);

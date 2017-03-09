@@ -1,4 +1,4 @@
-package net.urbanmc.mcinfected.util;
+package net.urbanmc.mcinfected.manager;
 
 import org.bukkit.ChatColor;
 

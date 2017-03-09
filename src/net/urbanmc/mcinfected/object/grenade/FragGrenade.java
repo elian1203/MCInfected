@@ -17,11 +17,9 @@ public class FragGrenade extends Grenade {
         List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
 
         for (Entity entity : nearbyEntities) {
-
-            if (entity instanceof Player)
+            if (entity instanceof Player) {
                 ((Player) entity).damage(10);
-
+            }
         }
-
     }
 }

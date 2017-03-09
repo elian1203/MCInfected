@@ -4,7 +4,7 @@ import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import net.urbanmc.mcinfected.util.Messages;
+import net.urbanmc.mcinfected.manager.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,7 +42,7 @@ public class Infected extends Command {
 				return;
 			}
 
-			GamePlayer tp = GamePlayerManager.getInstance().getGamePlayerByUniqueId(targetPlayer.getUniqueId());
+			GamePlayer tp = GamePlayerManager.getInstance().getGamePlayer(targetPlayer);
 
 			messagePlayer(p,
 			              Messages.getInstance().getString("player_infected_" + tp.isInfected(),

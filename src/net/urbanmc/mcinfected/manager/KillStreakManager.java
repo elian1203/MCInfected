@@ -28,7 +28,9 @@ public class KillStreakManager {
 	private void loadKillStreaks() {
 		killStreaks = new ArrayList<>();
 
-		FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "killstreaks.yml"));
+		FileConfiguration data = YamlConfiguration.loadConfiguration(new File(
+				"plugins/MCInfected",
+				"killstreaks" + ".yml"));
 		ConfigurationSection sect = data.getConfigurationSection("streaks");
 
 		for (String amount : sect.getKeys(false)) {
@@ -44,5 +46,19 @@ public class KillStreakManager {
 
 	public List<KillStreak> getKillStreaks() {
 		return killStreaks;
+	}
+
+	public KillStreak getKillStreak(int kills) {
+		for (KillStreak killStreak : killStreaks) {
+			if (killStreak.getKills() == kills)
+				return killStreak;
+
+			for (int repeat : killStreak.getRepeats()) {
+				if (repeat == kills)
+					return killStreak;
+			}
+		}
+
+		return null;
 	}
 }

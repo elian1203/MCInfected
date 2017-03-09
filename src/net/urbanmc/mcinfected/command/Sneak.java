@@ -2,7 +2,7 @@ package net.urbanmc.mcinfected.command;
 
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import net.urbanmc.mcinfected.util.Messages;
+import net.urbanmc.mcinfected.manager.Messages;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collections;

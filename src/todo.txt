@@ -1,7 +1,7 @@
 TODO:
-- No attack cooldown
-- Zombie Infection
-- Grenades
-- Finish messages
-- Game Listener(s)
+- Finish Messages
+- Death Listener
+- Kill Listener
+- Food Consume Listener
+- Shop Listener
 - Shop command
