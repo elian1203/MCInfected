@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.object.grenade;
 
+import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -10,8 +11,8 @@ import java.util.*;
 
 public class FlashGrenade extends Grenade {
 
-    public FlashGrenade(Item item) {
-        super(item);
+    public FlashGrenade(GamePlayer thrower, Item item) {
+        super(thrower, item);
     }
 
     @Override

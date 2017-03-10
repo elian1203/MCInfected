@@ -131,14 +131,15 @@ public class ItemUtil {
 		return false;
 	}
 
-	public static void throwItem(Player p, ItemStack is, MCInfected plugin) {
-		p.getInventory().removeItem(is);
+	public static void throwItem(GamePlayer p, ItemStack is, MCInfected plugin) {
+		Player player = p.getOnlinePlayer();
+		player.getInventory().removeItem(is);
 
-		Item item = p.getWorld().dropItem(p.getLocation(), is);
+		Item item = player.getWorld().dropItem(player.getLocation(), is);
 
-		Grenade grenade = Grenade.parseGrenade(item);
+		Grenade grenade = Grenade.parseGrenade(p, item);
 
-		item.setVelocity(p.getLocation().getDirection().normalize().multiply(2.5));
+		item.setVelocity(player.getLocation().getDirection().normalize().multiply(2.5));
 
 		ItemThrown runnable = new ItemThrown(grenade);
 

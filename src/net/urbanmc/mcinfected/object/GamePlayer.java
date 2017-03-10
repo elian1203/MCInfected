@@ -18,6 +18,7 @@ public class GamePlayer {
 	private boolean voted = false;
 	private boolean sneaking;
 	private boolean infected;
+	private GamePlayer lastAttacker;
 
 	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
 	                  int highestKillStreak, Rank rank) {
@@ -152,5 +153,13 @@ public class GamePlayer {
 		infected = true;
 
 		kit = KitManager.getInstance().getZombieKit();
+	}
+
+	public GamePlayer getLastAttacker() {
+		return lastAttacker;
+	}
+
+	public void setLastAttacker(GamePlayer lastAttacker) {
+		this.lastAttacker = lastAttacker;
 	}
 }

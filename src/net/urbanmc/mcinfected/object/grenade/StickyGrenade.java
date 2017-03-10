@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.object.grenade;
 
+import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -10,22 +11,20 @@ import java.util.List;
 
 public class StickyGrenade extends Grenade {
 
-	public StickyGrenade(Item item) {
-		super(item);
+	public StickyGrenade(GamePlayer thrower, Item item) {
+		super(thrower, item);
 	}
 
 	@Override
 	public void activate() {
-		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3 ,3);
+		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
 
 		PotionEffect slowness = new PotionEffect(PotionEffectType.SLOW, 10, 1);
 
 		for (Entity entity : nearbyEntities) {
 
-			if(entity instanceof Player)
+			if (entity instanceof Player)
 				((Player) entity).addPotionEffect(slowness);
-
-
 		}
 	}
 }

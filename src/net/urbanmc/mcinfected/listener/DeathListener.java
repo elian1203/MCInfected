@@ -3,141 +3,122 @@ package net.urbanmc.mcinfected.listener;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
-import net.urbanmc.mcinfected.manager.MapManager;
-import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import net.urbanmc.mcinfected.util.ItemUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.projectiles.ProjectileSource;
-
-import java.text.MessageFormat;
-import java.util.Random;
 
 public class DeathListener implements Listener {
-   private Random r = new Random();
 
-    @EventHandler
-    public void onPlayerDeathByEntity(EntityDamageByEntityEvent e) {
+	@EventHandler
+	public void onPlayerDeath(EntityDamageEvent e) {
+		if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
+			return;
 
-        if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
-            return;
+		if (!(e.getEntity() instanceof Player))
+			return;
 
-        if (!(e.getEntity() instanceof Player))
-            return;
+		Player player = (Player) e.getEntity();
 
-        Player player = (Player) e.getEntity();
+		double health = player.getHealth() - e.getDamage();
 
-        double health = player.getHealth() - e.getDamage();
+		if (health > 0)
+			return;
 
-        if (health > 0)
-            return;
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-        GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
+		p.setDeaths(p.getDeaths() + 1);
 
-        p.setDeaths(p.getDeaths() + 1);
+		// TODO: Finish
+	}
+/*
+	@EventHandler
+	public void onPlayerDeathByEntity(EntityDamageByEntityEvent e) {
+		if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
+			return;
 
-        if (p.isInfected()) {
-            player.teleport(MapManager.getInstance().getGameMap().getSpawn());
-        }
-        else {
+		if (!(e.getEntity() instanceof Player))
+			return;
 
-            String cause = "death";
-            Entity enemy = getDamager(e);
+		Player player = (Player) e.getEntity();
 
-            if (enemy instanceof Player) {
-                cause = ((Player) enemy).getName();
-            }
+		double health = player.getHealth() - e.getDamage();
 
-            int random = r.nextInt(3) + 1;
+		if (health > 0)
+			return;
 
-            String infectedMessages = (String) Messages.getInstance().getString("has_become_zombie" + random);
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-            String formattedDeathMessage = MessageFormat.format(infectedMessages, player.getName(), cause);
+		p.setDeaths(p.getDeaths() + 1);
 
-            Bukkit.broadcastMessage(formattedDeathMessage);
+		if (p.isInfected()) {
+			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
+		} else {
+			p.setInfected();
+			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
+		}
 
-                p.setInfected();
-        }
+		String deathMessage;
 
-        ItemUtil.equipPlayer(p);
+		Player killer = getDamagerAsPlayer(e.getDamager());
 
-        e.setCancelled(true);
-    }
+		if (killer != null) {
+			Random r = new Random();
 
-    @EventHandler
-    public void onPlayerDeath(EntityDamageEvent e) {
+			int i = r.nextInt(3);
 
-        if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
-            return;
+			deathMessage = Messages.getInstance().getString("has_become_zombie_" + i, player.getName(), killer.getName
+			());
+		} else {
+			deathMessage = Messages.getInstance().getString("has_become_zombie_unknown", player.getName());
+		}
 
-        if (!(e.getEntity() instanceof Player))
-            return;
+		Bukkit.broadcastMessage(deathMessage);
 
-        if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)
-                || e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
-                || e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
-            return;
+		ItemUtil.equipPlayer(p);
 
-        Player player = (Player) e.getEntity();
+		e.setCancelled(true);
+	}
 
-        double health = player.getHealth() - e.getDamage();
+	@EventHandler
+	public void onPlayerDefath(EntityDamageEvent e) {
+		if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
+			return;
 
-        if (health > 0)
-            return;
+		if (!(e.getEntity() instanceof Player))
+			return;
 
-        GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
+		if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) ||
+				e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) ||
+				e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
+			return;
 
-        p.setDeaths(p.getDeaths() + 1);
+		Player player = (Player) e.getEntity();
 
-        if (p.isInfected()) {
-            player.teleport(MapManager.getInstance().getGameMap().getSpawn());
-        }
-        else {
+		double health = player.getHealth() - e.getDamage();
 
-            int random = r.nextInt(3) + 1;
+		if (health > 0)
+			return;
 
-            String infectedMessages = (String) Messages.getInstance().getString("has_become_zombie" + random);
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-            String formattedDeathMessage = MessageFormat.format(infectedMessages, player.getName(), "Death");
+		p.setDeaths(p.getDeaths() + 1);
 
-            Bukkit.broadcastMessage(formattedDeathMessage);
+		if (p.isInfected()) {
+			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
+		} else {
+			p.setInfected();
+			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
+		}
 
-            p.setInfected();
-        }
+		String deathMessage = Messages.getInstance().getString("has_become_zombie_unknown", player.getName());
 
-        ItemUtil.equipPlayer(p);
+		Bukkit.broadcastMessage(deathMessage);
 
-        e.setCancelled(true);
-    }
+		ItemUtil.equipPlayer(p);
 
-
-    private Entity getDamager(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Projectile) {
-
-            Projectile proj = (Projectile) e.getDamager();
-
-            ProjectileSource projsource = proj.getShooter();
-
-            if (!(projsource instanceof Player))
-                return e.getDamager();
-
-            return (Player) projsource;
-        }
-
-        return e.getDamager();
-    }
-
-
-    private String getDeathMessage() {
-        return "";
-    }
+		e.setCancelled(true);
+	}
+*/
 }
