@@ -58,6 +58,7 @@ public class DeathListener implements Listener {
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
 		} else {
 			p.setInfected();
+			p.setKillStreak(0);
 			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 		}
 

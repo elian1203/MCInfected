@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.object.grenade;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class Grenade {
 
@@ -14,6 +15,30 @@ public abstract class Grenade {
 		this.item = item;
 	}
 
+	public static boolean isGrenade(ItemStack is) {
+		Material type = is.getType();
+
+		return type.equals(Material.TRIPWIRE_HOOK) || type.equals(Material.SLIME_BALL) ||
+				type.equals(Material.SNOW_BALL) || type.equals(Material.EGG);
+	}
+
+	public static Grenade parseGrenade(GamePlayer thrower, Item item) {
+		Material type = item.getItemStack().getType();
+
+		switch (type) {
+			case TRIPWIRE_HOOK:
+				return new ThrowingKnife(thrower, item);
+			case SLIME_BALL:
+				return new StickyGrenade(thrower, item);
+			case SNOW_BALL:
+				return new FlashGrenade(thrower, item);
+			case EGG:
+				return new FragGrenade(thrower, item);
+			default:
+				return null;
+		}
+	}
+
 	public GamePlayer getThrower() {
 		return thrower;
 	}
@@ -23,19 +48,4 @@ public abstract class Grenade {
 	}
 
 	public abstract void activate();
-
-	public static Grenade parseGrenade(GamePlayer thrower, Item item) {
-		Material type = item.getItemStack().getType();
-
-		if (type == Material.TRIPWIRE_HOOK)
-			return new ThrowingKnife(thrower, item);
-		else if (type == Material.SLIME_BALL)
-			return new StickyGrenade(thrower, item);
-		else if (type == Material.SNOW_BALL)
-			return new FlashGrenade(thrower, item);
-		else if (type == Material.EGG)
-			return new FragGrenade(thrower, item);
-
-		return null;
-	}
 }

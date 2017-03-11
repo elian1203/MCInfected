@@ -31,8 +31,12 @@ public class KillStreakManager {
 		FileConfiguration data = YamlConfiguration.loadConfiguration(new File(
 				"plugins/MCInfected",
 				"killstreaks" + ".yml"));
-		ConfigurationSection sect = data.getConfigurationSection("streaks");
 
+		loadKillStreaksFromSection(data.getConfigurationSection("streaks.human"), false);
+		loadKillStreaksFromSection(data.getConfigurationSection("streaks.zombie"), true);
+	}
+
+	private void loadKillStreaksFromSection(ConfigurationSection sect, boolean zombieStreaks) {
 		for (String amount : sect.getKeys(false)) {
 			List<Integer> list = sect.getIntegerList(amount + ".repeats");
 
@@ -40,7 +44,7 @@ public class KillStreakManager {
 
 			List<ItemStack> rewards = ItemUtil.getItemList(sect.getStringList(amount + ".items"));
 
-			killStreaks.add(new KillStreak(Integer.parseInt(amount), repeats, rewards));
+			killStreaks.add(new KillStreak(Integer.parseInt(amount), repeats, rewards, zombieStreaks));
 		}
 	}
 
@@ -48,13 +52,13 @@ public class KillStreakManager {
 		return killStreaks;
 	}
 
-	public KillStreak getKillStreak(int kills) {
+	public KillStreak getKillStreak(int kills, boolean zombieStreak) {
 		for (KillStreak killStreak : killStreaks) {
-			if (killStreak.getKills() == kills)
+			if (killStreak.getKills() == kills && killStreak.isZombieStreak() == zombieStreak)
 				return killStreak;
 
 			for (int repeat : killStreak.getRepeats()) {
-				if (repeat == kills)
+				if (repeat == kills && killStreak.isZombieStreak() == zombieStreak)
 					return killStreak;
 			}
 		}

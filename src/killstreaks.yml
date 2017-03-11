@@ -1,5 +1,59 @@
 streaks:
-  3:
-    repeats: 11, 21
-    items:
-    - apple
+  human:
+    2:
+      repeats: 11, 20
+      items:
+      - melon
+    3:
+      repeats: 12, 21
+      items:
+      - apple
+    4:
+      repeats: 13, 22
+      items:
+      - cooked_chicken
+    5:
+      repeats: 14, 23
+      items:
+      - grilled_pork
+    6:
+      repeats: 15, 24
+      items:
+      - golden_apple
+    7:
+      repeats: 16
+      items:
+      - slime_ball
+    8:
+      repeats: 17
+      items:
+      - snow_ball
+    9:
+      repeats: 18
+      items:
+      - 'potion effect:increase_damage'
+    10:
+      repeats: 19
+      items:
+      - 'splash_potion effect:poison'
+    25:
+      repeats: 0
+      items:
+      - diamond_sword
+  zombie:
+    1:
+      items:
+      - 'potato name:Brainzzzzz'
+      - grilled_pork
+    2:
+      items:
+      - 'potato name:Brainzzzzz'
+      - 'mushroom_stew amount:2'
+    3:
+      items:
+      - 'potato name:Brainzzzzz'
+      - 'potion effect:speed'
+    4:
+      items:
+      - 'potato name:Brainzzzzz'
+      - 'potion effect:increase_damage'

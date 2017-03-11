@@ -1,2 +1,9 @@
 food:
--Apple:4
+- 'potato:1'
+- 'melon:2'
+- 'apple:4'
+- 'cooked_chicken:6'
+- 'grilled_pork:8'
+- 'mushroom_stew:8'
+- 'cake:8'
+- 'golden_apple:20'

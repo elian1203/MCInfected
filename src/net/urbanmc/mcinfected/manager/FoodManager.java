@@ -24,6 +24,7 @@ public class FoodManager {
 
     private void loadFood() {
         food = new ArrayList<>();
+
         List<String> foodStringList = data.getStringList("food");
 
         String[] foodSplit;
@@ -42,6 +43,15 @@ public class FoodManager {
 
     public List<Food> getFoodList() {
         return food;
+    }
+
+    public Food getFoodByMaterial(Material type) {
+        for (Food food : food) {
+            if (food.getMaterial().equals(type))
+                return food;
+        }
+
+        return null;
     }
 
     public static FoodManager getInstance() {

@@ -10,8 +10,6 @@ import java.io.File;
 
 public class MCInfected extends JavaPlugin {
 
-	private GameStart runnable;
-
 	@Override
 	public void onEnable() {
 		createFiles();
@@ -50,15 +48,18 @@ public class MCInfected extends JavaPlugin {
 		PluginManager pm = this.getServer().getPluginManager();
 
 		pm.registerEvents(new AttackListener(), this);
+		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
 		pm.registerEvents(new DeathListener(), this);
+		pm.registerEvents(new FoodConsumeListener(), this);
+		pm.registerEvents(new GrenadeListener(this), this);
 		pm.registerEvents(new JoinListener(), this);
 		pm.registerEvents(new SneakListener(), this);
 	}
 
 	private void registerGame() {
-		runnable = new GameStart(this);
+		GameStart runnable = new GameStart(this);
 
 		int taskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, runnable, 0, 20);
 		runnable.setTaskId(taskId);

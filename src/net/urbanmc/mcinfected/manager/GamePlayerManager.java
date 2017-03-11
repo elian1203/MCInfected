@@ -78,7 +78,7 @@ public class GamePlayerManager {
 			return;
 
 		GamePlayer gamePlayer =
-				new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1), new ArrayList<>());
+				new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, 1, new ArrayList<>());
 
 		players.add(gamePlayer);
 
