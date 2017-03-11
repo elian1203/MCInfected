@@ -2,7 +2,9 @@ package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
+import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
+import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.util.VoteUtil;
@@ -88,6 +90,9 @@ public class GameStart implements Runnable {
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.teleport(loc);
+
+			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);
+			gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
 		}
 
 		GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);

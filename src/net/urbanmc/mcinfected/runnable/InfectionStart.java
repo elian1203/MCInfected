@@ -91,6 +91,10 @@ public class InfectionStart implements Runnable {
 
 			ItemUtil.equipPlayer(p);
 
+			Bukkit.broadcastMessage(Messages.getInstance().getString("has_become_mother", player.getName()));
+		}
+
+		for (Player player : motherZombies) {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
 	}

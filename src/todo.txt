@@ -1,4 +1,9 @@
 TODO:
-- Finish Messages
+- Fix Vote Command
+- Help Command
+- Shop Manager
 - Shop Listener
 - Shop Command
+- Add cookie & score gives
+- Add highest streak checker
+- Add Game End

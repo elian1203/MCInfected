@@ -1,8 +1,10 @@
 package net.urbanmc.mcinfected.manager;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import net.urbanmc.mcinfected.gson.GamePlayerList;
+import net.urbanmc.mcinfected.gson.GamePlayerListSerializer;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import net.urbanmc.mcinfected.object.GamePlayerList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -41,9 +43,11 @@ public class GamePlayerManager {
 
 	private void loadPlayers() {
 		try {
+			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer()).create();
+
 			Scanner scanner = new Scanner(file);
 
-			players = new Gson().fromJson(scanner.nextLine(), GamePlayerList.class).getPlayers();
+			players = gson.fromJson(scanner.nextLine(), GamePlayerList.class).getPlayers();
 
 			scanner.close();
 		} catch (Exception ex) {
@@ -57,9 +61,11 @@ public class GamePlayerManager {
 
 	public void savePlayers() {
 		try {
+			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer()).create();
+
 			PrintWriter writer = new PrintWriter(file);
 
-			writer.write(new Gson().toJson(new GamePlayerList(players)));
+			writer.write(gson.toJson(new GamePlayerList(players)));
 
 			writer.close();
 		} catch (Exception ex) {
@@ -78,7 +84,7 @@ public class GamePlayerManager {
 			return;
 
 		GamePlayer gamePlayer =
-				new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, 1, new ArrayList<>());
+				new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1), new ArrayList<>());
 
 		players.add(gamePlayer);
 

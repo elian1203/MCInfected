@@ -28,6 +28,7 @@ public class CommandManager {
 		commands = new ArrayList<>();
 
 		commands.add(new About());
+		commands.add(new Ignore());
 		commands.add(new Infected());
 		commands.add(new Message());
 		commands.add(new Reply());

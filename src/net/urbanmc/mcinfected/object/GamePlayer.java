@@ -1,7 +1,6 @@
 package net.urbanmc.mcinfected.object;
 
 import net.urbanmc.mcinfected.manager.KitManager;
-import net.urbanmc.mcinfected.manager.RankManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -14,9 +13,8 @@ public class GamePlayer {
 
 	private UUID uuid;
 	private long scores, cookies, gamesPlayed;
-	private int kills, deaths, highestKillStreak, killStreak, rankNumber;
+	private int kills, deaths, highestKillStreak, killStreak;
 	private List<UUID> ignoring;
-
 	private Rank rank;
 	private Kit kit;
 	private boolean voted = false;
@@ -25,7 +23,7 @@ public class GamePlayer {
 	private GamePlayer lastAttacker, lastMessager;
 
 	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
-	                  int highestKillStreak, int rankNumber, List<UUID> ignoring) {
+	                  int highestKillStreak, Rank rank, List<UUID> ignoring) {
 		this.uuid = uuid;
 		this.scores = scores;
 		this.cookies = cookies;
@@ -33,10 +31,8 @@ public class GamePlayer {
 		this.kills = kills;
 		this.deaths = deaths;
 		this.highestKillStreak = highestKillStreak;
-		this.rankNumber = rankNumber;
+		this.rank = rank;
 		this.ignoring = ignoring;
-
-		this.rank = RankManager.getInstance().getRankByLevel(this.rankNumber);
 	}
 
 	public UUID getUniqueId() {

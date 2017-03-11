@@ -55,7 +55,17 @@ public class MapManager {
 	private void loadRandom() {
 		Random r = new Random();
 
-		random = maps.get(r.nextInt(maps.size()) - 1);
+		System.out.println(maps.size());
+
+		int i = r.nextInt(maps.size());
+
+		System.out.println(i);
+
+		i--;
+
+		System.out.println(i);
+
+		random = maps.get(i);
 	}
 
 	private void loadSpecific() {

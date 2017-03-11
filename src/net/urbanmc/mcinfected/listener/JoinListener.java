@@ -26,7 +26,7 @@ public class JoinListener implements Listener {
 
 	private void disableAttackCooldown(Player p) {
 		AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-		attribute.setBaseValue(16);
+		attribute.setBaseValue(20);
 
 		p.saveData();
 	}
