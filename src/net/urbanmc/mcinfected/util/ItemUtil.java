@@ -131,6 +131,7 @@ public class ItemUtil {
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void throwItem(GamePlayer p, ItemStack is, MCInfected plugin) {
 		Player player = p.getOnlinePlayer();
 		player.getInventory().removeItem(is);
@@ -143,7 +144,7 @@ public class ItemUtil {
 
 		ItemThrown runnable = new ItemThrown(grenade);
 
-		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 0, 1);
+		int taskId = plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, runnable, 0, 2);
 
 		runnable.setTaskId(taskId);
 	}

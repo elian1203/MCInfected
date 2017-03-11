@@ -29,6 +29,8 @@ public class CommandManager {
 
 		commands.add(new About());
 		commands.add(new Infected());
+		commands.add(new Message());
+		commands.add(new Reply());
 		commands.add(new Shop());
 		commands.add(new Sneak());
 		commands.add(new Stats());

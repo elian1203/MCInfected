@@ -1,8 +1,7 @@
 TODO:
 - Finish Messages
-- Kill Listener
-- Finish Death Listener
-- Attack Listener
+- KillStreaks File
 - Food Consume Listener
+- Grenade Throw Listener
 - Shop Listener
-- Shop command
+- Shop Command

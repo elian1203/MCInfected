@@ -20,13 +20,13 @@ public class GamePlayerManager {
 
 	private List<GamePlayer> players;
 
-	public static GamePlayerManager getInstance() {
-		return instance;
-	}
-
 	private GamePlayerManager() {
 		loadFile();
 		loadPlayers();
+	}
+
+	public static GamePlayerManager getInstance() {
+		return instance;
 	}
 
 	private void loadFile() {
@@ -77,7 +77,8 @@ public class GamePlayerManager {
 		if (getGamePlayer(uuid) != null)
 			return;
 
-		GamePlayer gamePlayer = new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1));
+		GamePlayer gamePlayer =
+				new GamePlayer(uuid, 0, 0, 0, 0, 0, 0, RankManager.getInstance().getRankByLevel(1), new ArrayList<>());
 
 		players.add(gamePlayer);
 

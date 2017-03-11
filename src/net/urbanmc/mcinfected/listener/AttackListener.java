@@ -1,7 +1,6 @@
 package net.urbanmc.mcinfected.listener;
 
 
-import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.entity.Entity;
@@ -10,75 +9,44 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
-public class AttackListener implements Listener{
+public class AttackListener implements Listener {
 
-    @EventHandler
-    public void onAttack(EntityDamageByEntityEvent e) {
+	@EventHandler
+	public void onAttack(EntityDamageByEntityEvent e) {
+		if (!(e.getEntity() instanceof Player))
+			return;
 
+		Player player = (Player) e.getEntity();
+		Player damager = getDamagerAsPlayer(e.getEntity());
 
-        if(!(e.getEntity() instanceof Player))
-            return;
+		if (damager == null)
+			return;
 
+		GamePlayer attacked = GamePlayerManager.getInstance().getGamePlayer(player);
+		GamePlayer attacker = GamePlayerManager.getInstance().getGamePlayer(damager);
 
-        Player player = (Player) e.getEntity();
+		if (attacked.isInfected() && attacker.isInfected() || !attacked.isInfected() && !attacker.isInfected()) {
+			e.setCancelled(true);
+			return;
+		}
 
-        double health = player.getHealth() - e.getDamage();
+		attacked.setLastAttacker(attacker);
+	}
 
-        if (health < 0)
-            return;
+	private Player getDamagerAsPlayer(Entity entity) {
+		if (entity instanceof Player)
+			return (Player) entity;
 
-        if(!(e.getDamager() instanceof Player)) {
-            getDamager(e, player);
-            return;
-        }
+		if (entity instanceof Projectile) {
+			Projectile projectile = (Projectile) entity;
+			ProjectileSource shooter = projectile.getShooter();
 
-        Player enemy = (Player) e.getDamager();
+			if (shooter instanceof Player)
+				return (Player) shooter;
+		}
 
-        GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
-        GamePlayer ene = GamePlayerManager.getInstance().getGamePlayer(enemy);
-
-        if(p.isInfected() && ene.isInfected())
-        {
-            e.setCancelled(true);
-            return;
-        }
-
-        if(!p.isInfected() && !ene.isInfected()) {
-            e.setCancelled(true);
-            return;
-        }
-
-        p.setLastAttacker(ene);
-    }
-
-
-    public void getDamager(EntityDamageByEntityEvent e, Player player) {
-
-        if(!(e.getDamager() instanceof Projectile))
-            return;
-
-        if(!(((Projectile) e.getDamager()).getShooter() instanceof Player))
-            return;
-
-        GamePlayer ene = GamePlayerManager.getInstance().getGamePlayer(
-                (Player)((Projectile) e.getDamager()).getShooter());
-
-        GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
-
-
-        if(p.isInfected() && ene.isInfected())
-        {
-            e.setCancelled(true);
-            return;
-        }
-
-        if(!p.isInfected() && !ene.isInfected()) {
-            e.setCancelled(true);
-            return;
-        }
-
-        p.setLastAttacker(ene);
-    }
-
+		return null;
+	}
 }

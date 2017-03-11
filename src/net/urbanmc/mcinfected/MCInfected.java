@@ -1,9 +1,6 @@
 package net.urbanmc.mcinfected;
 
-import net.urbanmc.mcinfected.listener.CommandListener;
-import net.urbanmc.mcinfected.listener.DeathListener;
-import net.urbanmc.mcinfected.listener.JoinListener;
-import net.urbanmc.mcinfected.listener.SneakListener;
+import net.urbanmc.mcinfected.listener.*;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
@@ -52,6 +49,8 @@ public class MCInfected extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = this.getServer().getPluginManager();
 
+		pm.registerEvents(new AttackListener(), this);
+		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
 		pm.registerEvents(new DeathListener(), this);
 		pm.registerEvents(new JoinListener(), this);

@@ -8,12 +8,12 @@ import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Vote extends Command {
 
 	public Vote() {
-		super("vote", "command.vote", true, Arrays.asList("v"));
+		super("vote", "command.vote", true, Collections.singletonList("v"));
 	}
 
 	@Override

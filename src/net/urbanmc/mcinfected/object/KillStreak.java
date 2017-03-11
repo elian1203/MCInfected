@@ -27,4 +27,15 @@ public class KillStreak {
 	public List<ItemStack> getRewards() {
 		return rewards;
 	}
+
+	private ItemStack[] getRewardsAsArray() {
+		ItemStack[] array = new ItemStack[rewards.size()];
+		array = rewards.toArray(array);
+
+		return array;
+	}
+
+	public void giveKillStreak(GamePlayer p) {
+		p.getOnlinePlayer().getInventory().addItem(getRewardsAsArray());
+	}
 }

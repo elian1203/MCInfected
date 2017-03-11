@@ -30,7 +30,7 @@ public class Stats extends Command {
 		}
 
 		if (tp == null) {
-			messageSender(sender, color("&4Player not found."));
+			messageSender(sender, Messages.getInstance().getString("player_not_found"));
 			return;
 		}
 

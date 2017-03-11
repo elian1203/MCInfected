@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.UUID;
 
 public class GamePlayer {
@@ -14,14 +15,16 @@ public class GamePlayer {
 	private long scores, cookies, gamesPlayed;
 	private int kills, deaths, highestKillStreak, killStreak;
 	private Rank rank;
+	private List<UUID> ignoring;
+
 	private Kit kit;
 	private boolean voted = false;
 	private boolean sneaking;
 	private boolean infected;
-	private GamePlayer lastAttacker;
+	private GamePlayer lastAttacker, lastMessager;
 
 	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
-	                  int highestKillStreak, Rank rank) {
+	                  int highestKillStreak, Rank rank, List<UUID> ignoring) {
 		this.uuid = uuid;
 		this.scores = scores;
 		this.cookies = cookies;
@@ -30,6 +33,7 @@ public class GamePlayer {
 		this.deaths = deaths;
 		this.highestKillStreak = highestKillStreak;
 		this.rank = rank;
+		this.ignoring = ignoring;
 	}
 
 	public UUID getUniqueId() {
@@ -62,6 +66,14 @@ public class GamePlayer {
 
 	public Rank getRank() {
 		return rank;
+	}
+
+	public List<UUID> getIgnoring() {
+		return ignoring;
+	}
+
+	public boolean isIgnoring(UUID uuid) {
+		return ignoring.contains(uuid);
 	}
 
 	public Kit getKit() {
@@ -107,6 +119,14 @@ public class GamePlayer {
 
 	public void setRank(Rank rank) {
 		this.rank = rank;
+	}
+
+	public void addToIgnoring(UUID uuid) {
+		ignoring.add(uuid);
+	}
+
+	public void removeFromIgnoring(UUID uuid) {
+		ignoring.remove(uuid);
 	}
 
 	public void setKit(Kit kit) {
@@ -161,5 +181,13 @@ public class GamePlayer {
 
 	public void setLastAttacker(GamePlayer lastAttacker) {
 		this.lastAttacker = lastAttacker;
+	}
+
+	public GamePlayer getLastMessager() {
+		return lastMessager;
+	}
+
+	public void setLastMessager(GamePlayer lastMessager) {
+		this.lastMessager = lastMessager;
 	}
 }
