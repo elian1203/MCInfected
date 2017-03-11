@@ -19,7 +19,7 @@ public class AttackListener implements Listener {
 			return;
 
 		Player player = (Player) e.getEntity();
-		Player damager = getDamagerAsPlayer(e.getEntity());
+		Player damager = getDamagerAsPlayer(e.getDamager());
 
 		if (damager == null)
 			return;
