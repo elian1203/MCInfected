@@ -15,8 +15,4 @@ public class ShopItem {
 	public int getPlace() {
 		return place;
 	}
-
-	public ItemStack getItem() {
-		return item;
-	}
 }
