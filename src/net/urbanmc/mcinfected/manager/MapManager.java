@@ -14,152 +14,156 @@ import java.util.Random;
 
 public class MapManager {
 
-	private static MapManager instance = new MapManager();
+    private static MapManager instance = new MapManager();
 
-	private FileConfiguration data;
+    private FileConfiguration data;
 
-	private Map lobby, random, current;
-	private List<Map> maps, specific;
+    private Map lobby, random, current;
+    private List<Map> maps, specific;
 
-	public static MapManager getInstance() {
-		return instance;
-	}
+    public static MapManager getInstance() {
+        return instance;
+    }
 
-	private MapManager() {
-		data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "maps.yml"));
+    private MapManager() {
+        data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "maps.yml"));
 
-		loadLobby();
-		loadMaps();
-		loadRandom();
-		loadSpecific();
-	}
+        loadLobby();
+        loadMaps();
+        loadRandom();
+        loadSpecific();
+    }
 
-	private void loadLobby() {
-		String loc = data.getString("lobby.spawn");
+    private void loadLobby() {
+        String loc = data.getString("lobby.spawn");
 
-		lobby = new Map("#lobby", loc);
-	}
+        lobby = new Map("#lobby", loc);
+    }
 
-	private void loadMaps() {
-		maps = new ArrayList<>();
+    private void loadMaps() {
+        maps = new ArrayList<>();
 
-		ConfigurationSection sect = data.getConfigurationSection("maps");
+        ConfigurationSection sect = data.getConfigurationSection("maps");
 
-		for (String name : sect.getKeys(false)) {
-			String loc = sect.getString(name + ".spawn");
+        for (String name : sect.getKeys(false)) {
+            String loc = sect.getString(name + ".spawn");
 
-			maps.add(new Map(name, loc));
-		}
-	}
+            maps.add(new Map(name, loc));
+        }
+    }
 
-	private void loadRandom() {
-		Random r = new Random();
+    private void loadRandom() {
+        Random r = new Random();
 
-		int i = r.nextInt(maps.size() - 1);
+        int i = r.nextInt(maps.size() - 1);
 
-		random = maps.get(i);
-	}
+        random = maps.get(i);
+    }
 
-	private void loadSpecific() {
-		specific = new ArrayList<>();
+    private void loadSpecific() {
+        specific = new ArrayList<>();
 
-		Random r = new Random();
+        Random r = new Random();
 
-		int size = maps.size();
+        int size = maps.size();
 
-		for (int i = 0; i < (size < 5 ? size : 5); i++) {
-			System.out.println("i = " + i);
-			System.out.println("size = " + size);
-			int temp = r.nextInt(size - 1);
-			System.out.println("temp = " + temp);
+        for (int i = 0; i < (size < 5 ? size : 5); i++) {
 
-			Map map = maps.get(temp);
+            int temp = r.nextInt(size - 1);
+            int backtemp = -1;
 
-			if (specific.contains(map)) {
-				i--;
-				continue;
-			}
+            Map map = maps.get(temp);
 
-			specific.add(map);
-		}
-	}
+            while (specific.contains(map)) {
+                temp = r.nextInt(size - 1);
 
-	public void setLobbyChars() {
-		World world = Bukkit.getWorld("lobby");
+                if (backtemp == temp)
+                    temp = ((temp + 1) > (size - 1)) ? temp : (temp + 1);
 
-		world.setPVP(false);
-		world.setGameRuleValue("doMobSpawning", "false");
-	}
+                map = maps.get(temp);
+                backtemp = temp;
+            }
 
-	public Map getLobby() {
-		return lobby;
-	}
+            specific.add(map);
+        }
+    }
 
-	public List<Map> getMaps() {
-		return maps;
-	}
+    public void setLobbyChars() {
+        World world = Bukkit.getWorld("lobby");
 
-	public List<Map> getSpecific() {
-		return specific;
-	}
+        world.setPVP(false);
+        world.setGameRuleValue("doMobSpawning", "false");
+    }
 
-	public Map getRandom() {
-		return random;
-	}
+    public Map getLobby() {
+        return lobby;
+    }
 
-	public List<String> getMapNames() {
-		List<String> names = new ArrayList<>();
+    public List<Map> getMaps() {
+        return maps;
+    }
 
-		for (Map map : MapManager.getInstance().getMaps()) {
-			names.add(map.getName());
-		}
+    public List<Map> getSpecific() {
+        return specific;
+    }
 
-		Collections.sort(names);
+    public Map getRandom() {
+        return random;
+    }
 
-		return names;
-	}
+    public List<String> getMapNames() {
+        List<String> names = new ArrayList<>();
 
-	public Map getMapByName(String name) {
-		for (Map map : maps) {
-			if (map.getName().equalsIgnoreCase(name))
-				return map;
-		}
+        for (Map map : MapManager.getInstance().getMaps()) {
+            names.add(map.getName());
+        }
 
-		return null;
-	}
+        Collections.sort(names);
 
-	public Map getSpecificByName(String name) {
-		if (name.equalsIgnoreCase("random"))
-			return random;
+        return names;
+    }
 
-		for (Map map : specific) {
-			if (map.getName().equalsIgnoreCase(name))
-				return map;
-		}
+    public Map getMapByName(String name) {
+        for (Map map : maps) {
+            if (map.getName().equalsIgnoreCase(name))
+                return map;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public void loadMap(Map map) {
-		WorldCreator creator = new WorldCreator(map.getWorld());
+    public Map getSpecificByName(String name) {
+        if (name.equalsIgnoreCase("random"))
+            return random;
 
-		creator.createWorld();
+        for (Map map : specific) {
+            if (map.getName().equalsIgnoreCase(name))
+                return map;
+        }
 
-		World world = Bukkit.getWorld(map.getWorld());
+        return null;
+    }
 
-		world.setPVP(true);
-		world.setDifficulty(Difficulty.HARD);
+    public void loadMap(Map map) {
+        WorldCreator creator = new WorldCreator(map.getWorld());
 
-		world.setGameRuleValue("doMobSpawning", "false");
-		world.setGameRuleValue("doMobLoot", "false");
-		world.setGameRuleValue("doDaylightCycle", "true");
-	}
+        creator.createWorld();
 
-	public Map getGameMap() {
-		return current;
-	}
+        World world = Bukkit.getWorld(map.getWorld());
 
-	public void setGameMap(Map map) {
-		current = map;
-	}
+        world.setPVP(true);
+        world.setDifficulty(Difficulty.HARD);
+
+        world.setGameRuleValue("doMobSpawning", "false");
+        world.setGameRuleValue("doMobLoot", "false");
+        world.setGameRuleValue("doDaylightCycle", "true");
+    }
+
+    public Map getGameMap() {
+        return current;
+    }
+
+    public void setGameMap(Map map) {
+        current = map;
+    }
 }
