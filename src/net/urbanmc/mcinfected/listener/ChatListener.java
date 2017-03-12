@@ -16,7 +16,8 @@ public class ChatListener implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
 
-		String format = Messages.getInstance().getString("chat_format", p.getRank().getName(), "%1$s", "%2$s");
+		String format = Messages.getInstance()
+				.getString("chat_format", p.getRank().getColor().getChar(), p.getRank().getName(), "%1$s", "%2$s");
 
 		e.setFormat(format);
 

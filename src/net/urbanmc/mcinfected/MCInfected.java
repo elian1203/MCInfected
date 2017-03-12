@@ -25,9 +25,9 @@ public class MCInfected extends JavaPlugin {
 	private void createFiles() {
 		getDataFolder().mkdir();
 
-		File file;
-
 		for (int i = 0; i < 4; i++) {
+			File file;
+
 			if (i == 0) {
 				file = new File(getDataFolder(), "killstreaks.yml");
 			} else if (i == 1) {

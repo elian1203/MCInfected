@@ -55,15 +55,7 @@ public class MapManager {
 	private void loadRandom() {
 		Random r = new Random();
 
-		System.out.println(maps.size());
-
-		int i = r.nextInt(maps.size());
-
-		System.out.println(i);
-
-		i--;
-
-		System.out.println(i);
+		int i = r.nextInt(maps.size() - 1);
 
 		random = maps.get(i);
 	}
@@ -76,9 +68,12 @@ public class MapManager {
 		int size = maps.size();
 
 		for (int i = 0; i < (size < 5 ? size : 5); i++) {
-			int temp = r.nextInt(size);
+			System.out.println("i = " + i);
+			System.out.println("size = " + size);
+			int temp = r.nextInt(size - 1);
+			System.out.println("temp = " + temp);
 
-			Map map = maps.get(temp - 1);
+			Map map = maps.get(temp);
 
 			if (specific.contains(map)) {
 				i--;
