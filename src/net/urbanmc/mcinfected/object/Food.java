@@ -7,7 +7,7 @@ public class Food {
     private Material material;
     private int healthReplenished;
 
-    public Food (Material mat, int healthReplenished) {
+    public Food(Material mat, int healthReplenished) {
         this.material = mat;
         this.healthReplenished = healthReplenished;
     }
