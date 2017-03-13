@@ -2,6 +2,7 @@ package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
+import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,6 +61,8 @@ public class MCInfected extends JavaPlugin {
 	}
 
 	private void registerGame() {
+		MapManager.getInstance().setLobbyVars();
+
 		GameStart runnable = new GameStart(this);
 
 		int taskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, runnable, 0, 20);

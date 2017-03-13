@@ -8,3 +8,7 @@ maps:
     spawn: 0/67/0/0/0/terminal
   Nuketown:
     spawn: 0/67/0/0/0/nuketown
+  Arkaden:
+    spawn: 0/67/0/0/0/arkaden
+  Highrise:
+    spawn: 0/67/0/0/0/highrise

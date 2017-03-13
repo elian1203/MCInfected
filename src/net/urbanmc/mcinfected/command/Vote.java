@@ -23,22 +23,38 @@ public class Vote extends Command {
 			return;
 		}
 
+		if (args.length == 0) {
+			messagePlayer(p, VoteUtil.getFormattedSpecific());
+			return;
+		}
+
 		if (p.hasVoted()) {
 			messagePlayer(p, color("&5You have already voted for a map."));
 			return;
 		}
 
-		if (args.length == 0) {
-			messagePlayer(p, color("&5Maps you can vote for:\n" + VoteUtil.getFormattedSpecific()));
-			return;
-		}
+		Map map;
 
-		Map map = MapManager.getInstance().getSpecificByName(args[0]);
+		if (isInt(args[0])) {
+			map = MapManager.getInstance().getSpecificByIndex(Integer.parseInt(args[0]) - 1);
+		} else {
+			map = MapManager.getInstance().getSpecificByName(args[0]);
+		}
 
 		if (map == null) {
 			messagePlayer(p, color("&4Map not found."));
+			return;
 		}
 
 		VoteUtil.addVotes(p, map, 1);
+	}
+
+	private boolean isInt(String s) {
+		try {
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException ex) {
+			return false;
+		}
 	}
 }

@@ -1,9 +1,8 @@
 TODO:
-- Fix Vote Command
-- Help Command
+- Fix Command Aliases
+- Sort Vote Maps
 - Shop Manager
 - Shop Listener
 - Shop Command
 - Add cookie & score gives
-- Add highest streak checker
 - Add Game End

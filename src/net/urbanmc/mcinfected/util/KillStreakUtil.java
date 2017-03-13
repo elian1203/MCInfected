@@ -9,6 +9,10 @@ public class KillStreakUtil {
 	public static void giveNextKillStreak(GamePlayer p) {
 		p.setKillStreak(p.getKillStreak() + 1);
 
+		if (p.getKillStreak() > p.getHighestKillStreak()) {
+			p.setHighestKillStreak(p.getKillStreak());
+		}
+
 		KillStreak streak = KillStreakManager.getInstance().getKillStreak(p.getKillStreak(), p.isInfected());
 
 		if (streak != null) {

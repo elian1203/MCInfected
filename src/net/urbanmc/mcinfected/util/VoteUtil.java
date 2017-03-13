@@ -3,10 +3,14 @@ package net.urbanmc.mcinfected.util;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.object.Map;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 public class VoteUtil {
@@ -16,44 +20,28 @@ public class VoteUtil {
 
 		p.setVoted();
 
-		Bukkit.broadcastMessage(Messages.getInstance().getString("player_voted",
-		                                                         p.getOnlinePlayer().getName(),
-		                                                         map.getName()));
+		Bukkit.broadcastMessage(Messages.getInstance()
+				                        .getString("player_voted", p.getOnlinePlayer().getName(), map.getName()));
 	}
 
 	public static String getFormattedSpecific() {
-		Map<String, Integer> specificMap = new LinkedHashMap<>();
+		List<Object> args = new ArrayList<>();
 
-		for (net.urbanmc.mcinfected.object.Map map : MapManager.getInstance().getSpecific()) {
-			specificMap.put(map.getName(), map.getVotes());
+		for (Map map : MapManager.getInstance().getSpecific()) {
+			args.add(map.getName());
+			args.add(map.getVotes());
 		}
 
-		net.urbanmc.mcinfected.object.Map random = MapManager.getInstance().getRandom();
+		args.add(MapManager.getInstance().getRandom().getVotes());
 
-		specificMap.put(random.getName(), random.getVotes());
+		Object[] array = new Object[9];
+		array = args.toArray(array);
 
-		specificMap = sortByValue(specificMap);
-
-		StringBuilder builder = new StringBuilder();
-
-		Iterator<Map.Entry<String, Integer>> itr = specificMap.entrySet().iterator();
-
-		for (int i = 0; i < specificMap.size(); i++) {
-			Map.Entry<String, Integer> entry = itr.next();
-
-			String s = ChatColor.GOLD + Integer.toString(i) + ". " + ChatColor.AQUA + entry.getKey() + ": " +
-					ChatColor.GREEN + entry.getValue() + "\n";
-
-			builder.append(s);
-		}
-
-		builder.setLength(builder.length() - 1);
-
-		return builder.toString();
+		return Messages.getInstance().getString("vote_list", array);
 	}
 
 	public static net.urbanmc.mcinfected.object.Map getTopVotedMap() {
-		Map<net.urbanmc.mcinfected.object.Map, Integer> specificMap = new LinkedHashMap<>();
+		java.util.Map<Map, Integer> specificMap = new LinkedHashMap<>();
 
 		for (net.urbanmc.mcinfected.object.Map map : MapManager.getInstance().getSpecific()) {
 			specificMap.put(map, map.getVotes());
@@ -65,17 +53,17 @@ public class VoteUtil {
 
 		specificMap = sortByValue(specificMap);
 
-		List<net.urbanmc.mcinfected.object.Map> list = new ArrayList<>(specificMap.keySet());
+		List<Map> list = new ArrayList<>(specificMap.keySet());
 
 		return list.get(0);
 	}
 
-	private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-		Map<K, V> result = new LinkedHashMap<>();
-		Stream<Map.Entry<K, V>> st = map.entrySet().stream();
+	private static <K, V extends Comparable<? super V>> java.util.Map<K, V> sortByValue(java.util.Map<K, V> map) {
+		java.util.Map<K, V> result = new LinkedHashMap<>();
+		Stream<Entry<K, V>> st = map.entrySet().stream();
 
-		st.sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).forEachOrdered(e -> result.put(e.getKey(),
-		                                                                                                 e.getValue()));
+		st.sorted(Collections.reverseOrder(Entry.comparingByValue()))
+				.forEachOrdered(e -> result.put(e.getKey(), e.getValue()));
 
 		return result;
 	}

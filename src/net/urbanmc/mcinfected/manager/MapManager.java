@@ -19,7 +19,9 @@ public class MapManager {
     private FileConfiguration data;
 
     private Map lobby, random, current;
-    private List<Map> maps, specific;
+    private List<Map> maps;
+
+    private List<Map> specific;
 
     public static MapManager getInstance() {
         return instance;
@@ -67,28 +69,28 @@ public class MapManager {
 
         int size = maps.size();
 
-        for (int i = 0; i < (size < 5 ? size : 5); i++) {
+        for (int i = 0; i < 4; i++) {
+            int index = r.nextInt(size);
 
-            int temp = r.nextInt(size - 1);
-            int backtemp = -1;
+            Map map = maps.get(index);
 
-            Map map = maps.get(temp);
-
-            while (specific.contains(map)) {
-                temp = r.nextInt(size - 1);
-
-                if (backtemp == temp)
-                    temp = ((temp + 1) > (size - 1)) ? temp : (temp + 1);
-
-                map = maps.get(temp);
-                backtemp = temp;
+            if (specific.contains(map)) {
+                i--;
+                continue;
             }
 
             specific.add(map);
         }
+/*
+        List<Map> temp = new ArrayList<>(specific);
+
+        specific.stream().sorted((m1, m2) -> m1.getName().compareTo(m2.getName())).forEach(temp::add);
+
+        specific = temp;
+*/
     }
 
-    public void setLobbyChars() {
+    public void setLobbyVars() {
         World world = Bukkit.getWorld("lobby");
 
         world.setPVP(false);
@@ -132,12 +134,22 @@ public class MapManager {
         return null;
     }
 
+    public Map getSpecificByIndex(int index) {
+        if (index > 4)
+            return null;
+
+        if (index == 4)
+            return random;
+
+        return specific.get(index);
+    }
+
     public Map getSpecificByName(String name) {
         if (name.equalsIgnoreCase("random"))
             return random;
 
         for (Map map : specific) {
-            if (map.getName().equalsIgnoreCase(name))
+            if (map.getName().toLowerCase().startsWith(name.toLowerCase()))
                 return map;
         }
 
@@ -156,7 +168,7 @@ public class MapManager {
 
         world.setGameRuleValue("doMobSpawning", "false");
         world.setGameRuleValue("doMobLoot", "false");
-        world.setGameRuleValue("doDaylightCycle", "true");
+        world.setGameRuleValue("doDaylightCycle", "false");
     }
 
     public Map getGameMap() {

@@ -29,11 +29,12 @@ public class Messages {
 
 	private String format(String message, Object... args) {
 		message = message.replace("{prefix}", bundle.getString("prefix"));
-		message = ChatColor.translateAlternateColorCodes('&', message);
 
 		if (args != null) {
 			message = MessageFormat.format(message, args);
 		}
+
+		message = ChatColor.translateAlternateColorCodes('&', message);
 
 		return message;
 	}
