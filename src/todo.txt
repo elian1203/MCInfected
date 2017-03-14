@@ -4,4 +4,3 @@ TODO:
 - Shop Command
 - Add cookie & score gives
 - Add Game End
-- Rank costs

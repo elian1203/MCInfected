@@ -13,6 +13,7 @@ ranks:
   2:
     name: Specialist
     color: 8
+    cost: 100
     items:
     - stone_sword
     - melon
@@ -24,6 +25,7 @@ ranks:
   3:
     name: Corporal
     color: 8
+    cost: 250
     items:
     - stone_sword
     - apple
@@ -35,6 +37,7 @@ ranks:
   4:
     name: Sergeant
     color: 8
+    cost: 400
     items:
     - stone_sword
     - apple
@@ -47,6 +50,7 @@ ranks:
   5:
     name: Staff Sergeant
     color: 8
+    cost: 550
     items:
     - stone_sword
     - apple
@@ -59,6 +63,7 @@ ranks:
   6:
     name: Master Sergeant
     color: e
+    cost: 700
     items:
     - stone_sword
     - 'apple amount:2'
@@ -70,6 +75,7 @@ ranks:
   7:
     name: 1st Sergeant
     color: e
+    cost: 850
     items:
     - stone_sword
     - 'apple amount:2'
@@ -82,6 +88,7 @@ ranks:
   8:
     name: Sergeant Major
     color: e
+    cost: 1150
     items:
     - stone_sword
     - 'apple amount:2'
@@ -95,6 +102,7 @@ ranks:
   9:
     name: Command Sergeant Major
     color: e
+    cost: 1300
     items:
     - stone_sword
     - 'apple amount:3'
@@ -107,6 +115,7 @@ ranks:
   10:
     name: 2nd Lieutenant
     color: e
+    cost: 1450
     items:
     - stone_sword
     - 'apple amount:3'
@@ -120,6 +129,7 @@ ranks:
   11:
     name: 1st Lieutenant
     color: a
+    cost: 1600
     items:
     - stone_sword
     - 'apple amount:3'
@@ -133,6 +143,7 @@ ranks:
   12:
     name: Captain
     color: a
+    cost: 1750
     items:
     - stone_sword
     - 'apple amount:3'
@@ -148,6 +159,7 @@ ranks:
   13:
     name: Major
     color: a
+    cost: 1900
     items:
     - stone_sword
     - 'apple amount:3'
@@ -157,6 +169,7 @@ ranks:
   14:
     name: Lt. Colonel
     color: a
+    cost: 2050
     items:
     - stone_sword
     - 'apple amount:4'
@@ -172,6 +185,7 @@ ranks:
   15:
     name: Colonel
     color: a
+    cost: 2200
     items:
     - stone_sword
     - 'apple amount:4'
@@ -186,6 +200,7 @@ ranks:
   16:
     name: Brigadier General
     color: b
+    cost: 2350
     items:
     - stone_sword
     - 'apple amount:4'
@@ -202,6 +217,7 @@ ranks:
   17:
     name: Major General
     color: b
+    cost: 2500
     items:
     - stone_sword
     - 'apple amount:5'
@@ -217,6 +233,7 @@ ranks:
   18:
     name: Lt. General
     color: b
+    cost: 2650
     items:
     - stone_sword
     - 'apple amount:5'
@@ -232,6 +249,7 @@ ranks:
   19:
     name: General
     color: b
+    cost: 2800
     items:
     - stone_sword
     - 'apple amount:6'
@@ -247,6 +265,7 @@ ranks:
   20:
     name: Commander
     color: 5
+    cost: 2950
     items:
     - iron_sword
     - 'apple amount:6'
