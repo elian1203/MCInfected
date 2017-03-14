@@ -8,7 +8,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +19,20 @@ public class RankManager {
 
 	private List<Rank> ranks;
 
-	public static RankManager getInstance() {
-		return instance;
-	}
-
 	private RankManager() {
 		loadRanks();
+	}
+
+	public static RankManager getInstance() {
+		return instance;
 	}
 
 	private void loadRanks() {
 		ranks = new ArrayList<>();
 
-		FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "ranks.yml"));
+		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("ranks.yml"));
+		FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
+
 		ConfigurationSection sect = data.getConfigurationSection("ranks");
 
 		for (String level : sect.getKeys(false)) {

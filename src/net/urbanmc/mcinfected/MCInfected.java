@@ -7,13 +7,10 @@ import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
 public class MCInfected extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		createFiles();
 		registerListeners();
 		registerGame();
 	}
@@ -23,28 +20,6 @@ public class MCInfected extends JavaPlugin {
 		GamePlayerManager.getInstance().savePlayers();
 	}
 
-	private void createFiles() {
-		getDataFolder().mkdir();
-
-		for (int i = 0; i < 4; i++) {
-			File file;
-
-			if (i == 0) {
-				file = new File(getDataFolder(), "killstreaks.yml");
-			} else if (i == 1) {
-				file = new File(getDataFolder(), "kits.yml");
-			} else if (i == 2) {
-				file = new File(getDataFolder(), "maps.yml");
-			} else {
-				file = new File(getDataFolder(), "ranks.yml");
-			}
-
-			if (!file.exists()) {
-				saveResource(file.getName(), false);
-			}
-		}
-	}
-
 	private void registerListeners() {
 		PluginManager pm = this.getServer().getPluginManager();
 
@@ -52,6 +27,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
+		pm.registerEvents(new DamageListener(), this);
 		pm.registerEvents(new DeathListener(), this);
 		pm.registerEvents(new FoodConsumeListener(), this);
 		pm.registerEvents(new FoodLevelListener(), this);

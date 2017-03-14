@@ -100,10 +100,18 @@ public class ItemUtil {
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(null);
 
+		List<ItemStack> items;
+		List<ItemStack> armor;
+
 		Kit kit = p.getKit();
 
-		List<ItemStack> items = kit.getItems();
-		List<ItemStack> armor = kit.getArmor();
+		if (kit == null) {
+			items = p.getRank().getItems();
+			armor = p.getRank().getArmor();
+		} else {
+			items = kit.getItems();
+			armor = kit.getArmor();
+		}
 
 		for (ItemStack item : items) {
 			player.getInventory().addItem(item);
@@ -116,7 +124,7 @@ public class ItemUtil {
 
 		player.getInventory().setArmorContents(array);
 
-		if (kit.hasDisguise()) {
+		if (kit != null && kit.hasDisguise()) {
 			DisguiseUtil.disguisePlayerAsEntity(player, kit.getDisguise());
 		}
 	}

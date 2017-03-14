@@ -7,7 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +18,19 @@ public class KillStreakManager {
 
 	private List<KillStreak> killStreaks;
 
-	public static KillStreakManager getInstance() {
-		return instance;
-	}
-
 	private KillStreakManager() {
 		loadKillStreaks();
+	}
+
+	public static KillStreakManager getInstance() {
+		return instance;
 	}
 
 	private void loadKillStreaks() {
 		killStreaks = new ArrayList<>();
 
-		FileConfiguration data = YamlConfiguration.loadConfiguration(new File(
-				"plugins/MCInfected",
-				"killstreaks" + ".yml"));
+		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("killstreaks.yml"));
+		FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
 
 		loadKillStreaksFromSection(data.getConfigurationSection("streaks.human"), false);
 		loadKillStreaksFromSection(data.getConfigurationSection("streaks.zombie"), true);

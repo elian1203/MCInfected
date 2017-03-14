@@ -5,7 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +17,13 @@ public class FoodManager {
     private List<Food> food;
 
     private FoodManager() {
-
         loadFood();
     }
 
     private void loadFood() {
-        FileConfiguration data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "food.yml"));
+        Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("food.yml"));
+        FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
+
         food = new ArrayList<>();
 
         List<String> foodStringList = data.getStringList("food");

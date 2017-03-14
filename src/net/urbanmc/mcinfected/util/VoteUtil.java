@@ -55,7 +55,13 @@ public class VoteUtil {
 
 		List<Map> list = new ArrayList<>(specificMap.keySet());
 
-		return list.get(0);
+		Map map = list.get(0);
+
+		if (map.getName().equals("#random")) {
+			return MapManager.getInstance().getRealRandom();
+		} else {
+			return map;
+		}
 	}
 
 	private static <K, V extends Comparable<? super V>> java.util.Map<K, V> sortByValue(java.util.Map<K, V> map) {

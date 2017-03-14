@@ -7,6 +7,7 @@ import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.manager.Messages;
+import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,7 +21,7 @@ public class GameStart implements Runnable {
 
 	public GameStart(MCInfected plugin) {
 		this.plugin = plugin;
-		this.time = 240;
+		this.time = 60; // Should be 240
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class GameStart implements Runnable {
 	}
 
 	private boolean enoughPlayers() {
-		return plugin.getServer().getOnlinePlayers().size() >= 8;
+		return plugin.getServer().getOnlinePlayers().size() >= 1; // Normally 8
 	}
 
 	private void startInfection() {
@@ -80,9 +81,11 @@ public class GameStart implements Runnable {
 		GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
 
 		gameMap = VoteUtil.getTopVotedMap();
+
+		Bukkit.broadcastMessage(Messages.getInstance().getString("map_won", gameMap.getName()));
+
 		MapManager.getInstance().loadMap(gameMap);
 		MapManager.getInstance().setGameMap(gameMap);
-		Bukkit.broadcastMessage(Messages.getInstance().getString("map_won", gameMap.getName()));
 	}
 
 	private void preInfection() {
@@ -93,6 +96,8 @@ public class GameStart implements Runnable {
 
 			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);
 			gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
+
+			ItemUtil.equipPlayer(gamePlayer);
 		}
 
 		GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);

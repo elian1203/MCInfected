@@ -20,7 +20,9 @@ public class DeathListener implements Listener {
 
 	@EventHandler
 	public void onPlayerDeath(EntityDamageEvent e) {
-		if (!GameManager.getInstance().getGameState().equals(GameState.RUNNING))
+		GameState state = GameManager.getInstance().getGameState();
+
+		if (!state.equals(GameState.INFECTION) && !state.equals(GameState.RUNNING))
 			return;
 
 		if (!(e.getEntity() instanceof Player))
@@ -34,6 +36,12 @@ public class DeathListener implements Listener {
 			return;
 
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
+
+		if (state.equals(GameState.INFECTION)) {
+			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
+			player.setHealth(20);
+			return;
+		}
 
 		p.setDeaths(p.getDeaths() + 1);
 
@@ -60,6 +68,10 @@ public class DeathListener implements Listener {
 			p.setInfected();
 			p.setKillStreak(0);
 			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
+		}
+
+		if (entityAttack) {
+			giveProperYield(p.getLastAttacker(), p.isInfected());
 		}
 
 		e.setCancelled(true);
@@ -89,6 +101,24 @@ public class DeathListener implements Listener {
 				return Messages.getInstance().getString("human_killed_zombie_" + i, killedName, attackerName);
 			else
 				return Messages.getInstance().getString("zombie_killed_human_" + i, killedName, attackerName);
+		}
+	}
+
+	private void giveProperYield(GamePlayer attacker, boolean zombieKilled) {
+		if (zombieKilled) {
+			attacker.giveScores(20);
+			attacker.giveCookies(2);
+		} else {
+			attacker.giveScores(10);
+			attacker.giveCookies(1);
+
+			GamePlayerManager.getInstance().giveAllScores(20, false);
+			GamePlayerManager.getInstance().giveAllScores(10, true);
+			GamePlayerManager.getInstance().messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
+
+			GamePlayerManager.getInstance().giveAllCookies(2, false);
+			GamePlayerManager.getInstance().giveAllCookies(1, true);
+			GamePlayerManager.getInstance().messageAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
 		}
 	}
 }

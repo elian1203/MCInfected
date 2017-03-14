@@ -1,12 +1,16 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.Map;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,168 +18,168 @@ import java.util.Random;
 
 public class MapManager {
 
-    private static MapManager instance = new MapManager();
+	private static MapManager instance = new MapManager();
 
-    private FileConfiguration data;
+	private FileConfiguration data;
 
-    private Map lobby, random, current;
-    private List<Map> maps;
+	private Map lobby, random, current;
+	private List<Map> maps;
 
-    private List<Map> specific;
+	private List<Map> specific;
 
-    public static MapManager getInstance() {
-        return instance;
-    }
+	private MapManager() {
+		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("maps.yml"));
+		data = YamlConfiguration.loadConfiguration(reader);
 
-    private MapManager() {
-        data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "maps.yml"));
+		loadLobby();
+		loadMaps();
+		loadRandom();
+		loadSpecific();
+	}
 
-        loadLobby();
-        loadMaps();
-        loadRandom();
-        loadSpecific();
-    }
+	public static MapManager getInstance() {
+		return instance;
+	}
 
-    private void loadLobby() {
-        String loc = data.getString("lobby.spawn");
+	private void loadLobby() {
+		String loc = data.getString("lobby.spawn");
 
-        lobby = new Map("#lobby", loc);
-    }
+		lobby = new Map("#lobby", loc);
+	}
 
-    private void loadMaps() {
-        maps = new ArrayList<>();
+	private void loadMaps() {
+		maps = new ArrayList<>();
 
-        ConfigurationSection sect = data.getConfigurationSection("maps");
+		ConfigurationSection sect = data.getConfigurationSection("maps");
 
-        for (String name : sect.getKeys(false)) {
-            String loc = sect.getString(name + ".spawn");
+		for (String name : sect.getKeys(false)) {
+			String loc = sect.getString(name + ".spawn");
 
-            maps.add(new Map(name, loc));
-        }
-    }
+			maps.add(new Map(name, loc));
+		}
+	}
 
-    private void loadRandom() {
-        Random r = new Random();
+	private void loadRandom() {
+		random = new Map("#random", "0/0/0/0/0/random");
+	}
 
-        int i = r.nextInt(maps.size() - 1);
+	private void loadSpecific() {
+		specific = new ArrayList<>();
 
-        random = maps.get(i);
-    }
+		Random r = new Random();
 
-    private void loadSpecific() {
-        specific = new ArrayList<>();
+		int size = maps.size();
 
-        Random r = new Random();
+		for (int i = 0; i < 4; i++) {
+			int index = r.nextInt(size);
 
-        int size = maps.size();
+			Map map = maps.get(index);
 
-        for (int i = 0; i < 4; i++) {
-            int index = r.nextInt(size);
+			if (specific.contains(map)) {
+				i--;
+				continue;
+			}
 
-            Map map = maps.get(index);
+			specific.add(map);
+		}
 
-            if (specific.contains(map)) {
-                i--;
-                continue;
-            }
+		specific.sort((m1, m2) -> m1.getName().compareTo(m2.getName()));
+	}
 
-            specific.add(map);
-        }
-/*
-        List<Map> temp = new ArrayList<>(specific);
+	public void setLobbyVars() {
+		World world = Bukkit.getWorld("lobby");
 
-        specific.stream().sorted((m1, m2) -> m1.getName().compareTo(m2.getName())).forEach(temp::add);
+		world.setPVP(false);
+		world.setGameRuleValue("doMobSpawning", "false");
+	}
 
-        specific = temp;
-*/
-    }
+	public Map getLobby() {
+		return lobby;
+	}
 
-    public void setLobbyVars() {
-        World world = Bukkit.getWorld("lobby");
+	public List<Map> getMaps() {
+		return maps;
+	}
 
-        world.setPVP(false);
-        world.setGameRuleValue("doMobSpawning", "false");
-    }
+	public List<Map> getSpecific() {
+		return specific;
+	}
 
-    public Map getLobby() {
-        return lobby;
-    }
+	public Map getRandom() {
+		return random;
+	}
 
-    public List<Map> getMaps() {
-        return maps;
-    }
+	public Map getRealRandom() {
+		Random r = new Random();
 
-    public List<Map> getSpecific() {
-        return specific;
-    }
+		int i = r.nextInt(maps.size());
 
-    public Map getRandom() {
-        return random;
-    }
+		return maps.get(i);
+	}
 
-    public List<String> getMapNames() {
-        List<String> names = new ArrayList<>();
+	public List<String> getMapNames() {
+		List<String> names = new ArrayList<>();
 
-        for (Map map : MapManager.getInstance().getMaps()) {
-            names.add(map.getName());
-        }
+		for (Map map : MapManager.getInstance().getMaps()) {
+			names.add(map.getName());
+		}
 
-        Collections.sort(names);
+		Collections.sort(names);
 
-        return names;
-    }
+		return names;
+	}
 
-    public Map getMapByName(String name) {
-        for (Map map : maps) {
-            if (map.getName().equalsIgnoreCase(name))
-                return map;
-        }
+	public Map getMapByName(String name) {
+		for (Map map : maps) {
+			if (map.getName().equalsIgnoreCase(name))
+				return map;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public Map getSpecificByIndex(int index) {
-        if (index > 4)
-            return null;
+	public Map getSpecificByIndex(int index) {
+		if (index > 4)
+			return null;
 
-        if (index == 4)
-            return random;
+		if (index == 4)
+			return random;
 
-        return specific.get(index);
-    }
+		return specific.get(index);
+	}
 
-    public Map getSpecificByName(String name) {
-        if (name.equalsIgnoreCase("random"))
-            return random;
+	public Map getSpecificByName(String name) {
+		if (name.equalsIgnoreCase("random"))
+			return random;
 
-        for (Map map : specific) {
-            if (map.getName().toLowerCase().startsWith(name.toLowerCase()))
-                return map;
-        }
+		for (Map map : specific) {
+			if (map.getName().toLowerCase().startsWith(name.toLowerCase()))
+				return map;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public void loadMap(Map map) {
-        WorldCreator creator = new WorldCreator(map.getWorld());
+	public void loadMap(Map map) {
+		WorldCreator creator = new WorldCreator(map.getWorld());
 
-        creator.createWorld();
+		creator.createWorld();
 
-        World world = Bukkit.getWorld(map.getWorld());
+		World world = Bukkit.getWorld(map.getWorld());
 
-        world.setPVP(true);
-        world.setDifficulty(Difficulty.HARD);
+		world.setPVP(true);
+		world.setDifficulty(Difficulty.HARD);
 
-        world.setGameRuleValue("doMobSpawning", "false");
-        world.setGameRuleValue("doMobLoot", "false");
-        world.setGameRuleValue("doDaylightCycle", "false");
-    }
+		world.setGameRuleValue("doMobSpawning", "false");
+		world.setGameRuleValue("doMobLoot", "false");
+		world.setGameRuleValue("doDaylightCycle", "false");
+	}
 
-    public Map getGameMap() {
-        return current;
-    }
+	public Map getGameMap() {
+		return current;
+	}
 
-    public void setGameMap(Map map) {
-        current = map;
-    }
+	public void setGameMap(Map map) {
+		current = map;
+	}
 }

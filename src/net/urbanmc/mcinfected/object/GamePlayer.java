@@ -96,8 +96,16 @@ public class GamePlayer {
 		this.scores = scores;
 	}
 
+	public void giveScores(long scores) {
+		this.scores += scores;
+	}
+
 	public void setCookies(long cookies) {
 		this.cookies = cookies;
+	}
+
+	public void giveCookies(long cookies) {
+		this.cookies += cookies;
 	}
 
 	public void setGamesPlayed(long gamesPlayed) {

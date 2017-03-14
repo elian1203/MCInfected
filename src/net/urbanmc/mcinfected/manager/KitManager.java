@@ -7,7 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,15 @@ public class KitManager {
 	private Kit zombie, mother;
 
 	private KitManager() {
-		data = YamlConfiguration.loadConfiguration(new File("plugins/MCInfected", "kits.yml"));
+		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("kits.yml"));
+		data = YamlConfiguration.loadConfiguration(reader);
 
 		loadMotherAndZombie();
 		loadKits();
+	}
+
+	public static KitManager getInstance() {
+		return instance;
 	}
 
 	private void loadKits() {
@@ -68,10 +74,6 @@ public class KitManager {
 
 	public Kit getMotherKit() {
 		return mother;
-	}
-
-	public static KitManager getInstance() {
-		return instance;
 	}
 
 

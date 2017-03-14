@@ -18,9 +18,7 @@ public class JoinListener implements Listener {
 
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
 
-		GameManager.getInstance().loadPlayer(p,
-		                                     GameManager.getInstance().getGameState() == GameManager.GameState
-				                                     .RUNNING);
+		GameManager.getInstance().loadPlayer(p);
 		disableAttackCooldown(e.getPlayer());
 	}
 

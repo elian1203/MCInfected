@@ -32,6 +32,10 @@ public class GamePlayerManager {
 	}
 
 	private void loadFile() {
+		if (!file.getParentFile().isDirectory()) {
+			file.getParentFile().mkdir();
+		}
+
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -112,5 +116,27 @@ public class GamePlayerManager {
 
 	public GamePlayer getGamePlayer(Player player) {
 		return getGamePlayer(player.getUniqueId());
+	}
+
+	public void giveAllScores(long scores, boolean zombies) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			getGamePlayer(p).giveScores(scores);
+		}
+	}
+
+	public void giveAllCookies(long cookies, boolean zombies) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			getGamePlayer(p).giveCookies(cookies);
+		}
+	}
+
+	public void messageAllTeam(String message, boolean zombies) {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			GamePlayer p = getGamePlayer(player);
+
+			if (p.isInfected() == zombies) {
+				p.getOnlinePlayer().sendMessage(message);
+			}
+		}
 	}
 }
