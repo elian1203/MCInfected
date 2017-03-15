@@ -35,6 +35,11 @@ public class Ignore extends Command {
 			return;
 		}
 
+		if (targetPlayer == p.getOnlinePlayer()) {
+			messagePlayer(p, color("&4You cannot ignore yourself!"));
+			return;
+		}
+
 		UUID uuid = targetPlayer.getUniqueId();
 
 		boolean ignoring = p.isIgnoring(uuid);

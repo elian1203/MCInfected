@@ -1,6 +1,6 @@
 TODO:
-- Shop Manager
+- Shop manageClickedItem
 - Shop Listener
-- Shop Command
 - Add cookie & score gives
 - Add Game End
+- Figure out vanilla command overrides
