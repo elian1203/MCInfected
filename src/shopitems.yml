@@ -3,20 +3,25 @@ items:
     item: 'barrier name:&oClose'
     type: close
   2:
-    item: 'iron_sword name:&oRank Up'
+    item: 'iron_sword name:&oRank_Up lore:&6Cost:_%amount%_Cookies'
     type: rank_up
   3:
-    item: 'melon name:&oMelon - &610 Cookies'
+    item: 'melon name:&oMelon lore:&6Cost:_10_Cookies'
     type: item
+    cost: 10
   4:
-    item: 'apple name:&oApple - &620 Cookies'
+    item: 'apple name:&oApple lore:&6Cost:_20_Cookies'
     type: item
+    cost: 20
   5:
-    item: 'slime_ball name:&oSticky Grenade - &625 Cookies'
+    item: 'slime_ball name:&oSticky_Grenade lore:&6Cost:_25_Cookies'
     type: item
+    cost: 25
   6:
-    item: 'snow_ball name:&oFlash Grenade - &625 Cookies'
+    item: 'snow_ball name:&oFlash_Grenade lore:&6Cost:_25_Cookies'
     type: item
+    cost: 25
   7:
-    item: 'ender_chest name:&oMystery Chest - &6200 Cookies'
+    item: 'ender_chest name:&oMystery_Chest lore:&6Cost:_200_Cookies'
     type: item
+    cost: 200

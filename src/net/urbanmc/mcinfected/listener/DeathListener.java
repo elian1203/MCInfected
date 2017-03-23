@@ -74,6 +74,8 @@ public class DeathListener implements Listener {
 			giveProperYield(p.getLastAttacker(), p.isInfected());
 		}
 
+		GameManager.getInstance().onPlayerDeath();
+
 		e.setCancelled(true);
 	}
 

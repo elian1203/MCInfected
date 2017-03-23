@@ -17,7 +17,7 @@ public class Reply extends Command {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 		if (args.length == 0) {
-			messageSender(sender, "/r [message]");
+			messageSender(sender, "/" + label + " [message]");
 			return;
 		}
 

@@ -53,6 +53,10 @@ public class InfectionStart implements Runnable {
 	private List<Player> selectMotherZombies() {
 		int amount = (Bukkit.getOnlinePlayers().size() / 100) * 20;
 
+		if (Bukkit.getOnlinePlayers().size() < 8) {
+			amount = 1;
+		}
+
 		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
 		Player[] array = new Player[players.size()];

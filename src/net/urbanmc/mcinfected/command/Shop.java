@@ -17,12 +17,12 @@ public class Shop extends Command {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 		if (args.length == 0) {
-			p.getOnlinePlayer().openInventory(ShopManager.getInstance().getShop());
+			p.getOnlinePlayer().openInventory(ShopManager.getInstance().getShop(p));
 			return;
 		}
 
 		if (args.length != 2 || !args[0].equalsIgnoreCase("buy")) {
-			messagePlayer(p, "/shop (for gui) or /shop buy [item number]");
+			messagePlayer(p, "/" + label + " (for gui) or /" + label + " buy [item number]");
 			return;
 		}
 

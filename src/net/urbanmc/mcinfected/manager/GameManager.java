@@ -52,6 +52,10 @@ public class GameManager {
 		p.getOnlinePlayer().teleport(spawn);
 	}
 
+	public void onPlayerDeath() {
+
+	}
+
 	public enum GameState {
 		LOBBY, COUNTDOWN, INFECTION, RUNNING;
 	}

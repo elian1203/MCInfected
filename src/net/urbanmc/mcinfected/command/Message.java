@@ -19,7 +19,7 @@ public class Message extends Command {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 		if (args.length < 2) {
-			messageSender(sender, "/msg [player] [message]");
+			messageSender(sender, "/" + label + " [player] [message]");
 			return;
 		}
 

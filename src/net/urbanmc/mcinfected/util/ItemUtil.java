@@ -29,18 +29,22 @@ public class ItemUtil {
 		ItemMeta meta = is.getItemMeta();
 		meta.setUnbreakable(true);
 
-		is.setItemMeta(meta);
-
 		if (split.length == 0) {
 			return is;
 		}
 
 		for (String arg : split) {
 			if (arg.startsWith("name:")) {
-				String displayName = arg.substring(5);
+				String displayName = arg.substring(5).replace("_", " ");
 				meta.setDisplayName(displayName);
 
-				is.setItemMeta(meta);
+				continue;
+			}
+
+			if (arg.startsWith("lore:")) {
+				String lore = arg.substring(5).replace("_", " ");
+				meta.setLore(Collections.singletonList(lore));
+
 				continue;
 			}
 
@@ -48,7 +52,6 @@ public class ItemUtil {
 				int amount = Integer.parseInt(arg.substring(7));
 				is.setAmount(amount);
 
-				is.setItemMeta(meta);
 				continue;
 			}
 
@@ -61,7 +64,6 @@ public class ItemUtil {
 
 				meta.addEnchant(ench, level, true);
 
-				is.setItemMeta(meta);
 				continue;
 			}
 
@@ -76,10 +78,10 @@ public class ItemUtil {
 				PotionMeta potionMeta = (PotionMeta) meta;
 
 				potionMeta.addCustomEffect(new PotionEffect(effectType, duration, level), true);
-
-				is.setItemMeta(meta);
 			}
 		}
+
+		is.setItemMeta(meta);
 
 		return is;
 	}

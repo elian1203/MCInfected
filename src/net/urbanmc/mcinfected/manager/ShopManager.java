@@ -1,17 +1,22 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.object.Rank;
 import net.urbanmc.mcinfected.object.ShopItem;
 import net.urbanmc.mcinfected.object.ShopItem.ShopItemType;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ShopManager {
@@ -20,11 +25,8 @@ public class ShopManager {
 
 	private List<ShopItem> items;
 
-	private Inventory shop;
-
 	private ShopManager() {
 		loadShopItems();
-		loadShop();
 	}
 
 	public static ShopManager getInstance() {
@@ -36,19 +38,11 @@ public class ShopManager {
 		FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
 
 		for (String key : data.getConfigurationSection("items").getKeys(false)) {
-			int place = Integer.parseInt(key);
+			int place = Integer.parseInt(key), cost = data.getInt(key + ".cost");
 			ItemStack item = ItemUtil.getItem(data.getString(key + ".item"));
 			ShopItemType type = ShopItemType.valueOf(data.getString(key + ".type").toUpperCase());
 
-			items.add(new ShopItem(place, item, type));
-		}
-	}
-
-	private void loadShop() {
-		shop = Bukkit.createInventory(null, 9, "Shop");
-
-		for (ShopItem item : items) {
-			shop.setItem(item.getPlace(), item.getItem());
+			items.add(new ShopItem(place, cost, item, type));
 		}
 	}
 
@@ -56,7 +50,32 @@ public class ShopManager {
 		return items;
 	}
 
-	public Inventory getShop() {
+	public Inventory getShop(GamePlayer p) {
+		Inventory shop = Bukkit.createInventory(null, 9, "Shop");
+
+		for (int i = 0; i < 8; i++) {
+			ShopItem item = getShopItem(i);
+
+			if (item == null)
+				continue;
+
+			if (item.getType().equals(ShopItemType.RANK_UP)) {
+				ItemMeta meta = item.getItem().getItemMeta();
+				Rank rank = RankManager.getInstance().getRankByLevel(p.getRank().getLevel() + 1);
+
+				if (rank == null) {
+					meta.setDisplayName(ChatColor.GOLD + "You are max level");
+					meta.setLore(Collections.emptyList());
+				} else {
+					meta.getLore().get(0).replace("%amount%", Long.toString(rank.getCost()));
+				}
+
+				item.getItem().setItemMeta(meta);
+			}
+
+			shop.setItem(i, item.getItem());
+		}
+
 		return shop;
 	}
 
@@ -69,7 +88,66 @@ public class ShopManager {
 		return null;
 	}
 
-	public void manageClickedItem(GamePlayer p, ShopItem item) {
+	public synchronized void manageClickedItem(GamePlayer p, ShopItem item) {
+		ShopItemType type = item.getType();
 
+		switch (type) {
+			case CLOSE:
+				p.getOnlinePlayer().closeInventory();
+				break;
+			case RANK_UP:
+				rankupPlayer(p);
+				break;
+			case ITEM:
+				purchaseItem(p, item);
+				break;
+		}
+	}
+
+	private void rankupPlayer(GamePlayer p) {
+		int level = p.getRank().getLevel();
+
+		if (level == 20) {
+			p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("max_rank"));
+			return;
+		}
+
+		Rank rank = RankManager.getInstance().getRankByLevel(level + 1);
+
+		long cost = rank.getCost();
+
+		if (p.getCookies() < cost) {
+			p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("insufficient_cookies"));
+			return;
+		}
+
+		p.setCookies(p.getCookies() - cost);
+
+		p.setRank(rank);
+
+		String message = Messages.getInstance()
+				.getString("player_rank_up", p.getOnlinePlayer().getName(), rank.getColor().getChar(), rank.getName());
+
+		Bukkit.broadcastMessage(message);
+	}
+
+	private void purchaseItem(GamePlayer p, ShopItem item) {
+		int cost = item.getCost();
+
+		if (p.getCookies() < cost) {
+			p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("insufficient_cookies"));
+			return;
+		}
+
+		p.setCookies(p.getCookies() - cost);
+
+		ItemStack is = item.getItem().clone();
+
+		ItemMeta meta = is.getItemMeta();
+		meta.setLore(new ArrayList<>());
+
+		is.setItemMeta(meta);
+
+		p.getOnlinePlayer().getInventory().addItem(is);
 	}
 }
