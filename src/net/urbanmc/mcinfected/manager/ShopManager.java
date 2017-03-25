@@ -149,5 +149,9 @@ public class ShopManager {
 		is.setItemMeta(meta);
 
 		p.getOnlinePlayer().getInventory().addItem(is);
+		p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("bought_item",
+		                                                                 is.getAmount(),
+		                                                                 ItemUtil.getFriendlyName(is),
+		                                                                 cost));
 	}
 }

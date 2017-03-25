@@ -4,24 +4,27 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
+import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
-import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class GameStart implements Runnable {
+public class GameStart extends BukkitRunnable {
 
 	private MCInfected plugin;
-	private int taskId, time;
+	private int time;
 	private Map gameMap;
 
 	public GameStart(MCInfected plugin) {
 		this.plugin = plugin;
 		this.time = 60; // Should be 240
+
+		runTaskTimerAsynchronously(plugin, 0, 20);
 	}
 
 	@Override
@@ -46,10 +49,6 @@ public class GameStart implements Runnable {
 		this.time--;
 	}
 
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
-	}
-
 	public void sufficientPlayers() {
 		time = 89;
 		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));
@@ -69,12 +68,8 @@ public class GameStart implements Runnable {
 	}
 
 	private void startInfection() {
-		InfectionStart task = new InfectionStart(plugin);
-
-		int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, task, 0, 20);
-		task.setTaskId(taskId);
-
-		Bukkit.getScheduler().cancelTask(this.taskId);
+		new InfectionStart(plugin);
+		cancel();
 	}
 
 	private void mapSelection() {

@@ -9,20 +9,24 @@ import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class InfectionStart implements Runnable {
+public class InfectionStart extends BukkitRunnable {
 
 	private MCInfected plugin;
-	private int taskId, time;
+	private int time;
 
 	public InfectionStart(MCInfected plugin) {
 		this.plugin = plugin;
 		this.time = 60;
+
+		runTaskTimerAsynchronously(plugin, 0, 20);
 	}
 
 	@Override
@@ -33,17 +37,10 @@ public class InfectionStart implements Runnable {
 
 		if (time == 0) {
 			startInfection();
+			cancel();
 		}
 
 		time--;
-	}
-
-	public int getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
 	}
 
 	private void broadcastTime() {
@@ -64,7 +61,7 @@ public class InfectionStart implements Runnable {
 
 		List<Player> zombies = new ArrayList<>();
 
-		Random r = new Random();
+		Random r = ThreadLocalRandom.current();
 
 		for (int i = 0; i < amount; i++) {
 			int index = r.nextInt(players.size());
@@ -101,9 +98,5 @@ public class InfectionStart implements Runnable {
 		for (Player player : motherZombies) {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
-	}
-
-	private void stop() {
-		Bukkit.getScheduler().cancelTask(taskId);
 	}
 }

@@ -3,8 +3,10 @@ package net.urbanmc.mcinfected.util;
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Kit;
-import net.urbanmc.mcinfected.object.grenade.*;
+import net.urbanmc.mcinfected.object.grenade.Grenade;
 import net.urbanmc.mcinfected.runnable.ItemThrown;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
@@ -18,6 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 public class ItemUtil {
 
@@ -36,7 +39,7 @@ public class ItemUtil {
 		for (String arg : split) {
 			if (arg.startsWith("name:")) {
 				String displayName = arg.substring(5).replace("_", " ");
-				meta.setDisplayName(displayName);
+				meta.setDisplayName(ChatColor.RESET + displayName);
 
 				continue;
 			}
@@ -154,7 +157,6 @@ public class ItemUtil {
 		return false;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void throwItem(GamePlayer p, ItemStack is, MCInfected plugin) {
 		Player player = p.getOnlinePlayer();
 		player.getInventory().removeItem(is);
@@ -165,10 +167,31 @@ public class ItemUtil {
 
 		item.setVelocity(player.getLocation().getDirection().normalize().multiply(2.5));
 
-		ItemThrown runnable = new ItemThrown(grenade);
+		new ItemThrown(grenade);
+	}
 
-		int taskId = plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, runnable, 0, 2);
+	public static String getFriendlyName(ItemStack is) {
+		if (is.getItemMeta().hasDisplayName())
+			return is.getItemMeta().getDisplayName();
 
-		runnable.setTaskId(taskId);
+		try {
+			Object nmsStack = getCraftItemStackClass().getMethod("asNMSCopy", ItemStack.class).invoke(null, is);
+
+			return nmsStack.getClass().getMethod("getName").invoke(nmsStack).toString();
+		} catch (Exception ex) {
+			Bukkit.getLogger().log(Level.SEVERE, "Error getting friendly name for " + is.getType().toString(), ex);
+			return "";
+		}
+	}
+
+	private static Class<?> getCraftItemStackClass() {
+		String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+
+		try {
+			return Class.forName("org.bukkit.craftbukkit." + version + ".inventory.CraftItemStack");
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 }

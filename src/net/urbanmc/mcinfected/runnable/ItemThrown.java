@@ -1,11 +1,10 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.object.grenade.Grenade;
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class ItemThrown implements Runnable {
+public class ItemThrown extends BukkitRunnable {
 
-	private int taskId;
 	private Grenade grenade;
 
 	public ItemThrown(Grenade grenade) {
@@ -16,14 +15,7 @@ public class ItemThrown implements Runnable {
 	public void run() {
 		if (grenade.getItem().isOnGround()) {
 			grenade.activate();
+			cancel();
 		}
-	}
-
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
-	}
-
-	private void cancel() {
-		Bukkit.getScheduler().cancelTask(taskId);
 	}
 }

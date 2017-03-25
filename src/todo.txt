@@ -1,3 +1,4 @@
 TODO:
 - Add cookie & score gives
 - Add Game End
+- Allow placing of cake & listener for it
