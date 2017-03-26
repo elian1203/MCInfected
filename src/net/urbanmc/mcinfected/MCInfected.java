@@ -24,6 +24,7 @@ public class MCInfected extends JavaPlugin {
 
 		pm.registerEvents(new AttackListener(), this);
 		pm.registerEvents(new BlockListener(), this);
+		pm.registerEvents(new CakeListener(), this);
 		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
 		pm.registerEvents(new DamageListener(), this);
