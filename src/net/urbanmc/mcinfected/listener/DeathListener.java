@@ -62,19 +62,19 @@ public class DeathListener implements Listener {
 
 		Bukkit.broadcastMessage(deathMessage);
 
-		if (p.isInfected()) {
-			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
-		} else {
-			p.setInfected();
-			p.setKillStreak(0);
-			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
-		}
-
 		if (entityAttack) {
 			giveProperYield(p.getLastAttacker(), p.isInfected());
 		}
 
-		GameManager.getInstance().onPlayerDeath();
+		if (p.isInfected()) {
+			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
+		} else {
+			if (!GameManager.getInstance().onHumanDeath(p)) {
+				p.setInfected();
+				p.setKillStreak(0);
+				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
+			}
+		}
 
 		e.setCancelled(true);
 	}
@@ -116,11 +116,14 @@ public class DeathListener implements Listener {
 
 			GamePlayerManager.getInstance().giveAllScores(20, false);
 			GamePlayerManager.getInstance().giveAllScores(10, true);
-			GamePlayerManager.getInstance().messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
 
 			GamePlayerManager.getInstance().giveAllCookies(2, false);
 			GamePlayerManager.getInstance().giveAllCookies(1, true);
-			GamePlayerManager.getInstance().messageAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
+
+			GamePlayerManager.getInstance()
+					.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
+			GamePlayerManager.getInstance()
+					.messageAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
 		}
 	}
 }

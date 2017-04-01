@@ -1,10 +1,8 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.Map;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,7 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +32,7 @@ public class MapManager {
 		loadMaps();
 		loadRandom();
 		loadSpecific();
+		setLobbyVars();
 	}
 
 	public static MapManager getInstance() {
@@ -86,19 +84,15 @@ public class MapManager {
 		specific.sort((m1, m2) -> m1.getName().compareTo(m2.getName()));
 	}
 
-	public void setLobbyVars() {
+	private void setLobbyVars() {
 		World world = Bukkit.getWorld("lobby");
 
 		world.setPVP(false);
 		world.setGameRuleValue("doMobSpawning", "false");
 	}
 
-	public Map getLobby() {
+	Map getLobby() {
 		return lobby;
-	}
-
-	public List<Map> getMaps() {
-		return maps;
 	}
 
 	public List<Map> getSpecific() {
@@ -115,27 +109,6 @@ public class MapManager {
 		int i = r.nextInt(maps.size());
 
 		return maps.get(i);
-	}
-
-	public List<String> getMapNames() {
-		List<String> names = new ArrayList<>();
-
-		for (Map map : MapManager.getInstance().getMaps()) {
-			names.add(map.getName());
-		}
-
-		Collections.sort(names);
-
-		return names;
-	}
-
-	public Map getMapByName(String name) {
-		for (Map map : maps) {
-			if (map.getName().equalsIgnoreCase(name))
-				return map;
-		}
-
-		return null;
 	}
 
 	public Map getSpecificByIndex(int index) {
@@ -181,5 +154,13 @@ public class MapManager {
 
 	public void setGameMap(Map map) {
 		current = map;
+	}
+
+	public void cleanseMap() {
+		for (Block b : FoodManager.getInstance().getCakes()) {
+			b.setType(Material.AIR);
+		}
+
+		FoodManager.getInstance().getCakes().clear();
 	}
 }

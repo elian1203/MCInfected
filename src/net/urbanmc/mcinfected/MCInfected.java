@@ -1,12 +1,15 @@
 package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
+import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MCInfected extends JavaPlugin {
+
+	private static GameStart gameStart;
 
 	@Override
 	public void onEnable() {
@@ -37,6 +40,11 @@ public class MCInfected extends JavaPlugin {
 	}
 
 	private void registerGame() {
-		new GameStart(this);
+		GameManager.getInstance().setPlugin(this);
+		gameStart = new GameStart(this);
+	}
+
+	public static GameStart getGameStart() {
+		return gameStart;
 	}
 }

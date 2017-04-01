@@ -22,7 +22,7 @@ public class InfectionStart extends BukkitRunnable {
 	private MCInfected plugin;
 	private int time;
 
-	public InfectionStart(MCInfected plugin) {
+	InfectionStart(MCInfected plugin) {
 		this.plugin = plugin;
 		this.time = 60;
 

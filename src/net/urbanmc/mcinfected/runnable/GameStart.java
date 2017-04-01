@@ -49,8 +49,12 @@ public class GameStart extends BukkitRunnable {
 		time--;
 	}
 
-	public void sufficientPlayers() {
-		time = 89;
+	public int getTime() {
+		return time;
+	}
+
+	public void amplePlayers() {
+		time = 90;
 		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));
 	}
 

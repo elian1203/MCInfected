@@ -2,6 +2,7 @@ package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.Food;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,47 +13,53 @@ import java.util.List;
 
 public class FoodManager {
 
-    private static FoodManager instance = new FoodManager();
+	private static FoodManager instance = new FoodManager();
 
-    private List<Food> food;
+	private List<Food> food;
 
-    private FoodManager() {
-        loadFood();
-    }
+	private List<Block> cakes;
 
-    private void loadFood() {
-        Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("food.yml"));
-        FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
+	private FoodManager() {
+		cakes = new ArrayList<>();
+		loadFood();
+	}
 
-        food = new ArrayList<>();
+	public static FoodManager getInstance() {
+		return instance;
+	}
 
-        List<String> foodStringList = data.getStringList("food");
+	private void loadFood() {
+		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("food.yml"));
+		FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
 
-        for (String string : foodStringList) {
-            String[] foodSplit = string.split(":");
+		food = new ArrayList<>();
 
-            Material mat = Material.valueOf(foodSplit[0].toUpperCase());
-            int healthReplenished = Integer.parseInt(foodSplit[1]);
+		List<String> foodStringList = data.getStringList("food");
 
-            food.add(new Food(mat, healthReplenished));
-        }
-    }
+		for (String string : foodStringList) {
+			String[] foodSplit = string.split(":");
 
-    public List<Food> getFoodList() {
-        return food;
-    }
+			Material mat = Material.valueOf(foodSplit[0].toUpperCase());
+			int healthReplenished = Integer.parseInt(foodSplit[1]);
 
-    public Food getFoodByMaterial(Material type) {
-        for (Food food : food) {
-            if (food.getMaterial().equals(type))
-                return food;
-        }
+			food.add(new Food(mat, healthReplenished));
+		}
+	}
 
-        return null;
-    }
+	public List<Food> getFoodList() {
+		return food;
+	}
 
-    public static FoodManager getInstance() {
-        return instance;
-    }
+	public Food getFoodByMaterial(Material type) {
+		for (Food food : food) {
+			if (food.getMaterial().equals(type))
+				return food;
+		}
 
+		return null;
+	}
+
+	public List<Block> getCakes() {
+		return cakes;
+	}
 }

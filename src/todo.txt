@@ -1,4 +1,4 @@
 TODO:
 - Add cookie & score gives
 - Add Game End
-- Cleanse world of cakes
+- Find way to completely reload plugin

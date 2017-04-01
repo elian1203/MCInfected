@@ -1,5 +1,7 @@
 package net.urbanmc.mcinfected.listener;
 
+import net.urbanmc.mcinfected.manager.FoodManager;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +41,11 @@ public class CakeListener implements Listener {
 		cake.setSlicesEaten(slicesEaten + 1);
 		cake.setSlicesRemaining(slicesEaten - 1);
 
-		b.getState().setData(cake);
+		if (cake.getSlicesEaten() == 0) {
+			b.setType(Material.AIR);
+			FoodManager.getInstance().getCakes().remove(b);
+		} else {
+			b.getState().setData(cake);
+		}
 	}
 }

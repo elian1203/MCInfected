@@ -1,8 +1,11 @@
 package net.urbanmc.mcinfected.listener;
 
+import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.runnable.GameStart;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -20,6 +23,12 @@ public class JoinListener implements Listener {
 
 		GameManager.getInstance().loadPlayer(p);
 		disableAttackCooldown(e.getPlayer());
+
+		GameStart gameStart = MCInfected.getGameStart();
+
+		if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= 16) {
+			gameStart.amplePlayers();
+		}
 	}
 
 	private void disableAttackCooldown(Player p) {

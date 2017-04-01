@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.listener;
 
+import net.urbanmc.mcinfected.manager.FoodManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MysteryManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
@@ -16,6 +17,7 @@ public class BlockListener implements Listener {
 		Material type = e.getBlock().getType();
 
 		if (type.equals(Material.CAKE)) {
+			FoodManager.getInstance().getCakes().add(e.getBlock());
 			return;
 		} else if (type.equals(Material.ENDER_CHEST)) {
 			GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
