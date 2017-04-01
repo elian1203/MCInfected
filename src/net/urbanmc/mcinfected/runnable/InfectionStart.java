@@ -98,5 +98,7 @@ public class InfectionStart extends BukkitRunnable {
 		for (Player player : motherZombies) {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
+
+		new GameTimer(plugin);
 	}
 }

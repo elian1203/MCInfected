@@ -46,7 +46,7 @@ public class GameStart extends BukkitRunnable {
 			preInfection();
 		}
 
-		this.time--;
+		time--;
 	}
 
 	public void sufficientPlayers() {
