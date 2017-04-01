@@ -2,6 +2,8 @@ package net.urbanmc.mcinfected.runnable;
 
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.manager.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameTimer extends BukkitRunnable {
@@ -14,9 +16,16 @@ public class GameTimer extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (time == 300 || time == 60) broadcastTime();
+
         if (time == 0) endGame();
 
         time--;
+    }
+
+    private void broadcastTime() {
+        Bukkit.broadcastMessage(Messages.getInstance().getString("time_remaining", time / 60));
     }
 
     public void endGame() {
