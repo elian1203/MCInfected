@@ -97,7 +97,7 @@ public class DeathListener implements Listener {
 
 			Random r = new Random();
 
-			int i = r.nextInt(3);
+			int i = r.nextInt(3) + 1;
 
 			if (killed.isInfected())
 				return Messages.getInstance().getString("human_killed_zombie_" + i, killedName, attackerName);

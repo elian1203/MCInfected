@@ -62,19 +62,26 @@ public class ItemUtil {
 				String enchant = arg.substring(8);
 				String[] enchantSplit = enchant.split("/");
 
+				enchantSplit[0] = convertEnchants(enchantSplit[0]);
+				//System.out.print(enchantSplit[0]);
+
 				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
 				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
 
-				meta.addEnchant(ench, level, true);
+				is.addEnchantment(ench, level);
+				//meta.addEnchant(ench, level, true);
 
 				continue;
 			}
 
 			if (arg.startsWith("effect:")) {
-				String effect = arg.substring(10);
+				String effect = arg.substring(7);
 				String[] effectSplit = effect.split("/");
 
+				//System.out.print(effectSplit[0]);
+
 				PotionEffectType effectType = PotionEffectType.getByName(effectSplit[0].toUpperCase());
+
 				int level = effectSplit.length < 2 ? 1 : Integer.parseInt(effectSplit[1]);
 				int duration = effectSplit.length < 3 ? 1 : Integer.parseInt(effectSplit[2]);
 
@@ -87,6 +94,20 @@ public class ItemUtil {
 		is.setItemMeta(meta);
 
 		return is;
+	}
+
+	private static String convertEnchants (String s) {
+		switch (s) {
+			case "sharpness":
+				return "damage_all";
+			case "infinite":
+				return "arrow_infinite";
+			case "power":
+				return "arrow_damage";
+			case "punch":
+				return "arrow_knockback";
+		}
+		return s;
 	}
 
 	public static List<ItemStack> getItemList(List<String> list) {
@@ -118,9 +139,11 @@ public class ItemUtil {
 			armor = kit.getArmor();
 		}
 
-		for (ItemStack item : items) {
-			player.getInventory().addItem(item);
-		}
+
+			for (ItemStack item : items) {
+				player.getInventory().addItem(item);
+			}
+
 
 		Collections.reverse(armor);
 
