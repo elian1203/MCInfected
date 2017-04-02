@@ -91,7 +91,7 @@ public class MapManager {
 		world.setGameRuleValue("doMobSpawning", "false");
 	}
 
-	Map getLobby() {
+	public Map getLobby() {
 		return lobby;
 	}
 

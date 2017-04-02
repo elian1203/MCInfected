@@ -20,7 +20,7 @@ public class GameTimer extends BukkitRunnable {
 
         if (time == 300 || time == 60) broadcastTime();
 
-        if (time == 0) GameManager.getInstance().endGame(false);
+        if (time == 0) GameManager.getInstance().endGame(false, null);
 
         time--;
     }

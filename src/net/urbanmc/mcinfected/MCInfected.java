@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
+import net.urbanmc.mcinfected.manager.CommandManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
@@ -41,6 +42,8 @@ public class MCInfected extends JavaPlugin {
 
 	private void registerGame() {
 		GameManager.getInstance().setPlugin(this);
+		CommandManager.getInstance();
+
 		gameStart = new GameStart(this);
 	}
 

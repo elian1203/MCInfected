@@ -114,14 +114,17 @@ public class DeathListener implements Listener {
 			attacker.giveScores(10);
 			attacker.giveCookies(1);
 
-			GamePlayerManager.getInstance().giveAllScores(20, false);
-			GamePlayerManager.getInstance().giveAllScores(10, true);
+			if (GameManager.getInstance().getHumans().size() > 1) {
+				GamePlayerManager.getInstance().giveAllScores(20, false);
+				GamePlayerManager.getInstance().giveAllCookies(2, false);
 
-			GamePlayerManager.getInstance().giveAllCookies(2, false);
+				GamePlayerManager.getInstance()
+						.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
+			}
+
+			GamePlayerManager.getInstance().giveAllScores(10, true);
 			GamePlayerManager.getInstance().giveAllCookies(1, true);
 
-			GamePlayerManager.getInstance()
-					.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
 			GamePlayerManager.getInstance()
 					.messageAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
 		}

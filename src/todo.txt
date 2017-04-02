@@ -1,4 +1,2 @@
 TODO:
-- Add cookie & score gives
-- Add Game End
-- Find way to completely reload plugin
+- Find way to restart server (in spigot forum atm)
