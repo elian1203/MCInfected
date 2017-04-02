@@ -37,6 +37,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new FoodLevelListener(), this);
 		pm.registerEvents(new GrenadeListener(this), this);
 		pm.registerEvents(new JoinListener(), this);
+		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
 	}
 

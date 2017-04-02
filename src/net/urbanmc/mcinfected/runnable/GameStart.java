@@ -24,7 +24,7 @@ public class GameStart extends BukkitRunnable {
 		this.plugin = plugin;
 		this.time = 60; // Should be 240
 
-		runTaskTimerAsynchronously(plugin, 0, 20);
+		runTaskTimer(plugin, 0, 20);
 	}
 
 	@Override

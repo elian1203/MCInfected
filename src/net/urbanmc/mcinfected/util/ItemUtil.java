@@ -38,14 +38,14 @@ public class ItemUtil {
 
 		for (String arg : split) {
 			if (arg.startsWith("name:")) {
-				String displayName = arg.substring(5).replace("_", " ");
+				String displayName = ChatColor.translateAlternateColorCodes('&', arg.substring(5).replace("_", " "));
 				meta.setDisplayName(ChatColor.RESET + displayName);
 
 				continue;
 			}
 
 			if (arg.startsWith("lore:")) {
-				String lore = arg.substring(5).replace("_", " ");
+				String lore = ChatColor.translateAlternateColorCodes('&', arg.substring(5).replace("_", " "));
 				meta.setLore(Collections.singletonList(lore));
 
 				continue;

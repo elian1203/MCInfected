@@ -7,6 +7,7 @@ import net.urbanmc.mcinfected.object.ShopItem.ShopItemType;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -34,13 +35,17 @@ public class ShopManager {
 	}
 
 	private void loadShopItems() {
+		items = new ArrayList<>();
+
 		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("shopitems.yml"));
 		FileConfiguration data = YamlConfiguration.loadConfiguration(reader);
 
-		for (String key : data.getConfigurationSection("items").getKeys(false)) {
-			int place = Integer.parseInt(key), cost = data.getInt(key + ".cost");
-			ItemStack item = ItemUtil.getItem(data.getString(key + ".item"));
-			ShopItemType type = ShopItemType.valueOf(data.getString(key + ".type").toUpperCase());
+		ConfigurationSection sect = data.getConfigurationSection("items");
+
+		for (String key : sect.getKeys(false)) {
+			int place = Integer.parseInt(key), cost = sect.getInt(key + ".cost");
+			ItemStack item = ItemUtil.getItem(sect.getString(key + ".item"));
+			ShopItemType type = ShopItemType.valueOf(sect.getString(key + ".type").toUpperCase());
 
 			items.add(new ShopItem(place, cost, item, type));
 		}
@@ -129,6 +134,8 @@ public class ShopManager {
 				.getString("player_rank_up", p.getOnlinePlayer().getName(), rank.getColor().getChar(), rank.getName());
 
 		Bukkit.broadcastMessage(message);
+
+		p.getOnlinePlayer().closeInventory();
 	}
 
 	private void purchaseItem(GamePlayer p, ShopItem item) {

@@ -26,7 +26,7 @@ public class InfectionStart extends BukkitRunnable {
 		this.plugin = plugin;
 		this.time = 60;
 
-		runTaskTimerAsynchronously(plugin, 0, 20);
+		runTaskTimer(plugin, 0, 20);
 	}
 
 	@Override
