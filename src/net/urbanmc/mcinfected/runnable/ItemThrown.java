@@ -14,7 +14,9 @@ public class ItemThrown extends BukkitRunnable {
 	@Override
 	public void run() {
 		if (grenade.getItem().isOnGround()) {
+			grenade.getItem().remove();
 			grenade.activate();
+
 			cancel();
 		}
 	}

@@ -96,7 +96,7 @@ public class ItemUtil {
 		return is;
 	}
 
-	private static String convertEnchants (String s) {
+	private static String convertEnchants(String s) {
 		switch (s) {
 			case "sharpness":
 				return "damage_all";
@@ -139,10 +139,9 @@ public class ItemUtil {
 			armor = kit.getArmor();
 		}
 
-
-			for (ItemStack item : items) {
-				player.getInventory().addItem(item);
-			}
+		for (ItemStack item : items) {
+			player.getInventory().addItem(item);
+		}
 
 
 		Collections.reverse(armor);

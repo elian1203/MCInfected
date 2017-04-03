@@ -26,6 +26,5 @@ public class StickyGrenade extends Grenade {
 			if (entity instanceof Player)
 				((Player) entity).addPotionEffect(slowness);
 		}
-		getItem().remove();
 	}
 }

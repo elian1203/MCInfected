@@ -66,16 +66,14 @@ public class ShopManager {
 
 			if (item.getType().equals(ShopItemType.RANK_UP)) {
 				ItemMeta meta = item.getItem().getItemMeta();
-				//System.out.print(p.getRank().getLevel());
 				Rank rank = RankManager.getInstance().getRankByLevel(p.getRank().getLevel() + 1);
 
 				if (rank == null) {
 					meta.setDisplayName(ChatColor.GOLD + "You are max level");
 					meta.setLore(Collections.emptyList());
 				} else {
-					meta.setLore(Collections.singletonList(
-							meta.getLore().get(0).replace("%amount%", Long.toString(rank.getCost())))
-					);
+					String lore = meta.getLore().get(0).replace("%amount%", Long.toString(rank.getCost()));
+					meta.setLore(Collections.singletonList(lore));
 				}
 
 				item.getItem().setItemMeta(meta);
