@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StickyGrenade extends Grenade {
 
-	public StickyGrenade(GamePlayer thrower, Item item) {
+	StickyGrenade(GamePlayer thrower, Item item) {
 		super(thrower, item);
 	}
 

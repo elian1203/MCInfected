@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ThrowingKnife extends Grenade {
 
-	public ThrowingKnife(GamePlayer thrower, Item item) {
+	ThrowingKnife(GamePlayer thrower, Item item) {
 		super(thrower, item);
 	}
 

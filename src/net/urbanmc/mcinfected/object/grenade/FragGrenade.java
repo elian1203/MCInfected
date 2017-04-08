@@ -10,23 +10,23 @@ import java.util.List;
 
 public class FragGrenade extends Grenade {
 
-    public FragGrenade(GamePlayer thrower, Item item) {
-        super(thrower, item);
-    }
+	FragGrenade(GamePlayer thrower, Item item) {
+		super(thrower, item);
+	}
 
-    @Override
-    public void activate() {
-        List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
+	@Override
+	public void activate() {
+		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
 
-        for (Entity entity : nearbyEntities) {
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
+		for (Entity entity : nearbyEntities) {
+			if (entity instanceof Player) {
+				Player player = (Player) entity;
 
-                player.damage(10);
+				player.damage(10);
 
-                GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
-                p.setLastAttacker(getThrower());
-            }
-        }
-    }
+				GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
+				p.setLastAttacker(getThrower());
+			}
+		}
+	}
 }

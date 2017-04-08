@@ -58,7 +58,7 @@ public class MapManager {
 	}
 
 	private void loadRandom() {
-		random = new Map("#random", "0/0/0/0/0/random");
+		random = new Map("Random", "0/0/0/0/0/random");
 	}
 
 	private void loadSpecific() {

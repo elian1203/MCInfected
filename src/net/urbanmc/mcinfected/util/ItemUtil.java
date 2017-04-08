@@ -143,7 +143,6 @@ public class ItemUtil {
 			player.getInventory().addItem(item);
 		}
 
-
 		Collections.reverse(armor);
 
 		ItemStack[] array = new ItemStack[4];
