@@ -10,7 +10,7 @@ public abstract class Grenade {
 	private GamePlayer thrower;
 	private Item item;
 
-	public Grenade(GamePlayer thrower, Item item) {
+	Grenade(GamePlayer thrower, Item item) {
 		this.thrower = thrower;
 		this.item = item;
 	}
@@ -39,7 +39,7 @@ public abstract class Grenade {
 		}
 	}
 
-	public GamePlayer getThrower() {
+	GamePlayer getThrower() {
 		return thrower;
 	}
 

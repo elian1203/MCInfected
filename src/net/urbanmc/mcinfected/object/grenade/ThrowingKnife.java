@@ -2,7 +2,6 @@ package net.urbanmc.mcinfected.object.grenade;
 
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -17,7 +16,6 @@ public class ThrowingKnife extends Grenade {
 
 	@Override
 	public void activate() {
-		Location loc = getItem().getLocation();
 		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(1, 2, 1);
 
 		for (Entity entity : nearbyEntities) {

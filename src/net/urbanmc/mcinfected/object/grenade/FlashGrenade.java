@@ -29,16 +29,11 @@ public class FlashGrenade extends Grenade {
 			nearbyEntities.forEach(System.out::println);
 			for (Entity entity : nearbyEntities) {
 				if (entity instanceof Player) {
-					Player p = (Player) entity;
-
-					if (p == getThrower().getOnlinePlayer())
-						continue;
-
-					p.addPotionEffects(effects);
+					((Player) entity).addPotionEffects(effects);
 					System.out.print("Potion Effect Applied");
 				}
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -12,7 +12,7 @@ public class ItemThrown extends BukkitRunnable {
 	public ItemThrown(Grenade grenade, MCInfected plugin) {
 		this.grenade = grenade;
 		this.plugin = plugin;
-		runTask(plugin);
+		runTaskTimer(plugin, 0, 1);
 	}
 
 	@Override
