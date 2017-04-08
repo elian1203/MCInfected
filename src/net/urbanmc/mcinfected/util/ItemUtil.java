@@ -187,8 +187,8 @@ public class ItemUtil {
 		Grenade grenade = Grenade.parseGrenade(p, item);
 
 		item.setVelocity(player.getLocation().getDirection().normalize().multiply(2.5));
-
-		new ItemThrown(grenade);
+		System.out.print("Item Thrown Class initialized");
+		new ItemThrown(grenade, plugin);
 	}
 
 	public static String getFriendlyName(ItemStack is) {

@@ -17,9 +17,10 @@ public class StickyGrenade extends Grenade {
 
 	@Override
 	public void activate() {
+		System.out.print("Sticky Grenade Activated");
 		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
 
-		PotionEffect slowness = new PotionEffect(PotionEffectType.SLOW, 10, 1);
+		PotionEffect slowness = new PotionEffect(PotionEffectType.SLOW, 200, 1);
 
 		for (Entity entity : nearbyEntities) {
 
