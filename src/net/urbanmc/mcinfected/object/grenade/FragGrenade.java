@@ -2,6 +2,7 @@ package net.urbanmc.mcinfected.object.grenade;
 
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.Effect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -11,7 +12,7 @@ import java.util.List;
 public class FragGrenade extends Grenade {
 
 	FragGrenade(GamePlayer thrower, Item item) {
-		super(thrower, item);
+		super(thrower, item, GrenadeType.FRAG);
 	}
 
 	@Override
@@ -21,7 +22,6 @@ public class FragGrenade extends Grenade {
 		for (Entity entity : nearbyEntities) {
 			if (entity instanceof Player) {
 				Player player = (Player) entity;
-
 				player.damage(10);
 
 				GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);

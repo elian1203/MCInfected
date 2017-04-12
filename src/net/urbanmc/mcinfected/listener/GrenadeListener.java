@@ -7,16 +7,24 @@ import net.urbanmc.mcinfected.object.grenade.Grenade;
 import net.urbanmc.mcinfected.runnable.ItemThrown;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GrenadeListener implements Listener {
 
     private MCInfected plugin;
+    public static List<Grenade> grenadeDuds = new ArrayList<>();
 
     public GrenadeListener(MCInfected plugin) {
         this.plugin = plugin;
@@ -43,15 +51,53 @@ public class GrenadeListener implements Listener {
     }
 
 
+
+
     @EventHandler
     public void onGrenadePickup(PlayerPickupItemEvent e) {
         //System.out.print("Grenade Pickup Called");
         //System.out.print(ChatColor.stripColor(e.getItem().getItemStack().getItemMeta().getDisplayName()));
         //String itemname = ChatColor.stripColor(e.getItem().getItemStack().getItemMeta().getDisplayName());
+
+
         if (Grenade.isGrenade(e.getItem().getItemStack())/*itemname.equalsIgnoreCase("Sticky Grenade") || itemname.equalsIgnoreCase("Flash Grenade")*/) {
-            e.getItem().remove();
+            grenadeDuds.forEach(Grenade::activate);
+            grenadeDuds.forEach(grenade -> {
+                grenade.getItem().remove();
+            });
             System.out.print("Grenade Removed");
             e.setCancelled(true);
         }
+
+
+        if(e.getItem().getCustomName() == null) return;
+
+        if(e.getItem().getCustomName().equalsIgnoreCase("ThrowingKnife")) {
+            e.getItem().remove();
+            ItemStack item = ItemUtil.getItem("tripwire_hook name:Throwing_Knife");
+            e.getPlayer().getInventory().addItem(item);
+            e.setCancelled(true);
+        }
+    }
+
+
+    @EventHandler
+    public void onKnifed(EntityDamageByEntityEvent e) {
+        if(!(e.getEntity() instanceof Player)) return;
+
+        if(!(e.getDamager().getType().equals(EntityType.ARROW))) return;
+
+        System.out.print(e.getDamager().getCustomName());
+        System.out.print(e.isCancelled());
+
+        if(e.getDamager().getCustomName() == null) return;
+        if(!e.getDamager().getCustomName().equalsIgnoreCase("ThrowingKnife")) return;
+
+        Projectile proj = (Projectile) e.getDamager();
+        System.out.print(proj.getLocation().getY() - e.getEntity().getLocation().getY());
+        //Originally the headshot distance was 1.35D but after some testing, I decided it would be a bit more accurate using 1.43D
+        int damage = (proj.getLocation().getY() - e.getEntity().getLocation().getY()) > 1.43D ? 20 : 16;
+        System.out.print(damage);
+        e.setDamage(damage);
     }
 }

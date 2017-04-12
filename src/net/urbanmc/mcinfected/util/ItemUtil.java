@@ -9,8 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -180,13 +182,22 @@ public class ItemUtil {
 
 	public static void throwItem(GamePlayer p, ItemStack is, MCInfected plugin) {
 		Player player = p.getOnlinePlayer();
-		player.getInventory().removeItem(is);
+		if(is.getAmount() > 1) is.setAmount(is.getAmount() - 1);
+		else player.getInventory().removeItem(is);
 
 		Item item = player.getWorld().dropItem(player.getLocation(), is);
 
 		Grenade grenade = Grenade.parseGrenade(p, item);
 
-		item.setVelocity(player.getLocation().getDirection().normalize().multiply(2.5));
+        if (grenade.getType().equals(Grenade.GrenadeType.THROWING_KNIFE)) {
+            Arrow arrow = p.getOnlinePlayer().launchProjectile(Arrow.class);
+            arrow.setCustomName("ThrowingKnife");
+            grenade.getItem().remove();
+            return;
+        }
+
+        item.setVelocity(player.getLocation().getDirection().normalize().multiply(1.75));
+
 		System.out.print("Item Thrown Class initialized");
 		new ItemThrown(grenade, plugin);
 	}

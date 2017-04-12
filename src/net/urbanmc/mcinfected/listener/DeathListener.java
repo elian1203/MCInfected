@@ -75,7 +75,7 @@ public class DeathListener implements Listener {
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
 		}
-
+		p.getOnlinePlayer().setHealth(20);
 		e.setCancelled(true);
 	}
 
