@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.command;
 
+import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.ShopManager;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
@@ -16,6 +17,12 @@ public class Shop extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+
+		if(GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
+			messagePlayer(p, color("&4You cannot open shop while in lobby!"));
+			return;
+		}
+
 		if (args.length == 0) {
 			p.getOnlinePlayer().openInventory(ShopManager.getInstance().getShop(p));
 			return;

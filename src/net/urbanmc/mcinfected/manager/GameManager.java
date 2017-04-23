@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.Scoreboard;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.RestartServer;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -63,7 +64,7 @@ public class GameManager {
 				ItemUtil.equipPlayer(p);
 				break;
 		}
-
+		Scoreboard.getInstance().addPlayersToGame();
 		p.getOnlinePlayer().teleport(spawn);
 	}
 
@@ -86,7 +87,7 @@ public class GameManager {
 		String message;
 
 		if (zombiesWin) {
-			message = Messages.getInstance().getString("end_game_zombies_win", died);
+			message = Messages.getInstance().getString("end_game_zombies_win", died.getOfflinePlayer().getName());
 
 			GamePlayerManager.getInstance().giveAllScores(150, true);
 			GamePlayerManager.getInstance().giveAllCookies(15, true);

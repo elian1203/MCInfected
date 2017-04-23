@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.Scoreboard;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
@@ -35,6 +36,9 @@ public class GameStart extends BukkitRunnable {
 		}
 
 		boolean enoughPlayers = enoughPlayers();
+
+		if(time <= 60  && enoughPlayers) Scoreboard.getInstance().minuteCountdown(time);
+
 
 		if (time == 15 && !enoughPlayers) {
 			insufficientPlayers();

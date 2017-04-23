@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.listener;
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.grenade.Grenade;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +46,10 @@ public class GrenadeListener implements Listener {
         if (!Grenade.isGrenade(is)) {
             return;
         }
+
+        if(!GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
+            return;
+
 
         GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
         e.setCancelled(true);
