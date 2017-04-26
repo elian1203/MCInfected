@@ -19,9 +19,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ItemUtil {
@@ -146,7 +144,8 @@ public class ItemUtil {
 		}
 
 		Collections.reverse(armor);
-
+		List<Material> armorlist = Arrays.asList(Material.CHAINMAIL_HELMET,Material.LEATHER_HELMET,Material.IRON_HELMET,Material.GOLD_HELMET,Material.DIAMOND_HELMET);
+		if(!armorlist.contains(armor.get(armor.size()-1).getType())) Collections.reverse(armor);
 		ItemStack[] array = new ItemStack[4];
 		array = armor.toArray(array);
 

@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.listener;
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
+import net.urbanmc.mcinfected.manager.PacketManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.grenade.Grenade;
 import net.urbanmc.mcinfected.runnable.ItemThrown;
@@ -105,5 +106,7 @@ public class GrenadeListener implements Listener {
         int damage = (proj.getLocation().getY() - e.getEntity().getLocation().getY()) > 1.43D ? 20 : 16;
         System.out.print(damage);
         e.setDamage(damage);
+
+        PacketManager.getInstance().sendActionBar((Player) e.getEntity(),"You have been hit with a throwing knife!" , "dark_red");
     }
 }
