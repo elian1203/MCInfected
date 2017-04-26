@@ -24,7 +24,7 @@ public class Scoreboard implements Listener {
         return instance;
     }
 
-    public Scoreboard() {
+    private Scoreboard() {
         createLobbyObj();
         setMinuteList();
     }

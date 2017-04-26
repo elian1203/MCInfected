@@ -5,9 +5,9 @@ lobby:
   spawn: 0/67/0/0/0/lobby
 maps:
   Terminal:
-    spawn: 0/67/0/0/0/terminal
+    spawn: -1098.5/10/1156.5/0/0/terminal
   Nuketown:
-    spawn: 0/67/0/0/0/nuketown
+    spawn: -1046.5/63/394.5/180/0/nuketown
   Arkaden:
     spawn: 0/67/0/0/0/arkaden
   Highrise:

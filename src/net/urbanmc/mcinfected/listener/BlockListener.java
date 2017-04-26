@@ -16,7 +16,7 @@ public class BlockListener implements Listener {
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Material type = e.getBlock().getType();
 
-		if (type.equals(Material.CAKE)) {
+		if (type.equals(Material.CAKE_BLOCK)) {
 			FoodManager.getInstance().getCakes().add(e.getBlock());
 			return;
 		} else if (type.equals(Material.ENDER_CHEST)) {
