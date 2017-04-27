@@ -67,9 +67,9 @@ public class Scoreboard implements Listener {
         obj.getScore(" ").setScore(8);
 
         obj.getScore(ChatColor.RED + "Zombies:").setScore(7);
-        obj.getScore(color("&c&l" + players[0])).setScore(6);
+        obj.getScore(color("&c&l" + players[1])).setScore(6);
 
-        obj.getScore(" ").setScore(1);
+        obj.getScore("  ").setScore(1);
         obj.getScore(color("&bMap:&f " + MapManager.getInstance().getGameMap().getName())).setScore(0);
 
         applyBoard();
@@ -145,7 +145,6 @@ public class Scoreboard implements Listener {
 
             if (p.isInfected())
                 zombies += 1;
-
             else
                 humans += 1;
         }

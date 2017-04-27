@@ -23,6 +23,22 @@ public class PacketManager {
         defineReflection();
     }
 
+    private void defineReflection() {
+        try {
+            version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + ".";
+
+            Class<?> chatComponent = getNMSClass("IChatBaseComponent");
+            Class<?> chatClass = getNMSClass("PacketPlayOutChat");
+            packetPlayOutChatConstructor = chatClass.getConstructor(chatComponent, byte.class);
+
+            sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", this.getNMSClass("Packet"));
+
+            chatSerializer = getNMSClass("IChatBaseComponent.ChatSerializer");
+        } catch (Exception e) {
+            System.out.print("[MCInfected] Error with Reflection");
+        }
+    }
+
     public static PacketManager getInstance() { return instance; }
 
     private Class<?> getNMSClass(String nmsClassString) throws ClassNotFoundException {
@@ -63,21 +79,6 @@ public class PacketManager {
 
     }
 
-    private void defineReflection() {
-        try {
-            version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + ".";
-
-            Class<?> chatComponent = getNMSClass("IChatBaseComponent");
-            Class<?> chatClass = getNMSClass("PacketPlayOutChat");
-            packetPlayOutChatConstructor = chatClass.getConstructor(chatComponent, byte.class);
-
-            sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", this.getNMSClass("Packet"));
-
-            chatSerializer = getNMSClass("IChatBaseComponent.ChatSerializer");
-        } catch (Exception e) {
-            System.out.print("[MCInfected] Error with Reflection");
-        }
-    }
 
 
 }
