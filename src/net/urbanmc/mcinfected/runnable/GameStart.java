@@ -1,7 +1,7 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
-import net.urbanmc.mcinfected.Scoreboard;
+import net.urbanmc.mcinfected.manager.ScoreboardManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
@@ -30,14 +30,14 @@ public class GameStart extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if (time == 240 || time == 180 || time == 120 || time == 60 || time == 30 || time == 15 || time == 3 || time
-				== 2 || time == 1) {
+		if (time == 240 || time == 180 || time == 120 || time == 60 || time == 30 || time == 15 || time == 3 ||
+				time == 2 || time == 1) {
 			broadcastTime();
 		}
 
 		boolean enoughPlayers = enoughPlayers();
 
-		if(time <= 60  && enoughPlayers) Scoreboard.getInstance().minuteCountdown(time);
+		ScoreboardManager.getInstance().minuteCountdown(time);
 
 
 		if (time == 15 && !enoughPlayers) {

@@ -1,7 +1,6 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.MCInfected;
-import net.urbanmc.mcinfected.Scoreboard;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.RestartServer;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -9,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +43,11 @@ public class GameManager {
 	}
 
 	public void loadPlayer(GamePlayer p) {
+		PlayerInventory inv = p.getOnlinePlayer().getInventory();
+
+		inv.clear();
+		inv.setArmorContents(null);
+
 		Location spawn = null;
 
 		switch (state) {
@@ -64,7 +69,7 @@ public class GameManager {
 				ItemUtil.equipPlayer(p);
 				break;
 		}
-		Scoreboard.getInstance().addPlayersToGame();
+		ScoreboardManager.getInstance().addPlayersToGame();
 		p.getOnlinePlayer().teleport(spawn);
 	}
 

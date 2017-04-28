@@ -22,6 +22,6 @@ public class RestartServer extends BukkitRunnable {
 
 		GamePlayerManager.getInstance().savePlayers();
 
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+		Bukkit.shutdown();
 	}
 }

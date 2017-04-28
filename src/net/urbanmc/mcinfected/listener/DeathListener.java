@@ -1,6 +1,6 @@
 package net.urbanmc.mcinfected.listener;
 
-import net.urbanmc.mcinfected.Scoreboard;
+import net.urbanmc.mcinfected.manager.ScoreboardManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
@@ -76,7 +76,7 @@ public class DeathListener implements Listener {
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
 		}
-		Scoreboard.getInstance().addZombie();
+		ScoreboardManager.getInstance().addZombie();
 		p.getOnlinePlayer().setHealth(20);
 		e.setCancelled(true);
 	}

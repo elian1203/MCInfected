@@ -1,7 +1,7 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
-import net.urbanmc.mcinfected.Scoreboard;
+import net.urbanmc.mcinfected.manager.ScoreboardManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.KitManager;
@@ -32,10 +32,11 @@ public class InfectionStart extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		Scoreboard.getInstance().minuteCountdown(time);
 		if (time == 5 || time == 4 || time == 3 || time == 2 || time == 1) {
 			broadcastTime();
 		}
+
+		ScoreboardManager.getInstance().minuteCountdown(time);
 
 		if (time == 0) {
 			startInfection();
@@ -101,7 +102,7 @@ public class InfectionStart extends BukkitRunnable {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
 
-		Scoreboard.getInstance().createRunningObj();
+		ScoreboardManager.getInstance().createRunningObj();
 		new GameTimer(plugin);
 	}
 }
