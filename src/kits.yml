@@ -6,6 +6,7 @@ zombie:
   - chainmail_chestplate
   - chainmail_leggings
   - chainmail_boots
+  disguise: zombie
 mother:
   items:
   - 'gold_sword enchant:sharpness'
@@ -14,6 +15,7 @@ mother:
   - chainmail_chestplate
   - chainmail_leggings
   - chainmail_boots
+  disguise: pig_zombie
 kits:
   skeleton:
     name: Skeleton

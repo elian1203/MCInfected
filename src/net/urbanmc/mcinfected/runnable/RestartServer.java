@@ -21,6 +21,7 @@ public class RestartServer extends BukkitRunnable {
 		}
 
 		GamePlayerManager.getInstance().savePlayers();
+		MapManager.getInstance().cleanseMap();
 
 		Bukkit.shutdown();
 	}

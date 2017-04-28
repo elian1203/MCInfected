@@ -4,6 +4,7 @@ import net.urbanmc.mcinfected.manager.FoodManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MysteryManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,6 +31,8 @@ public class BlockListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		e.setCancelled(true);
+		if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+			e.setCancelled(true);
+		}
 	}
 }

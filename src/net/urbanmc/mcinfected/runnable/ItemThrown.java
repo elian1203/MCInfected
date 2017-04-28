@@ -1,9 +1,7 @@
 package net.urbanmc.mcinfected.runnable;
 
-import net.urbanmc.event.GrenadeActivateEvent;
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.object.grenade.Grenade;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -22,15 +20,7 @@ public class ItemThrown extends BukkitRunnable {
 
 		if (grenade.getItem().isOnGround() || hitPlayer) {
 			grenade.getItem().remove();
-
 			cancel();
-
-			GrenadeActivateEvent event = new GrenadeActivateEvent(grenade);
-			Bukkit.getPluginManager().callEvent(event);
-
-			if (!event.isCancelled()) {
-				grenade.activate();
-			}
 		}
 	}
 

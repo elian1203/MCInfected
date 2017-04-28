@@ -1,7 +1,6 @@
 package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
-import net.urbanmc.mcinfected.manager.CommandManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
@@ -43,7 +42,6 @@ public class MCInfected extends JavaPlugin {
 
 	private void registerGame() {
 		GameManager.getInstance().setPlugin(this);
-		CommandManager.getInstance().deregisterCommand(getCommand("help"));
 
 		gameStart = new GameStart(this);
 	}

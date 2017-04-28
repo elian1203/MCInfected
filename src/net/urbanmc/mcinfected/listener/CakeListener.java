@@ -28,7 +28,10 @@ public class CakeListener implements Listener {
 
 		double health = player.getHealth();
 
-		health += 4;
+		if (health == 20)
+			return;
+
+		health += 8;
 
 		if (health > 20) {
 			health = 20;
@@ -36,16 +39,17 @@ public class CakeListener implements Listener {
 
 		player.setHealth(health);
 
-		int slicesEaten = cake.getSlicesEaten();
+		int slicesRemaining = cake.getSlicesRemaining();
 
-		cake.setSlicesEaten(slicesEaten + 1);
-		cake.setSlicesRemaining(slicesEaten - 1);
+		cake.setSlicesRemaining(slicesRemaining - 1);
 
-		if (cake.getSlicesEaten() == 0) {
+		if (cake.getSlicesRemaining() == 0) {
 			b.setType(Material.AIR);
 			FoodManager.getInstance().getCakes().remove(b);
 		} else {
-			b.getState().setData(cake);
+			b.setData(cake.getData());
 		}
+
+		e.setCancelled(true);
 	}
 }

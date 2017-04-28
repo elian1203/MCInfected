@@ -1,5 +1,4 @@
 TODO:
-- Fix scoreboard at start
+- Fix scoreboard at start remove 0:15
 - Fix grenade not being thrown
-- Override help command
-- Fix disguises
+- Look into cookies (I think it's giving too much somewhere)

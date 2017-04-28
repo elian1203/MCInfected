@@ -42,18 +42,17 @@ public class Stats extends Command {
 	private String build(GamePlayer p) {
 		Rank rank = p.getRank();
 
-		String message = Messages.getInstance().getString(
+		return Messages.getInstance().getString(
 				"player_stats",
 				p.getOfflinePlayer().getName(),
 				rank.getLevel(),
 				rank.getName(),
 				p.getScores(),
 				p.getCookies(),
+				p.getGamesPlayed(),
 				p.getKills(),
 				p.getDeaths(),
 				p.getKDR(),
 				p.getHighestKillStreak());
-
-		return message;
 	}
 }

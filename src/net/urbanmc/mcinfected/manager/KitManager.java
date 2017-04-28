@@ -51,17 +51,15 @@ public class KitManager {
 		EntityType disguise = null;
 
 		if (data.contains(path + ".disguise")) {
-			disguise = EntityType.valueOf(data.getString(path + ".disguise"));
+			disguise = EntityType.valueOf(data.getString(path + ".disguise").toUpperCase());
 		}
 
-		Kit kit = new Kit(
+		return new Kit(
 				data.getString(path + ".name"),
 				data.getString(path + ".permission"),
 				ItemUtil.getItemList(data.getStringList(path + ".armor")),
 				ItemUtil.getItemList(data.getStringList(path + ".items")),
 				disguise);
-
-		return kit;
 	}
 
 	public List<Kit> getKits() {
@@ -75,6 +73,4 @@ public class KitManager {
 	public Kit getMotherKit() {
 		return mother;
 	}
-
-
 }

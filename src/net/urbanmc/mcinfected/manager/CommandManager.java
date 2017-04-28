@@ -3,16 +3,12 @@ package net.urbanmc.mcinfected.manager;
 import net.urbanmc.mcinfected.command.*;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CommandManager {
@@ -33,6 +29,7 @@ public class CommandManager {
 		commands = new ArrayList<>();
 
 		commands.add(new About());
+		commands.add(new Help());
 		commands.add(new Ignore());
 		commands.add(new Infected());
 		commands.add(new Message());
@@ -41,24 +38,6 @@ public class CommandManager {
 		commands.add(new Sneak());
 		commands.add(new Stats());
 		commands.add(new Vote());
-	}
-
-	@SuppressWarnings("unchecked")
-	public void deregisterCommand(PluginCommand cmd) {
-		try {
-			Object result = getPrivateField(Bukkit.getServer().getPluginManager(), "commandMap");
-			SimpleCommandMap commandMap = (SimpleCommandMap) result;
-			Object map = getPrivateField(commandMap, "knownCommands");
-			HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
-			knownCommands.remove(cmd.getName());
-			for (String alias : cmd.getAliases()) {
-				if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains("MCInfected")) {
-					knownCommands.remove(alias);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	private Command getCommandByName(String name) {
