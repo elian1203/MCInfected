@@ -30,6 +30,9 @@ public class FoodConsumeListener implements Listener {
 
 		double health = player.getHealth();
 
+		if (health == 20)
+			return;
+
 		health += food.getHealthReplenished();
 
 		if (health > 20) {
@@ -37,6 +40,11 @@ public class FoodConsumeListener implements Listener {
 		}
 
 		player.setHealth(health);
-		player.getInventory().removeItem(new ItemStack(is.getType()));
+
+		if (is.getAmount() > 1) {
+			is.setAmount(is.getAmount() - 1);
+		} else {
+			player.getInventory().removeItem(is);
+		}
 	}
 }

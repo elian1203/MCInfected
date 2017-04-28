@@ -59,22 +59,24 @@ public abstract class Grenade {
 
 	public abstract void activate();
 
-	public void createHelix(List<Entity> nearbyEntities) {
+	void createHelix(List<Entity> nearbyEntities) {
 		Location loc = getItem().getLocation();
 		int radius = 2;
 		for (double y = 0; y <= 4; y += 0.05) {
 			double x = radius * Math.cos(y);
 			double z = radius * Math.sin(y);
-			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.EXPLOSION_NORMAL,
-			                                                                     true,
-			                                                                     (float) (loc.getX() + x),
-			                                                                     (float) (loc.getY() + y),
-			                                                                     (float) (loc.getZ() + z),
-			                                                                     0,
-			                                                                     0,
-			                                                                     0,
-			                                                                     0,
-			                                                                     1);
+			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
+					EnumParticle.EXPLOSION_NORMAL,
+					true,
+					(float) (loc.getX() + x),
+					(float) (loc.getY() + y),
+					(float) (loc.getZ() + z),
+					0,
+					0,
+					0,
+					0,
+					1);
+
 			nearbyEntities.forEach(entity -> {
 				if (entity instanceof Player) {
 					((CraftPlayer) ((Player) entity)).getHandle().playerConnection.sendPacket(packet);
@@ -86,7 +88,6 @@ public abstract class Grenade {
 	public GrenadeType getType() {
 		return type;
 	}
-
 
 	public enum GrenadeType {
 		THROWING_KNIFE, FRAG, STICKY, FLASH

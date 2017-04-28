@@ -1,3 +1,5 @@
 TODO:
-- Fix cake not working
-- Better scoreboard: format string mm:ss
+- Fix scoreboard at start
+- Fix grenade not being thrown
+- Override help command
+- Fix disguises

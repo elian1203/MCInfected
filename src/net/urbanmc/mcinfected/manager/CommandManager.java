@@ -3,11 +3,16 @@ package net.urbanmc.mcinfected.manager;
 import net.urbanmc.mcinfected.command.*;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CommandManager {
@@ -16,12 +21,12 @@ public class CommandManager {
 
 	private List<Command> commands;
 
-	public static CommandManager getInstance() {
-		return instance;
-	}
-
 	private CommandManager() {
 		loadCommands();
+	}
+
+	public static CommandManager getInstance() {
+		return instance;
 	}
 
 	private void loadCommands() {
@@ -38,11 +43,25 @@ public class CommandManager {
 		commands.add(new Vote());
 	}
 
-	public List<Command> getCommands() {
-		return commands;
+	@SuppressWarnings("unchecked")
+	public void deregisterCommand(PluginCommand cmd) {
+		try {
+			Object result = getPrivateField(Bukkit.getServer().getPluginManager(), "commandMap");
+			SimpleCommandMap commandMap = (SimpleCommandMap) result;
+			Object map = getPrivateField(commandMap, "knownCommands");
+			HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
+			knownCommands.remove(cmd.getName());
+			for (String alias : cmd.getAliases()) {
+				if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains("MCInfected")) {
+					knownCommands.remove(alias);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
-	public Command getCommandByName(String name) {
+	private Command getCommandByName(String name) {
 		for (Command command : commands) {
 			if (command.getName().equalsIgnoreCase(name))
 				return command;
@@ -86,5 +105,16 @@ public class CommandManager {
 		command.execute(sender, label, args, p);
 
 		return true;
+	}
+
+	private Object getPrivateField(Object object,
+	                               String field) throws SecurityException, NoSuchFieldException,
+			IllegalArgumentException, IllegalAccessException {
+		Class<?> clazz = object.getClass();
+		Field objectField = clazz.getDeclaredField(field);
+		objectField.setAccessible(true);
+		Object result = objectField.get(object);
+		objectField.setAccessible(false);
+		return result;
 	}
 }

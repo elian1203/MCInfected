@@ -3,7 +3,6 @@ package net.urbanmc.mcinfected;
 import net.urbanmc.mcinfected.listener.*;
 import net.urbanmc.mcinfected.manager.CommandManager;
 import net.urbanmc.mcinfected.manager.GameManager;
-import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,15 +11,14 @@ public class MCInfected extends JavaPlugin {
 
 	private static GameStart gameStart;
 
+	public static GameStart getGameStart() {
+		return gameStart;
+	}
+
 	@Override
 	public void onEnable() {
 		registerListeners();
 		registerGame();
-	}
-
-	@Override
-	public void onDisable() {
-		GamePlayerManager.getInstance().savePlayers();
 	}
 
 	private void registerListeners() {
@@ -37,6 +35,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new FoodLevelListener(), this);
 		pm.registerEvents(new GrenadeListener(this), this);
 		pm.registerEvents(new HealthRegainListener(), this);
+		pm.registerEvents(new ItemDropListener(), this);
 		pm.registerEvents(new JoinListener(), this);
 		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
@@ -44,12 +43,8 @@ public class MCInfected extends JavaPlugin {
 
 	private void registerGame() {
 		GameManager.getInstance().setPlugin(this);
-		CommandManager.getInstance();
+		CommandManager.getInstance().deregisterCommand(getCommand("help"));
 
 		gameStart = new GameStart(this);
-	}
-
-	public static GameStart getGameStart() {
-		return gameStart;
 	}
 }

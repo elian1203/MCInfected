@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.manager;
 
+import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Rank;
 import net.urbanmc.mcinfected.object.ShopItem;
@@ -140,6 +141,11 @@ public class ShopManager {
 	}
 
 	private void purchaseItem(GamePlayer p, ShopItem item) {
+		if (GameManager.getInstance().getGameState() != GameState.RUNNING) {
+			p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("cannot_buy_yet"));
+			return;
+		}
+
 		int cost = item.getCost();
 
 		if (p.getCookies() < cost) {

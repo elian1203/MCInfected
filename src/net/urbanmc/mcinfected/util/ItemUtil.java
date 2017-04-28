@@ -9,17 +9,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
 public class ItemUtil {
@@ -63,7 +64,6 @@ public class ItemUtil {
 				String[] enchantSplit = enchant.split("/");
 
 				enchantSplit[0] = convertEnchants(enchantSplit[0]);
-				//System.out.print(enchantSplit[0]);
 
 				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
 				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
@@ -77,8 +77,6 @@ public class ItemUtil {
 			if (arg.startsWith("effect:")) {
 				String effect = arg.substring(7);
 				String[] effectSplit = effect.split("/");
-
-				//System.out.print(effectSplit[0]);
 
 				PotionEffectType effectType = PotionEffectType.getByName(effectSplit[0].toUpperCase());
 
@@ -144,8 +142,14 @@ public class ItemUtil {
 		}
 
 		Collections.reverse(armor);
-		List<Material> armorlist = Arrays.asList(Material.CHAINMAIL_HELMET,Material.LEATHER_HELMET,Material.IRON_HELMET,Material.GOLD_HELMET,Material.DIAMOND_HELMET);
-		if(!armorlist.contains(armor.get(armor.size()-1).getType())) Collections.reverse(armor);
+		List<Material> armorlist = Arrays.asList(
+				Material.CHAINMAIL_HELMET,
+				Material.LEATHER_HELMET,
+				Material.IRON_HELMET,
+				Material.GOLD_HELMET,
+				Material.DIAMOND_HELMET);
+		if (!armorlist.contains(armor.get(armor.size() - 1).getType()))
+			Collections.reverse(armor);
 		ItemStack[] array = new ItemStack[4];
 		array = armor.toArray(array);
 
@@ -181,23 +185,19 @@ public class ItemUtil {
 
 	public static void throwItem(GamePlayer p, ItemStack is, MCInfected plugin) {
 		Player player = p.getOnlinePlayer();
-		if(is.getAmount() > 1) is.setAmount(is.getAmount() - 1);
-		else player.getInventory().removeItem(is);
+		if (is.getAmount() > 1)
+			is.setAmount(is.getAmount() - 1);
+		else
+			player.getInventory().removeItem(is);
 
 		Item item = player.getWorld().dropItem(player.getLocation(), is);
 
 		Grenade grenade = Grenade.parseGrenade(p, item);
 
-        if (grenade.getType().equals(Grenade.GrenadeType.THROWING_KNIFE)) {
-            Arrow arrow = p.getOnlinePlayer().launchProjectile(Arrow.class);
-            arrow.setCustomName("ThrowingKnife");
-            grenade.getItem().remove();
-            return;
-        }
+		item.setPickupDelay(1000000);
 
-        item.setVelocity(player.getLocation().getDirection().normalize().multiply(1.75));
+		item.setVelocity(player.getLocation().getDirection().normalize().multiply(1.75));
 
-		System.out.print("Item Thrown Class initialized");
 		new ItemThrown(grenade, plugin);
 	}
 

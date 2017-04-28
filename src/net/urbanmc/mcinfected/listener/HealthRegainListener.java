@@ -15,7 +15,7 @@ public class HealthRegainListener implements Listener {
 		if (GameManager.getInstance().getGameState() != GameState.RUNNING)
 			return;
 
-		if (e.getRegainReason() != RegainReason.REGEN)
+		if (e.getRegainReason() != RegainReason.REGEN && e.getRegainReason() != RegainReason.SATIATED)
 			return;
 
 		if (e.getEntity() instanceof Player) {
