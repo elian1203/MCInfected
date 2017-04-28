@@ -47,7 +47,8 @@ public class GamePlayerManager {
 
 	private void loadPlayers() {
 		try {
-			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer()).create();
+			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer())
+					.create();
 
 			Scanner scanner = new Scanner(file);
 
@@ -65,7 +66,8 @@ public class GamePlayerManager {
 
 	public void savePlayers() {
 		try {
-			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer()).create();
+			Gson gson = new GsonBuilder().registerTypeAdapter(GamePlayerList.class, new GamePlayerListSerializer())
+					.create();
 
 			PrintWriter writer = new PrintWriter(file);
 
@@ -75,10 +77,6 @@ public class GamePlayerManager {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	public List<GamePlayer> getPlayers() {
-		return players;
 	}
 
 	public void register(Player p) {
@@ -118,15 +116,39 @@ public class GamePlayerManager {
 		return getGamePlayer(player.getUniqueId());
 	}
 
-	public void giveAllScores(long scores, boolean zombies) {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			getGamePlayer(p).giveScores(scores);
+	public void giveAllScores(long scores, boolean zombies, GamePlayer... exclude) {
+		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+
+		if (exclude != null) {
+			for (GamePlayer p : exclude) {
+				players.remove(p.getOnlinePlayer());
+			}
+		}
+
+		for (Player player : players) {
+			GamePlayer p = getGamePlayer(player);
+
+			if (p.isInfected() == zombies) {
+				p.giveScores(scores);
+			}
 		}
 	}
 
-	public void giveAllCookies(long cookies, boolean zombies) {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			getGamePlayer(p).giveCookies(cookies);
+	public void giveAllCookies(long cookies, boolean zombies, GamePlayer... exclude) {
+		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+
+		if (exclude != null) {
+			for (GamePlayer p : exclude) {
+				players.remove(p.getOnlinePlayer());
+			}
+		}
+
+		for (Player player : players) {
+			GamePlayer p = getGamePlayer(player);
+
+			if (p.isInfected() == zombies) {
+				p.giveCookies(cookies);
+			}
 		}
 	}
 

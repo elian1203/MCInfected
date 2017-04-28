@@ -3,3 +3,25 @@ name: MCInfected
 version: 0.1
 authors: [Elian, Silverwolfg11]
 depend: [LibsDisguises]
+
+permissions:
+  command.about:
+    default: true
+  command.help:
+    default: true
+  command.ignore:
+    default: true
+  command.infected:
+    default: true
+  command.message:
+    default: true
+  command.reply:
+    default: true
+  command.shop:
+    default: true
+  command.sneak:
+    default: op
+  command.stats:
+    default: true
+  command.vote:
+    default: true
