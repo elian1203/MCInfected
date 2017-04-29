@@ -12,7 +12,7 @@ public class DamageListener implements Listener {
 	public void onDamage(EntityDamageEvent e) {
 		GameState state = GameManager.getInstance().getGameState();
 
-		if (state.equals(GameState.LOBBY) || state.equals(GameState.COUNTDOWN)) {
+		if (state.equals(GameState.LOBBY) || state.equals(GameState.COUNTDOWN) || state.equals(GameState.FINISHED)) {
 			e.setCancelled(true);
 		}
 	}

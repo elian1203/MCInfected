@@ -87,6 +87,8 @@ public class GameManager {
 	}
 
 	public void endGame(boolean zombiesWin, GamePlayer died) {
+		setGameState(GameState.FINISHED);
+
 		List<GamePlayer> humans = getHumans();
 
 		String message;
@@ -125,6 +127,6 @@ public class GameManager {
 	}
 
 	public enum GameState {
-		LOBBY, COUNTDOWN, INFECTION, RUNNING
+		LOBBY, COUNTDOWN, INFECTION, RUNNING, FINISHED
 	}
 }

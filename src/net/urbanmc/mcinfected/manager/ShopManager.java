@@ -128,7 +128,7 @@ public class ShopManager {
 			return;
 		}
 
-		p.setCookies(p.getCookies() - cost);
+		p.setCookies(0);
 
 		p.setRank(rank);
 

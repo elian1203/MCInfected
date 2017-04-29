@@ -117,7 +117,7 @@ public class GamePlayerManager {
 	}
 
 	public void giveAllScores(long scores, boolean zombies, GamePlayer... exclude) {
-		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+		Collection<? extends Player> players = new HashSet<>(Bukkit.getOnlinePlayers());
 
 		if (exclude != null) {
 			for (GamePlayer p : exclude) {
@@ -135,7 +135,7 @@ public class GamePlayerManager {
 	}
 
 	public void giveAllCookies(long cookies, boolean zombies, GamePlayer... exclude) {
-		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+		Collection<? extends Player> players = new HashSet<>(Bukkit.getOnlinePlayers());
 
 		if (exclude != null) {
 			for (GamePlayer p : exclude) {
@@ -152,8 +152,16 @@ public class GamePlayerManager {
 		}
 	}
 
-	public void messageAllTeam(String message, boolean zombies) {
-		for (Player player : Bukkit.getOnlinePlayers()) {
+	public void messageAllTeam(String message, boolean zombies, GamePlayer... exclude) {
+		Collection<? extends Player> players = new HashSet<>(Bukkit.getOnlinePlayers());
+
+		if (exclude != null) {
+			for (GamePlayer p : exclude) {
+				players.remove(p.getOnlinePlayer());
+			}
+		}
+
+		for (Player player : players) {
 			GamePlayer p = getGamePlayer(player);
 
 			if (p.isInfected() == zombies) {

@@ -83,7 +83,14 @@ public class InfectionStart extends BukkitRunnable {
 	}
 
 	private void startInfection() {
-		List<Player> motherZombies = selectMotherZombies();
+		List<Player> motherZombies;
+
+		try {
+			motherZombies = selectMotherZombies();
+		} catch (Exception ex) {
+			new RestartServer(plugin);
+			return;
+		}
 
 		GameManager.getInstance().setGameState(GameManager.GameState.RUNNING);
 

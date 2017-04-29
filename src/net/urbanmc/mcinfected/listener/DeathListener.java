@@ -127,7 +127,7 @@ public class DeathListener implements Listener {
 				GamePlayerManager.getInstance().giveAllCookies(2, false, killed);
 
 				GamePlayerManager.getInstance()
-						.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false);
+						.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false, killed);
 			}
 
 			GamePlayerManager.getInstance().giveAllScores(10, true, killed);
