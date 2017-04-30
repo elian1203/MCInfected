@@ -9,6 +9,14 @@ maps:
   Nuketown:
     spawn: -1046.5/63/394.5/180/0/nuketown
   Arkaden:
-    spawn: 0/67/0/0/0/arkaden
+    spawn: 92.5/63/245.5/-90/0/arkaden
   Highrise:
-    spawn: 0/67/0/0/0/highrise
+    spawn: -12.5/189/7.5/-90/0/highrise
+  Hijacked:
+    spawn: -486.5/31/154.5/-90/0/hijacked
+  Carrier:
+    spawn: -1062.5/48/-1005.5/0/0/carrier
+  Cargo:
+    spawn: -1052.5/33/-974.5/180/0/cargo
+  Meltdown:
+    spawn: -1032.5/33/-995.5/90/0/meltdown

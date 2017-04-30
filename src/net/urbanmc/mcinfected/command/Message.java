@@ -48,10 +48,10 @@ public class Message extends Command {
 		String from = sender instanceof Player ? sender.getName() : "CONSOLE", to = targetPlayer.getName();
 
 		if (p != null) {
-			p.setLastMessager(target);
+			p.setLastMessenger(target);
 		}
 
-		target.setLastMessager(p);
+		target.setLastMessenger(p);
 
 		messageSender(sender, Messages.getInstance().getString("message_to", to, message));
 		messagePlayer(target, Messages.getInstance().getString("message_from", from, message));

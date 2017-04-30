@@ -17,10 +17,8 @@ public class GamePlayer {
 	private List<UUID> ignoring;
 	private Rank rank;
 	private Kit kit;
-	private boolean voted = false;
-	private boolean sneaking;
-	private boolean infected;
-	private GamePlayer lastAttacker, lastMessager;
+	private boolean voted = false, sneaking = false, infected = false, motherZombie = false;
+	private GamePlayer lastAttacker, lastMessenger;
 
 	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
 	                  int highestKillStreak, Rank rank, List<UUID> ignoring) {
@@ -47,24 +45,48 @@ public class GamePlayer {
 		return cookies;
 	}
 
+	public void setCookies(long cookies) {
+		this.cookies = cookies;
+	}
+
 	public long getGamesPlayed() {
 		return gamesPlayed;
+	}
+
+	public void setGamesPlayed(long gamesPlayed) {
+		this.gamesPlayed = gamesPlayed;
 	}
 
 	public int getKills() {
 		return kills;
 	}
 
+	public void setKills(int kills) {
+		this.kills = kills;
+	}
+
 	public int getDeaths() {
 		return deaths;
+	}
+
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
 	}
 
 	public int getHighestKillStreak() {
 		return highestKillStreak;
 	}
 
+	public void setHighestKillStreak(int hightestKillStreak) {
+		this.highestKillStreak = hightestKillStreak;
+	}
+
 	public Rank getRank() {
 		return rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
 	}
 
 	public List<UUID> getIgnoring() {
@@ -77,6 +99,10 @@ public class GamePlayer {
 
 	public Kit getKit() {
 		return kit;
+	}
+
+	public void setKit(Kit kit) {
+		this.kit = kit;
 	}
 
 	public String getKDR() {
@@ -92,40 +118,12 @@ public class GamePlayer {
 		return df.format(kdr);
 	}
 
-	public void setScores(long scores) {
-		this.scores = scores;
-	}
-
 	public void giveScores(long scores) {
 		this.scores += scores;
 	}
 
-	public void setCookies(long cookies) {
-		this.cookies = cookies;
-	}
-
 	public void giveCookies(long cookies) {
 		this.cookies += cookies;
-	}
-
-	public void setGamesPlayed(long gamesPlayed) {
-		this.gamesPlayed = gamesPlayed;
-	}
-
-	public void setKills(int kills) {
-		this.kills = kills;
-	}
-
-	public void setDeaths(int deaths) {
-		this.deaths = deaths;
-	}
-
-	public void setHighestKillStreak(int hightestKillStreak) {
-		this.highestKillStreak = hightestKillStreak;
-	}
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
 	}
 
 	public void addToIgnoring(UUID uuid) {
@@ -134,10 +132,6 @@ public class GamePlayer {
 
 	public void removeFromIgnoring(UUID uuid) {
 		ignoring.remove(uuid);
-	}
-
-	public void setKit(Kit kit) {
-		this.kit = kit;
 	}
 
 	public int getKillStreak() {
@@ -182,6 +176,17 @@ public class GamePlayer {
 		kit = KitManager.getInstance().getZombieKit();
 	}
 
+	public boolean isMotherZombie() {
+		return motherZombie;
+	}
+
+	public void setMotherZombie() {
+		infected = true;
+		motherZombie = true;
+
+		kit = KitManager.getInstance().getMotherKit();
+	}
+
 	public GamePlayer getLastAttacker() {
 		return lastAttacker;
 	}
@@ -190,11 +195,11 @@ public class GamePlayer {
 		this.lastAttacker = lastAttacker;
 	}
 
-	public GamePlayer getLastMessager() {
-		return lastMessager;
+	public GamePlayer getLastMessenger() {
+		return lastMessenger;
 	}
 
-	public void setLastMessager(GamePlayer lastMessager) {
-		this.lastMessager = lastMessager;
+	public void setLastMessenger(GamePlayer lastMessenger) {
+		this.lastMessenger = lastMessenger;
 	}
 }

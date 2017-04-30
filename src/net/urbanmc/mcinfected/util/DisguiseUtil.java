@@ -13,8 +13,4 @@ class DisguiseUtil {
 
 		DisguiseAPI.disguiseToAll(p, disguise);
 	}
-
-	static void removePlayerDisguise(Player p) {
-		DisguiseAPI.undisguiseToAll(p);
-	}
 }

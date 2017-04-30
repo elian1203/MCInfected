@@ -1,3 +1,4 @@
 TODO:
-- Fix scoreboard at start remove 0:15
+- Fix scoreboard players get messed up
 - Fix grenade not being thrown
+- Kit command
