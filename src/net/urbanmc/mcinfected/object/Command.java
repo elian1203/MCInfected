@@ -35,7 +35,7 @@ public abstract class Command {
 		return aliases;
 	}
 
-	public void messageSender(CommandSender sender, String message) {
+	protected void messageSender(CommandSender sender, String message) {
 		if (!(sender instanceof Player)) {
 			message = ChatColor.stripColor(message);
 		}
@@ -43,7 +43,7 @@ public abstract class Command {
 		sender.sendMessage(message);
 	}
 
-	public void messagePlayer(GamePlayer p, String message) {
+	protected void messagePlayer(GamePlayer p, String message) {
 		p.getOnlinePlayer().sendMessage(message);
 	}
 

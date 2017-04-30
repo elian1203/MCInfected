@@ -1,11 +1,10 @@
 package net.urbanmc.mcinfected.runnable;
 
 import net.urbanmc.mcinfected.MCInfected;
-import net.urbanmc.mcinfected.manager.ScoreboardManager;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
-import net.urbanmc.mcinfected.manager.KitManager;
 import net.urbanmc.mcinfected.manager.Messages;
+import net.urbanmc.mcinfected.manager.ScoreboardManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.Bukkit;
@@ -99,8 +98,7 @@ public class InfectionStart extends BukkitRunnable {
 		for (Player player : motherZombies) {
 			GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-			p.setInfected();
-			p.setKit(KitManager.getInstance().getMotherKit());
+			p.setMotherZombie();
 
 			ItemUtil.equipPlayer(p);
 

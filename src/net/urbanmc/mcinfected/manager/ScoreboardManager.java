@@ -132,4 +132,12 @@ public class ScoreboardManager implements Listener {
 	private String formatTime(long seconds) {
 		return String.format("%d:%02d", seconds / 60, seconds % 60);
 	}
+
+	public void amplePlayers(int time) {
+		obj.getScoreboard().resetScores(formatTime(time));
+	}
+
+	public void insufficientPlayers() {
+		obj.getScoreboard().resetScores("0:15");
+	}
 }
