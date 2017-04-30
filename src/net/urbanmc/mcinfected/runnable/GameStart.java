@@ -23,7 +23,7 @@ public class GameStart extends BukkitRunnable {
 
 	public GameStart(MCInfected plugin) {
 		this.plugin = plugin;
-		this.time = 60; // Should be 240
+		this.time = 240;
 
 		runTaskTimer(plugin, 0, 20);
 	}

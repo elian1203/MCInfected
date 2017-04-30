@@ -52,9 +52,9 @@ public class InfectionStart extends BukkitRunnable {
 
 	private List<Player> selectMotherZombies() {
 		double online = Integer.valueOf(Bukkit.getOnlinePlayers().size()).doubleValue();
-		double amount = (online / 100) * 20;
+		double amount = (online / 100) * 10;
 
-		if (Bukkit.getOnlinePlayers().size() < 4) {
+		if (Bukkit.getOnlinePlayers().size() < 10) {
 			amount = 1;
 		}
 
