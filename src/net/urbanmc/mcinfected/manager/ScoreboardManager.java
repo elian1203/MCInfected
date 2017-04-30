@@ -101,6 +101,8 @@ public class ScoreboardManager implements Listener {
 		}
 	}
 
+	public void stopCountdown(int time) { obj.getScoreboard().resetScores(formatTime(time-1)); }
+
 	private int[] sortPlayers() {
 		int humans = 0;
 		int zombies = 0;
