@@ -82,8 +82,11 @@ public class DeathListener implements Listener {
 
 		ItemUtil.equipPlayer(p);
 
+		p.setLastAttacker(null);
+
 		ScoreboardManager.getInstance().addZombie();
 		p.getOnlinePlayer().setHealth(20);
+
 		e.setCancelled(true);
 	}
 

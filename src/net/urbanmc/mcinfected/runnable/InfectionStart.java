@@ -51,9 +51,10 @@ public class InfectionStart extends BukkitRunnable {
 	}
 
 	private List<Player> selectMotherZombies() {
-		int amount = (Bukkit.getOnlinePlayers().size() / 100) * 20;
+		double online = Integer.valueOf(Bukkit.getOnlinePlayers().size()).doubleValue();
+		double amount = (online / 100) * 20;
 
-		if (Bukkit.getOnlinePlayers().size() < 8) {
+		if (Bukkit.getOnlinePlayers().size() < 4) {
 			amount = 1;
 		}
 
@@ -66,7 +67,7 @@ public class InfectionStart extends BukkitRunnable {
 
 		Random r = ThreadLocalRandom.current();
 
-		for (int i = 0; i < amount; i++) {
+		for (int i = 0; i < Double.valueOf(amount).intValue(); i++) {
 			int index = r.nextInt(players.size());
 
 			Player p = array[index];
@@ -89,6 +90,7 @@ public class InfectionStart extends BukkitRunnable {
 			motherZombies = selectMotherZombies();
 		} catch (Exception ex) {
 			new RestartServer(plugin);
+			ex.printStackTrace();
 			return;
 		}
 
