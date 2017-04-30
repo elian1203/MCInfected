@@ -40,7 +40,6 @@ public class GameStart extends BukkitRunnable {
 		ScoreboardManager.getInstance().minuteCountdown(time);
 
 		if (time == 15 && !enoughPlayers) {
-			ScoreboardManager.getInstance().stopCountdown(time);
 			insufficientPlayers();
 		} else if (time == 15 && enoughPlayers) {
 			mapSelection();

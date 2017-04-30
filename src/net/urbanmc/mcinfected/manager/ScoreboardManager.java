@@ -100,8 +100,7 @@ public class ScoreboardManager implements Listener {
 			replaceEntry(oldFormatted, formatted);
 		}
 	}
-
-	public void stopCountdown(int time) { obj.getScoreboard().resetScores(formatTime(time-1)); }
+	
 
 	private int[] sortPlayers() {
 		int humans = 0;
