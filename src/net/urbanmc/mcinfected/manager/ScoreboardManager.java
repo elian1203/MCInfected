@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 
 public class ScoreboardManager implements Listener {
 
@@ -28,6 +29,7 @@ public class ScoreboardManager implements Listener {
 		obj.setDisplayName(ChatColor.RED + "MCInfected");
 		obj.getScore(ChatColor.AQUA + "Players:").setScore(10);
 		obj.getScore(ChatColor.BOLD + String.valueOf(0)).setScore(9);
+		obj.getScore("     ").setScore(1);
 	}
 
 	public void createRunningObj() {
@@ -48,8 +50,10 @@ public class ScoreboardManager implements Listener {
 		obj.getScore(ChatColor.RED + "Zombies:").setScore(7);
 		obj.getScore(color("&c&l" + players[1])).setScore(6);
 
-		obj.getScore("  ").setScore(1);
-		obj.getScore(color("&bMap:&f " + MapManager.getInstance().getGameMap().getName())).setScore(0);
+		obj.getScore("  ").setScore(3);
+		obj.getScore(color("&bMap:&f " + MapManager.getInstance().getGameMap().getName())).setScore(2);
+
+		obj.getScore("   ").setScore(1);
 
 		applyBoard();
 	}
@@ -91,16 +95,17 @@ public class ScoreboardManager implements Listener {
 
 
 	public void minuteCountdown(int time) {
+
+
 		if (time == 0) {
-			obj.getScoreboard().resetScores("0:01");
+			obj.getScoreboard().resetScores(ChatColor.RED + "0:01");
 		} else {
-			String oldFormatted = formatTime(time + 1);
-			String formatted = formatTime(time);
+			String oldFormatted = ChatColor.RED + formatTime(time + 1);
+			String formatted = ChatColor.RED + formatTime(time);
 
 			replaceEntry(oldFormatted, formatted);
 		}
 	}
-	
 
 	private int[] sortPlayers() {
 		int humans = 0;
@@ -133,7 +138,10 @@ public class ScoreboardManager implements Listener {
 	}
 
 	public void amplePlayers(int time) {
-		obj.getScoreboard().resetScores(formatTime(time));
+		System.out.print(formatTime(time));
+		System.out.print(formatTime(time + 1));
+		obj.getScoreboard().resetScores(ChatColor.RED + formatTime(time + 1));
+		//applyBoard();
 	}
 
 	public void insufficientPlayers() {

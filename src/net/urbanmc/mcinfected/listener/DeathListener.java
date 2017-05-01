@@ -75,7 +75,7 @@ public class DeathListener implements Listener {
 
 				p.setInfected();
 				p.setKillStreak(0);
-
+				ScoreboardManager.getInstance().addZombie();
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
 		}
@@ -84,7 +84,6 @@ public class DeathListener implements Listener {
 
 		p.setLastAttacker(null);
 
-		ScoreboardManager.getInstance().addZombie();
 		p.getOnlinePlayer().setHealth(20);
 
 		e.setCancelled(true);
