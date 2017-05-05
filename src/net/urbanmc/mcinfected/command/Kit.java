@@ -28,10 +28,12 @@ public class Kit extends Command {
 			List<String> allowedKits = convertToNames(KitManager.getInstance().getKitsForPlayer(p));
 
 			String joined = StringUtils.join(allowedKits, ", ");
+
+
 		}
 	}
 
 	private List<String> convertToNames(List<net.urbanmc.mcinfected.object.Kit> kits) {
-		return kits.stream().map(kit -> kit.getName()).collect(Collectors.toList());
+		return kits.stream().map(net.urbanmc.mcinfected.object.Kit::getName).collect(Collectors.toList());
 	}
 }

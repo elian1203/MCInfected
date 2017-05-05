@@ -5,6 +5,7 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.manager.ScoreboardManager;
+import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,7 +19,7 @@ public class GameTimer extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		ScoreboardManager.getInstance().minuteCountdown(time);
+		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.GAME);
 
 		if (time == 300 || time == 60)
 			broadcastTime();

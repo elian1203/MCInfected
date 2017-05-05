@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.manager.Messages;
+import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.KillStreakUtil;
@@ -84,7 +85,7 @@ public class DeathListener implements Listener {
 
 		p.setLastAttacker(null);
 
-		ScoreboardManager.getInstance().addZombie();
+		ScoreboardManager.getInstance().updateBoard(BoardType.GAME);
 		p.getOnlinePlayer().setHealth(20);
 
 		e.setCancelled(true);

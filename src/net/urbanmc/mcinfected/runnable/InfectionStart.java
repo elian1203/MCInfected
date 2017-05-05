@@ -5,6 +5,7 @@ import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.manager.ScoreboardManager;
+import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.bukkit.Bukkit;
@@ -35,7 +36,7 @@ public class InfectionStart extends BukkitRunnable {
 			broadcastTime();
 		}
 
-		ScoreboardManager.getInstance().minuteCountdown(time);
+		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.GAME);
 
 		if (time == 0) {
 			startInfection();
@@ -109,7 +110,6 @@ public class InfectionStart extends BukkitRunnable {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
 
-		ScoreboardManager.getInstance().createRunningObj();
 		new GameTimer(plugin);
 	}
 }

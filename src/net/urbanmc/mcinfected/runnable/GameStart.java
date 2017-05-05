@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.MapManager;
 import net.urbanmc.mcinfected.manager.Messages;
+import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -37,7 +38,7 @@ public class GameStart extends BukkitRunnable {
 
 		boolean enoughPlayers = enoughPlayers();
 
-		ScoreboardManager.getInstance().minuteCountdown(time);
+		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.LOBBY);
 
 		if (time == 15 && !enoughPlayers) {
 			insufficientPlayers();
@@ -57,7 +58,7 @@ public class GameStart extends BukkitRunnable {
 	}
 
 	public void amplePlayers() {
-		ScoreboardManager.getInstance().amplePlayers(time);
+		ScoreboardManager.getInstance().amplePlayers(time + 1);
 
 		time = 90;
 		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));

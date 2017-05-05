@@ -1,4 +1,3 @@
 TODO:
-- Fix scoreboard players get messed up
 - Fix grenade not being thrown
 - Kit command

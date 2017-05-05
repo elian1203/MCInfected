@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.MCInfected;
+import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.RestartServer;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -49,27 +50,33 @@ public class GameManager {
 		inv.setArmorContents(null);
 
 		Location spawn = null;
+		BoardType type = null;
 
 		switch (state) {
 			case LOBBY:
 				spawn = MapManager.getInstance().getLobby().getSpawn();
+				type = BoardType.LOBBY;
 				break;
 			case COUNTDOWN:
 				spawn = MapManager.getInstance().getLobby().getSpawn();
+				type = BoardType.LOBBY;
 				break;
 			case INFECTION:
 				spawn = MapManager.getInstance().getGameMap().getSpawn();
+				type = BoardType.GAME;
 
 				ItemUtil.equipPlayer(p);
 				break;
 			case RUNNING:
 				spawn = MapManager.getInstance().getGameMap().getSpawn();
+				type = BoardType.GAME;
 
 				p.setInfected();
 				ItemUtil.equipPlayer(p);
 				break;
 		}
-		ScoreboardManager.getInstance().addPlayersToGame();
+
+		ScoreboardManager.getInstance().addPlayersToGame(type);
 		p.getOnlinePlayer().teleport(spawn);
 	}
 
