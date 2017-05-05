@@ -27,8 +27,8 @@ public class KitManager {
 		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("kits.yml"));
 		data = YamlConfiguration.loadConfiguration(reader);
 
-		loadMotherAndZombie();
 		loadKits();
+		loadMotherAndZombie();
 	}
 
 	public static KitManager getInstance() {
@@ -48,6 +48,9 @@ public class KitManager {
 	private void loadMotherAndZombie() {
 		mother = formKit("mother");
 		zombie = formKit("zombie");
+
+		kits.add(mother);
+		kits.add(zombie);
 	}
 
 	private Kit formKit(String path) {
@@ -71,6 +74,16 @@ public class KitManager {
 
 	public Kit getMotherKit() {
 		return mother;
+	}
+
+	public Kit getKitByName(String name) {
+		for (Kit kit : kits) {
+			if (kit.getName().equalsIgnoreCase(name)) {
+				return kit;
+			}
+		}
+
+		return null;
 	}
 
 	public List<Kit> getKitsForPlayer(GamePlayer p) {

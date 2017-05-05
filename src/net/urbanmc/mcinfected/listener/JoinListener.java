@@ -43,10 +43,13 @@ public class JoinListener implements Listener {
 
 	private String getJoinMessage(String playerName) {
 
-		if(GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
+		if (GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
 			return Messages.getInstance().getString("joined_running", playerName);
 
 		else
-			return Messages.getInstance().getString("joined_pregrame,", playerName, Bukkit.getOnlinePlayers().size(), MCInfected.getSufficientPlayers());
+			return Messages.getInstance().getString("joined_pregame",
+			                                        playerName,
+			                                        Bukkit.getOnlinePlayers().size(),
+			                                        MCInfected.getSufficientPlayers());
 	}
 }

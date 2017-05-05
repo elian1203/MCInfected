@@ -43,6 +43,8 @@ public class DeathListener implements Listener {
 		if (state.equals(GameState.INFECTION)) {
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
 			player.setHealth(20);
+
+			e.setCancelled(true);
 			return;
 		}
 

@@ -61,11 +61,11 @@ public class ScoreboardManager implements Listener {
 
 		String[] split = text.split("\\r?\\n");
 
-		int lineNumber = 0, alt = split.length;
+		int lineNumber = 0, score = split.length;
 
 		while (lineNumber < split.length) {
 			String line = split[lineNumber++];
-			obj.getScore(line).setScore(alt--);
+			obj.getScore(line).setScore(score--);
 		}
 	}
 

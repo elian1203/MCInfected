@@ -9,7 +9,7 @@ zombie:
   - chainmail_boots
   disguise: zombie
 mother:
-  name: Mother Zombie
+  name: Mother
   items:
   - 'gold_sword enchant:sharpness'
   armor:

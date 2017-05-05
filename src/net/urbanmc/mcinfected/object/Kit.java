@@ -7,39 +7,43 @@ import java.util.List;
 
 public class Kit {
 
-    private String name, permission;
-    private List<ItemStack> armor, items;
-    private EntityType disguise;
+	private String name, permission;
+	private List<ItemStack> armor, items;
+	private EntityType disguise;
 
-    public Kit(String name, String permission, List<ItemStack> armor, List<ItemStack> items, EntityType disguise) {
-        this.name = name;
-        this.permission = permission;
-        this.armor = armor;
-        this.items = items;
-        this.disguise = disguise;
-    }
+	public Kit(String name, String permission, List<ItemStack> armor, List<ItemStack> items, EntityType disguise) {
+		this.name = name;
+		this.permission = permission;
+		this.armor = armor;
+		this.items = items;
+		this.disguise = disguise;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPermission() {
-        return permission;
-    }
+	public String getPermission() {
+		return permission;
+	}
 
-    public List<ItemStack> getArmor() {
-        return armor;
-    }
+	public List<ItemStack> getArmor() {
+		return armor;
+	}
 
-    public List<ItemStack> getItems() {
-        return items;
-    }
+	public List<ItemStack> getItems() {
+		return items;
+	}
 
-    public boolean hasDisguise() {
-        return disguise != null;
-    }
+	public boolean hasDisguise() {
+		return disguise != null;
+	}
 
-    public EntityType getDisguise() {
-        return disguise;
-    }
+	public EntityType getDisguise() {
+		return disguise;
+	}
+
+	public boolean playerHasAccess(GamePlayer p) {
+		return p.getOnlinePlayer().hasPermission(permission);
+	}
 }
