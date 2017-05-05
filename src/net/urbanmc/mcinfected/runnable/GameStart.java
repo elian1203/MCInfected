@@ -76,7 +76,7 @@ public class GameStart extends BukkitRunnable {
 	}
 
 	private boolean enoughPlayers() {
-		return plugin.getServer().getOnlinePlayers().size() >= 1; // Normally 8
+		return plugin.getServer().getOnlinePlayers().size() >= MCInfected.getSufficientPlayers(); // Normally 8
 	}
 
 	private void startInfection() {

@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.listener;
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
+import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.bukkit.Bukkit;
@@ -29,6 +30,8 @@ public class JoinListener implements Listener {
 		if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= 1 /*Normally 8 */) {
 			gameStart.amplePlayers();
 		}
+
+		e.setJoinMessage(getJoinMessage(e.getPlayer().getName()));
 	}
 
 	private void disableAttackCooldown(Player p) {
@@ -36,5 +39,14 @@ public class JoinListener implements Listener {
 		attribute.setBaseValue(20);
 
 		p.saveData();
+	}
+
+	private String getJoinMessage(String playerName) {
+
+		if(GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
+			return Messages.getInstance().getString("joined_running", playerName);
+
+		else
+			return Messages.getInstance().getString("joined_pregrame,", playerName, Bukkit.getOnlinePlayers().size(), MCInfected.getSufficientPlayers());
 	}
 }

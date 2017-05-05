@@ -9,10 +9,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MCInfected extends JavaPlugin {
 
 	private static GameStart gameStart;
+	private static int sufficientPlayers = 1; //Normally 16
 
 	public static GameStart getGameStart() {
 		return gameStart;
 	}
+
+	public static int getSufficientPlayers() { return sufficientPlayers; }
 
 	@Override
 	public void onEnable() {
