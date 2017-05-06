@@ -25,3 +25,6 @@ items:
     item: 'ender_chest name:&oMystery_Chest lore:&6Cost:_200_Cookies'
     type: item
     cost: 200
+  8:
+    item: 'cookie name:&oCookies lore:&6You_have_%amount%_Cookies'
+    type: cookies

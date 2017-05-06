@@ -27,7 +27,9 @@ public class ShopListener implements Listener {
 		GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);
 		ShopItem item = ShopManager.getInstance().getShopItem(e.getSlot());
 
-		ShopManager.getInstance().manageClickedItem(gamePlayer, item);
+		if (item != null) {
+			ShopManager.getInstance().manageClickedItem(gamePlayer, item);
+		}
 
 		e.setCancelled(true);
 	}

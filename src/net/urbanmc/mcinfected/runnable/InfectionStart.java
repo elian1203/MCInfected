@@ -111,5 +111,6 @@ public class InfectionStart extends BukkitRunnable {
 		}
 
 		new GameTimer(plugin);
+		new SpawnInvincibility(plugin);
 	}
 }
