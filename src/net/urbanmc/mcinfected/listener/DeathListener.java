@@ -1,11 +1,7 @@
 package net.urbanmc.mcinfected.listener;
 
-import net.urbanmc.mcinfected.manager.ScoreboardManager;
-import net.urbanmc.mcinfected.manager.GameManager;
+import net.urbanmc.mcinfected.manager.*;
 import net.urbanmc.mcinfected.manager.GameManager.GameState;
-import net.urbanmc.mcinfected.manager.GamePlayerManager;
-import net.urbanmc.mcinfected.manager.MapManager;
-import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -23,6 +19,7 @@ public class DeathListener implements Listener {
 
 	@EventHandler
 	public void onPlayerDeath(EntityDamageEvent e) {
+		System.out.println("ran event");
 		GameState state = GameManager.getInstance().getGameState();
 
 		if (!state.equals(GameState.INFECTION) && !state.equals(GameState.RUNNING))
@@ -35,16 +32,30 @@ public class DeathListener implements Listener {
 
 		double health = player.getHealth() - e.getDamage();
 
-		if (health > 0)
+		System.out.println("health = " + health);
+
+		if (health > 0) {
+			System.out.println("cancelled for health");
 			return;
+		}
+
+		e.setCancelled(true);
+
+		handleEvent(e);
+	}
+
+	private synchronized void handleEvent(EntityDamageEvent e) {
+		System.out.println("started handling");
+		GameState state = GameManager.getInstance().getGameState();
+		Player player = (Player) e.getEntity();
 
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
+		player.teleport(MapManager.getInstance().getGameMap().getSpawn()); // not permanent
+		player.setHealth(20);
+
 		if (state.equals(GameState.INFECTION)) {
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
-			player.setHealth(20);
-
-			e.setCancelled(true);
 			return;
 		}
 
@@ -88,9 +99,8 @@ public class DeathListener implements Listener {
 		p.setLastAttacker(null);
 
 		ScoreboardManager.getInstance().updateBoard(BoardType.GAME);
-		p.getOnlinePlayer().setHealth(20);
 
-		e.setCancelled(true);
+		System.out.println("finished handling");
 	}
 
 	private boolean isEntityCause(DamageCause cause) {

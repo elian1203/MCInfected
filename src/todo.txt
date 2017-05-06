@@ -1,5 +1,4 @@
 TODO:
 - Fix grenades being weird
 - Kit command
-- Mobs still spawning
 - Double death when falling out of map
