@@ -9,13 +9,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MCInfected extends JavaPlugin {
 
 	private static GameStart gameStart;
-	private static int sufficientPlayers = 1; //Normally 16
+	private static int sufficientPlayers = 1; //Normally 8
 
 	public static GameStart getGameStart() {
 		return gameStart;
 	}
 
-	public static int getSufficientPlayers() { return sufficientPlayers; }
+	public static int getSufficientPlayers() {
+		return sufficientPlayers;
+	}
 
 	@Override
 	public void onEnable() {
@@ -31,6 +33,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new CakeListener(), this);
 		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
+		pm.registerEvents(new CreatureSpawn(), this);
 		pm.registerEvents(new DamageListener(), this);
 		pm.registerEvents(new DeathListener(), this);
 		pm.registerEvents(new FoodConsumeListener(), this);
@@ -44,6 +47,8 @@ public class MCInfected extends JavaPlugin {
 	}
 
 	private void registerGame() {
+		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
 		GameManager.getInstance().setPlugin(this);
 
 		gameStart = new GameStart(this);
