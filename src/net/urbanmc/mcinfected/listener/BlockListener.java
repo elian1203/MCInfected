@@ -6,10 +6,15 @@ import net.urbanmc.mcinfected.manager.MysteryManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Painting;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BlockListener implements Listener {
 
@@ -32,6 +37,25 @@ public class BlockListener implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent e) {
+		if (!e.getAction().equals(Action.LEFT_CLICK_BLOCK))
+			return;
+
+		Block b = e.getClickedBlock().getRelative(e.getBlockFace());
+
+		if (b.getType().equals(Material.FIRE)) {
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent e) {
+		if (e.getRightClicked() instanceof Painting) {
 			e.setCancelled(true);
 		}
 	}

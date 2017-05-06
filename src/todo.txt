@@ -3,4 +3,3 @@ TODO:
 - Kit command
 - Mobs still spawning
 - Double death when falling out of map
-- Disallow removing fire
