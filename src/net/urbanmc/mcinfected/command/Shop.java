@@ -33,6 +33,9 @@ public class Shop extends Command {
 
 		int place = Integer.parseInt(args[1]) + 1;
 
+		if (place > 6)
+			return;
+
 		ShopItem item = ShopManager.getInstance().getShopItem(place);
 
 		ShopManager.getInstance().manageClickedItem(p, item);

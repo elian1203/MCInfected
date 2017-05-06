@@ -45,6 +45,8 @@ public class DeathListener implements Listener {
 			return;
 		}
 
+		InvincibilityManager.getInstance().add(p);
+
 		p.setDeaths(p.getDeaths() + 1);
 
 		String deathMessage;

@@ -59,7 +59,7 @@ public class ShopManager {
 	public Inventory getShop(GamePlayer p) {
 		Inventory shop = Bukkit.createInventory(null, 9, "Shop");
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 9; i++) {
 			ShopItem item = getShopItem(i);
 
 			if (item == null)
@@ -76,6 +76,13 @@ public class ShopManager {
 					String lore = meta.getLore().get(0).replace("%amount%", Long.toString(rank.getCost()));
 					meta.setLore(Collections.singletonList(lore));
 				}
+
+				item.getItem().setItemMeta(meta);
+			} else if (item.getType().equals(ShopItemType.COOKIES)) {
+				ItemMeta meta = item.getItem().getItemMeta();
+
+				String lore = meta.getLore().get(0).replace("%amount%", Long.toString(p.getCookies()));
+				meta.setLore(Collections.singletonList(lore));
 
 				item.getItem().setItemMeta(meta);
 			}
