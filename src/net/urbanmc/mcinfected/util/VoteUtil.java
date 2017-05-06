@@ -6,11 +6,9 @@ import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Map;
 import org.bukkit.Bukkit;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 public class VoteUtil {
@@ -55,9 +53,13 @@ public class VoteUtil {
 
 		List<Map> list = new ArrayList<>(specificMap.keySet());
 
-		Map map = list.get(0);
+		Random r = ThreadLocalRandom.current();
 
-		if (map.getName().equals("#random")) {
+		int index = r.nextInt(list.size());
+
+		Map map = list.get(index);
+
+		if (map.getName().equals("Random")) {
 			return MapManager.getInstance().getRealRandom();
 		} else {
 			return map;

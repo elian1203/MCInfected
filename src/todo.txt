@@ -1,4 +1,5 @@
 TODO:
 - Fix grenades being weird
-- Kit command
-- Double death when falling out of map
+- Fix enchanting
+- Death invincibility
+- Shop display cookies

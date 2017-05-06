@@ -41,30 +41,30 @@ public class KitManager {
 		ConfigurationSection sect = data.getConfigurationSection("kits");
 
 		for (String name : sect.getKeys(false))
-			kits.add(formKit(name));
+			kits.add(formKit(sect, name));
 
 	}
 
 	private void loadMotherAndZombie() {
-		mother = formKit("mother");
-		zombie = formKit("zombie");
+		mother = formKit(data, "mother");
+		zombie = formKit(data, "zombie");
 
 		kits.add(mother);
 		kits.add(zombie);
 	}
 
-	private Kit formKit(String path) {
+	private Kit formKit(ConfigurationSection sect, String path) {
 		EntityType disguise = null;
 
-		if (data.contains(path + ".disguise")) {
-			disguise = EntityType.valueOf(data.getString(path + ".disguise").toUpperCase());
+		if (sect.contains(path + ".disguise")) {
+			disguise = EntityType.valueOf(sect.getString(path + ".disguise").toUpperCase());
 		}
 
 		return new Kit(
-				data.getString(path + ".name"),
-				data.getString(path + ".permission"),
-				ItemUtil.getItemList(data.getStringList(path + ".armor")),
-				ItemUtil.getItemList(data.getStringList(path + ".items")),
+				sect.getString(path + ".name"),
+				sect.getString(path + ".permission"),
+				ItemUtil.getItemList(sect.getStringList(path + ".armor")),
+				ItemUtil.getItemList(sect.getStringList(path + ".items")),
 				disguise);
 	}
 

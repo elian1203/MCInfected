@@ -19,7 +19,6 @@ public class DeathListener implements Listener {
 
 	@EventHandler
 	public void onPlayerDeath(EntityDamageEvent e) {
-		System.out.println("ran event");
 		GameState state = GameManager.getInstance().getGameState();
 
 		if (!state.equals(GameState.INFECTION) && !state.equals(GameState.RUNNING))
@@ -32,26 +31,13 @@ public class DeathListener implements Listener {
 
 		double health = player.getHealth() - e.getDamage();
 
-		System.out.println("health = " + health);
-
-		if (health > 0) {
-			System.out.println("cancelled for health");
+		if (health > 0)
 			return;
-		}
 
 		e.setCancelled(true);
 
-		handleEvent(e);
-	}
-
-	private synchronized void handleEvent(EntityDamageEvent e) {
-		System.out.println("started handling");
-		GameState state = GameManager.getInstance().getGameState();
-		Player player = (Player) e.getEntity();
-
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-		player.teleport(MapManager.getInstance().getGameMap().getSpawn()); // not permanent
 		player.setHealth(20);
 
 		if (state.equals(GameState.INFECTION)) {
@@ -99,8 +85,6 @@ public class DeathListener implements Listener {
 		p.setLastAttacker(null);
 
 		ScoreboardManager.getInstance().updateBoard(BoardType.GAME);
-
-		System.out.println("finished handling");
 	}
 
 	private boolean isEntityCause(DamageCause cause) {

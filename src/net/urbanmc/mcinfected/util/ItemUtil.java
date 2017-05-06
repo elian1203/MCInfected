@@ -68,7 +68,7 @@ public class ItemUtil {
 				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
 				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
 
-				is.addEnchantment(ench, level);
+				is.addUnsafeEnchantment(ench, level);
 				//meta.addEnchant(ench, level, true);
 
 				continue;

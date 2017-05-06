@@ -30,5 +30,4 @@ kits:
     - leather_chestplate
     - leather_leggings
     - leather_boots
-    disguise:
-    - skeleton
+    disguise: skeleton
