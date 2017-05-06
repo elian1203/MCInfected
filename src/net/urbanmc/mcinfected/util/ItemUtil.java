@@ -68,7 +68,8 @@ public class ItemUtil {
 				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
 				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
 
-				is.addUnsafeEnchantment(ench, level);
+				//is.addUnsafeEnchantment(ench, level);
+				meta.addEnchant(ench, level, true);
 				//meta.addEnchant(ench, level, true);
 
 				continue;
@@ -98,7 +99,7 @@ public class ItemUtil {
 		switch (s) {
 			case "sharpness":
 				return "damage_all";
-			case "infinite":
+			case "infinity":
 				return "arrow_infinite";
 			case "power":
 				return "arrow_damage";
