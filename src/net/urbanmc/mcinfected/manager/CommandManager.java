@@ -34,6 +34,7 @@ public class CommandManager {
 		commands.add(new Ignore());
 		commands.add(new Infected());
 		commands.add(new Kit());
+		commands.add(new net.urbanmc.mcinfected.command.List());
 		commands.add(new Message());
 		commands.add(new Reply());
 		commands.add(new Shop());
