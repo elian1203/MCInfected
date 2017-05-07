@@ -103,10 +103,11 @@ public class InfectionStart extends BukkitRunnable {
 			p.setMotherZombie();
 
 			ItemUtil.equipPlayer(p);
-			PacketUtil.removePlayerFromList(p.getOnlinePlayer());
 
 			Bukkit.broadcastMessage(Messages.getInstance().getString("has_become_mother", player.getName()));
 		}
+
+		PacketUtil.removePlayersFromList(motherZombies);
 
 		for (Player player : motherZombies) {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));

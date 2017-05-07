@@ -8,6 +8,7 @@ import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PacketUtil {
@@ -40,6 +41,23 @@ public class PacketUtil {
 			sendPacket(player, packet);
 		}
 	}
+
+    public static void removePlayersFromList(List<Player> players) {
+	    List<EntityPlayer> list = new ArrayList<>();
+
+	    players.forEach((p) -> {
+	        list.add(((CraftPlayer) p).getHandle());
+        });
+
+	    Iterable<EntityPlayer> iterlist = () -> list.iterator();
+
+        PacketPlayOutPlayerInfo packet =
+                new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, iterlist);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            sendPacket(player, packet);
+        }
+    }
 
 	private static void sendPacket(Player p, Packet packet) {
 		((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
