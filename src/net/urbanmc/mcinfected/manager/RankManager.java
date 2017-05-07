@@ -47,10 +47,6 @@ public class RankManager {
 		}
 	}
 
-	public List<Rank> getRanks() {
-		return ranks;
-	}
-
 	public Rank getRankByLevel(int level) {
 		for (Rank rank : ranks) {
 			if (rank.getLevel() == level)
