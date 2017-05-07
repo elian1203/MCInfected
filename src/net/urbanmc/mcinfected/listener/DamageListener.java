@@ -7,12 +7,13 @@ import net.urbanmc.mcinfected.manager.InvincibilityManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageListener implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(EntityDamageEvent e) {
 		GameState state = GameManager.getInstance().getGameState();
 

@@ -1,5 +1,6 @@
 package net.urbanmc.mcinfected.command;
 
+import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.command.CommandSender;
@@ -14,16 +15,7 @@ public class Help extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-		String message = color("&2==**== McInfected ==**==" + "\n &6/about&f: A little about the plugin" +
-				                       "\n &6/help&f: &fMakes this command appear" +
-				                       "\n &6/ignore (player)&f: Ignore that one player!" +
-				                       "\n &6/infected (player)&f: Find out if a player is infected!" +
-				                       "\n &6/message (player)&f: Send a nice little message to your buddy!" +
-				                       "\n &6/reply&f: Reply to your buddy!" +
-				                       "\n &6/shop&f: Access the amazing shop!" + "\n &6/sneak&f: Toggle sneak!" +
-				                       "\n &6/stats&f: Check out your amazing player stats!" +
-				                       "\n &6/vote&f: Vote for your favorite map!" +
-				                       "\n &6/kit&F: Don't like being a zombie? Change how you look and feel when you're infected!");
+		String message = Messages.getInstance().getString("help");
 
 		messageSender(sender, message);
 	}

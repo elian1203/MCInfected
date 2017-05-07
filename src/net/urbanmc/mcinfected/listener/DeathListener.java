@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class DeathListener implements Listener {
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerDeath(EntityDamageEvent e) {
 		GameState state = GameManager.getInstance().getGameState();
 

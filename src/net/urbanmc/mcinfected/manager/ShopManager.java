@@ -74,7 +74,9 @@ public class ShopManager {
 					meta.setDisplayName(ChatColor.GOLD + "You are max level");
 					meta.setLore(Collections.emptyList());
 				} else {
-					String lore = meta.getLore().get(0).replace("%amount%", Long.toString(rank.getCost()));
+					String cost = Long.toString(rank.getCost());
+
+					String lore = meta.getLore().get(0).replace("%amount%", cost);
 					meta.setLore(Collections.singletonList(lore));
 				}
 

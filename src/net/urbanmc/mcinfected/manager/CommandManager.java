@@ -3,13 +3,14 @@ package net.urbanmc.mcinfected.manager;
 import net.urbanmc.mcinfected.command.*;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CommandManager {
 
@@ -82,19 +83,13 @@ public class CommandManager {
 			p = GamePlayerManager.getInstance().getGamePlayer((Player) sender);
 		}
 
-		command.execute(sender, label, args, p);
+		try {
+			command.execute(sender, label, args, p);
+		} catch (Exception ex) {
+			Bukkit.getLogger().log(Level.SEVERE, "Error while executing command " + label, ex);
+			sender.sendMessage(ChatColor.RED + "Error while executing command! Please contact an administrator!");
+		}
 
 		return true;
-	}
-
-	private Object getPrivateField(Object object,
-	                               String field) throws SecurityException, NoSuchFieldException,
-			IllegalArgumentException, IllegalAccessException {
-		Class<?> clazz = object.getClass();
-		Field objectField = clazz.getDeclaredField(field);
-		objectField.setAccessible(true);
-		Object result = objectField.get(object);
-		objectField.setAccessible(false);
-		return result;
 	}
 }

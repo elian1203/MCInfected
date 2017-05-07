@@ -9,14 +9,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MCInfected extends JavaPlugin {
 
 	private static GameStart gameStart;
-	private static int sufficientPlayers = 1; //Normally 8
 
 	public static GameStart getGameStart() {
 		return gameStart;
 	}
 
 	public static int getSufficientPlayers() {
-		return sufficientPlayers;
+		return 1; // Normally 8
 	}
 
 	@Override
@@ -28,6 +27,7 @@ public class MCInfected extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = this.getServer().getPluginManager();
 
+		pm.registerEvents(new ArmorListener(), this);
 		pm.registerEvents(new AttackListener(), this);
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new CakeListener(), this);

@@ -12,12 +12,11 @@ import java.util.List;
 public class StickyGrenade extends Grenade {
 
 	StickyGrenade(GamePlayer thrower, Item item) {
-		super(thrower, item, GrenadeType.STICKY);
+		super(thrower, item);
 	}
 
 	@Override
 	public void activate() {
-		System.out.print("Sticky Grenade Activated");
 		List<Entity> nearbyEntities = this.getItem().getNearbyEntities(3, 3, 3);
 
 		PotionEffect slowness = new PotionEffect(PotionEffectType.SLOW, 200, 1);
@@ -28,5 +27,4 @@ public class StickyGrenade extends Grenade {
 			}
 		}
 	}
-
 }

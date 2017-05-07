@@ -14,12 +14,10 @@ public abstract class Grenade {
 
 	private GamePlayer thrower;
 	private Item item;
-	private GrenadeType type;
 
-	Grenade(GamePlayer thrower, Item item, GrenadeType type) {
+	Grenade(GamePlayer thrower, Item item) {
 		this.thrower = thrower;
 		this.item = item;
-		this.type = type;
 	}
 
 	public static boolean isGrenade(ItemStack is) {
@@ -58,20 +56,17 @@ public abstract class Grenade {
 
 	void createHelix(List<Entity> nearbyEntities) {
 		Location loc = getItem().getLocation();
+
 		int radius = 2;
+
 		for (double y = 0; y <= 4; y += 0.05) {
 			double x = radius * Math.cos(y);
 			double z = radius * Math.sin(y);
 
-			PacketUtil.sendExplosionParticles(nearbyEntities, (float) x, (float) y, (float) z);
+			PacketUtil.sendExplosionParticles(nearbyEntities,
+			                                  (float) (x + loc.getX()),
+			                                  (float) (y + loc.getY()),
+			                                  (float) (z + loc.getZ()));
 		}
-	}
-
-	public GrenadeType getType() {
-		return type;
-	}
-
-	public enum GrenadeType {
-		THROWING_KNIFE, FRAG, STICKY, FLASH
 	}
 }

@@ -1,20 +1,20 @@
 package net.urbanmc.mcinfected.object.grenade;
 
 import net.urbanmc.mcinfected.object.GamePlayer;
-import org.bukkit.Effect;
-import org.bukkit.EntityEffect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class FlashGrenade extends Grenade {
 
 	FlashGrenade(GamePlayer thrower, Item item) {
-		super(thrower, item, GrenadeType.FLASH);
+		super(thrower, item);
 	}
 
 	@Override
