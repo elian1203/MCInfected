@@ -26,7 +26,7 @@ public class InfectionStart extends BukkitRunnable {
 
 	InfectionStart(MCInfected plugin) {
 		this.plugin = plugin;
-		this.time = 5; //Normally 60
+		this.time = 60;
 
 		runTaskTimer(plugin, 0, 20);
 	}
@@ -103,7 +103,7 @@ public class InfectionStart extends BukkitRunnable {
 			p.setMotherZombie();
 
 			ItemUtil.equipPlayer(p);
-			PacketUtil.sendPlayerList(p.getOnlinePlayer(),p.getOnlinePlayer());
+			PacketUtil.removePlayerFromList(p.getOnlinePlayer());
 
 			Bukkit.broadcastMessage(Messages.getInstance().getString("has_become_mother", player.getName()));
 		}

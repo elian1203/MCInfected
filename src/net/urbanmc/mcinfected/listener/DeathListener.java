@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.KillStreakUtil;
+import net.urbanmc.mcinfected.util.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,9 +76,10 @@ public class DeathListener implements Listener {
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
 		} else {
 			if (!GameManager.getInstance().onHumanDeath(p)) {
-
 				p.setInfected();
 				p.setKillStreak(0);
+
+				PacketUtil.removePlayerFromList(p.getOnlinePlayer());
 
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
@@ -100,11 +102,12 @@ public class DeathListener implements Listener {
 
 		if (attacker == null) {
 			if (killed.isInfected()) {
-				if(cause.equals(DamageCause.VOID)) return Messages.getInstance().getString("zombie_fell", killedName);
+				if (cause.equals(DamageCause.VOID))
+					return Messages.getInstance().getString("zombie_fell", killedName);
 				return Messages.getInstance().getString("zombie_died", killedName);
-			}
-			else {
-				if(cause.equals(DamageCause.VOID)) return Messages.getInstance().getString("human_fell", killedName);
+			} else {
+				if (cause.equals(DamageCause.VOID))
+					return Messages.getInstance().getString("human_fell", killedName);
 				return Messages.getInstance().getString("has_become_zombie_unknown", killedName);
 			}
 		} else {
@@ -133,15 +136,17 @@ public class DeathListener implements Listener {
 				GamePlayerManager.getInstance().giveAllScores(20, false, killed);
 				GamePlayerManager.getInstance().giveAllCookies(2, false, killed);
 
-				GamePlayerManager.getInstance()
-						.sendBarAllTeam(Messages.getInstance().getString("human_killed_humans"),"green", false, killed);
+				GamePlayerManager.getInstance().sendBarAllTeam(Messages.getInstance().getString("human_killed_humans"),
+				                                               "green",
+				                                               false,
+				                                               killed);
 			}
 
 			GamePlayerManager.getInstance().giveAllScores(10, true, killed);
 			GamePlayerManager.getInstance().giveAllCookies(1, true, killed);
 
 			GamePlayerManager.getInstance()
-					.sendBarAllTeam(Messages.getInstance().getString("human_killed_zombies"),"green", true);
+					.sendBarAllTeam(Messages.getInstance().getString("human_killed_zombies"), "green", true);
 		}
 	}
 }

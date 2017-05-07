@@ -17,11 +17,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
 
-    private MCInfected plugin;
+	private MCInfected plugin;
 
-    public JoinListener(MCInfected plugin) {
-        this.plugin = plugin;
-    }
+	public JoinListener(MCInfected plugin) {
+		this.plugin = plugin;
+	}
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
@@ -69,13 +69,9 @@ public class JoinListener implements Listener {
 	private void displayMaps(Player p) {
 		if (GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY)
 			return;
-		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.sendMessage(VoteUtil.getFormattedSpecific());
-            }
-        },20);
 
-
+		Bukkit.getScheduler().runTaskLater(plugin, () -> {
+			p.sendMessage(VoteUtil.getFormattedSpecific());
+		}, 20);
 	}
 }
