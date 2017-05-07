@@ -1,5 +1,3 @@
 TODO:
 - Fix grenades being weird
 - After grenade death, deathlistener being weird
-- Dying twice when falling out of map
-- Use checkspace method for buying from shop

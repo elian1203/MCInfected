@@ -14,7 +14,6 @@ public class DamageListener implements Listener {
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
-		System.out.println("ran damage event");
 		GameState state = GameManager.getInstance().getGameState();
 
 		if (state.equals(GameState.LOBBY) || state.equals(GameState.COUNTDOWN) || state.equals(GameState.FINISHED)) {
@@ -25,13 +24,10 @@ public class DamageListener implements Listener {
 		if (!(e.getEntity() instanceof Player))
 			return;
 
-		System.out.println("passed initial");
-
 		Player player = (Player) e.getEntity();
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player.getUniqueId());
 
 		if (InvincibilityManager.getInstance().in(p)) {
-			System.out.println("cancelled for in");
 			e.setCancelled(true);
 		}
 	}

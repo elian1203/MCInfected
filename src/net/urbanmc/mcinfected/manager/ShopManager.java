@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -160,8 +161,6 @@ public class ShopManager {
 			return;
 		}
 
-		p.setCookies(p.getCookies() - cost);
-
 		ItemStack is = item.getItem().clone();
 
 		ItemMeta meta = is.getItemMeta();
@@ -169,10 +168,17 @@ public class ShopManager {
 
 		is.setItemMeta(meta);
 
-		p.getOnlinePlayer().getInventory().addItem(is);
-		p.getOnlinePlayer().sendMessage(Messages.getInstance().getString("bought_item",
-		                                                                 is.getAmount(),
-		                                                                 ItemUtil.getFriendlyName(is),
-		                                                                 cost));
+		Player player = p.getOnlinePlayer();
+
+		if (!ItemUtil.checkSpace(player, is)) {
+			player.sendMessage(Messages.getInstance().getString("insufficient_space"));
+			return;
+		}
+
+		p.setCookies(p.getCookies() - cost);
+
+		player.getInventory().addItem(is);
+		player.sendMessage(Messages.getInstance()
+				                   .getString("bought_item", is.getAmount(), ItemUtil.getFriendlyName(is), cost));
 	}
 }

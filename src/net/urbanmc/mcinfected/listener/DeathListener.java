@@ -39,6 +39,7 @@ public class DeathListener implements Listener {
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
 		player.setHealth(20);
+		player.setFallDistance(0);
 
 		if (state.equals(GameState.INFECTION)) {
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
