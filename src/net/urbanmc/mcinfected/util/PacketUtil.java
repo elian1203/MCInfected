@@ -37,8 +37,8 @@ public class PacketUtil {
 
     public static void sendPlayerList(Player removePlayer, Player sendPlayer) {
 
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo();
-        try {
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((EntityPlayer) removePlayer));
+        /*try {
             Field a = packet.getClass().getDeclaredField("a");
             a.setAccessible(true);
             a.set(packet, PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER);
@@ -49,8 +49,8 @@ public class PacketUtil {
             sendPacket(sendPlayer, packet);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
+        }*/
+        sendPacket(sendPlayer, packet);
     }
 
     private static void sendPacket(Player p, Packet packet) {
