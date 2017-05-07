@@ -60,9 +60,9 @@ public class DeathListener implements Listener {
 			attacker.setKills(attacker.getKills() + 1);
 			KillStreakUtil.giveNextKillStreak(attacker);
 
-			deathMessage = getDeathMessage(p, attacker);
+			deathMessage = getDeathMessage(p, attacker, e.getCause());
 		} else {
-			deathMessage = getDeathMessage(p, null);
+			deathMessage = getDeathMessage(p, null, e.getCause());
 		}
 
 		Bukkit.broadcastMessage(deathMessage);
@@ -95,14 +95,18 @@ public class DeathListener implements Listener {
 				cause.equals(DamageCause.PROJECTILE) || cause.equals(DamageCause.CUSTOM);
 	}
 
-	private String getDeathMessage(GamePlayer killed, GamePlayer attacker) {
+	private String getDeathMessage(GamePlayer killed, GamePlayer attacker, DamageCause cause) {
 		String killedName = killed.getOnlinePlayer().getName();
 
 		if (attacker == null) {
-			if (killed.isInfected())
+			if (killed.isInfected()) {
+				if(cause.equals(DamageCause.VOID)) return Messages.getInstance().getString("zombie_fell", killedName);
 				return Messages.getInstance().getString("zombie_died", killedName);
-			else
+			}
+			else {
+				if(cause.equals(DamageCause.VOID)) return Messages.getInstance().getString("human_fell", killedName);
 				return Messages.getInstance().getString("has_become_zombie_unknown", killedName);
+			}
 		} else {
 			String attackerName = attacker.getOnlinePlayer().getName();
 
@@ -130,14 +134,14 @@ public class DeathListener implements Listener {
 				GamePlayerManager.getInstance().giveAllCookies(2, false, killed);
 
 				GamePlayerManager.getInstance()
-						.messageAllTeam(Messages.getInstance().getString("human_killed_humans"), false, killed);
+						.sendBarAllTeam(Messages.getInstance().getString("human_killed_humans"),"green", false, killed);
 			}
 
 			GamePlayerManager.getInstance().giveAllScores(10, true, killed);
 			GamePlayerManager.getInstance().giveAllCookies(1, true, killed);
 
 			GamePlayerManager.getInstance()
-					.messageAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
+					.sendBarAllTeam(Messages.getInstance().getString("human_killed_zombies"),"green", true);
 		}
 	}
 }

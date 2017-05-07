@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.urbanmc.mcinfected.gson.GamePlayerList;
 import net.urbanmc.mcinfected.gson.GamePlayerListSerializer;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.util.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -166,6 +167,24 @@ public class GamePlayerManager {
 
 			if (p.isInfected() == zombies) {
 				p.getOnlinePlayer().sendMessage(message);
+			}
+		}
+	}
+
+	public void sendBarAllTeam(String message, String color, boolean zombies, GamePlayer... exclude) {
+		Collection<? extends Player> players = new HashSet<>(Bukkit.getOnlinePlayers());
+
+		if (exclude != null) {
+			for (GamePlayer p : exclude) {
+				players.remove(p.getOnlinePlayer());
+			}
+		}
+
+		for (Player player : players) {
+			GamePlayer p = getGamePlayer(player);
+
+			if (p.isInfected() == zombies) {
+				PacketUtil.sendActionBar(p.getOnlinePlayer(), message, color);
 			}
 		}
 	}

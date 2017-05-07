@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.GameStart;
+import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -32,6 +33,8 @@ public class JoinListener implements Listener {
 		}
 
 		e.setJoinMessage(getJoinMessage(e.getPlayer().getName()));
+
+		displayMaps(e.getPlayer());
 	}
 
 	private void disableAttackCooldown(Player p) {
@@ -51,5 +54,12 @@ public class JoinListener implements Listener {
 			                                        playerName,
 			                                        Bukkit.getOnlinePlayers().size(),
 			                                        MCInfected.getSufficientPlayers());
+	}
+
+	private void displayMaps(Player p) {
+
+		if(GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY) return;
+		p.sendMessage(VoteUtil.getFormattedSpecific());
+
 	}
 }
