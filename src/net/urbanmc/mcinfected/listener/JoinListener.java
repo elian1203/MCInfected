@@ -19,12 +19,16 @@ public class JoinListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		GamePlayerManager.getInstance().register(e.getPlayer());
+		Player player = e.getPlayer();
+		GamePlayerManager.getInstance().register(player);
 
-		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
+		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
 		GameManager.getInstance().loadPlayer(p);
-		disableAttackCooldown(e.getPlayer());
+		disableAttackCooldown(player);
+
+		player.setHealth(20);
+		player.setFoodLevel(20);
 
 		GameStart gameStart = MCInfected.getGameStart();
 
@@ -34,7 +38,7 @@ public class JoinListener implements Listener {
 
 		e.setJoinMessage(getJoinMessage(e.getPlayer().getName()));
 
-		displayMaps(e.getPlayer());
+		displayMaps(player);
 	}
 
 	private void disableAttackCooldown(Player p) {
@@ -58,7 +62,8 @@ public class JoinListener implements Listener {
 
 	private void displayMaps(Player p) {
 
-		if(GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY) return;
+		if (GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY)
+			return;
 		p.sendMessage(VoteUtil.getFormattedSpecific());
 
 	}
