@@ -19,6 +19,7 @@ public class ItemThrown extends BukkitRunnable {
 		boolean hitPlayer = itemHitPlayer(grenade.getItem());
 
 		if (grenade.getItem().isOnGround() || hitPlayer) {
+			grenade.activate();
 			grenade.getItem().remove();
 			cancel();
 		}

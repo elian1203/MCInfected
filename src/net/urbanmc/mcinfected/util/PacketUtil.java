@@ -1,66 +1,36 @@
 package net.urbanmc.mcinfected.util;
 
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_11_R1.IChatBaseComponent.ChatSerializer;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.logging.Level;
+import java.util.List;
 
 public class PacketUtil {
 
-	//Defining Reflection variables
-	private static String version;
-	private static Constructor<?> packetPlayOutChatConstructor;
-	private static Class<?> chatSerializer;
-	private static Method sendPacket;
+	public static void sendActionBar(Player p, String text, String color) {
+		String json = "{\"text\":\"" + text + "\", \"color\": \"" + color + "\"}";
+		IChatBaseComponent comp = ChatSerializer.a(json);
 
-	static {
-		defineReflection();
+		PacketPlayOutChat packet = new PacketPlayOutChat(comp, (byte) 2);
+
+		sendPacket(p, packet);
 	}
 
-	private static void defineReflection() {
-		try {
-			version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + ".";
+	public static void sendExplosionParticles(List<Entity> entities, float x, float y, float z) {
+		PacketPlayOutWorldParticles packet =
+				new PacketPlayOutWorldParticles(EnumParticle.EXPLOSION_NORMAL, true, x, y, z, 0, 0, 0, 0, 1);
 
-			Class<?> chatComponent = getNMSClass("IChatBaseComponent");
-			Class<?> chatClass = getNMSClass("PacketPlayOutChat");
-			packetPlayOutChatConstructor = chatClass.getConstructor(chatComponent, byte.class);
-
-			sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", getNMSClass("Packet"));
-
-			chatSerializer = getNMSClass("IChatBaseComponent.ChatSerializer");
-		} catch (Exception e) {
-			Bukkit.getLogger().log(Level.SEVERE, "[MCInfected] Error with Reflection");
-		}
+		entities.forEach(e -> {
+			if (e instanceof Player) {
+				sendPacket((Player) e, packet);
+			}
+		});
 	}
 
-	private static Class<?> getNMSClass(String nmsClassString) throws ClassNotFoundException {
-		String name = "net.minecraft.server." + version + nmsClassString;
-		Class<?> nmsClass = Class.forName(name);
-		return nmsClass;
-	}
-
-	private static Object getConnection(
-			Player player) throws SecurityException, NoSuchMethodException, NoSuchFieldException,
-			IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Method getHandle = player.getClass().getMethod("getHandle");
-		Object nmsPlayer = getHandle.invoke(player);
-		Field conField = nmsPlayer.getClass().getField("playerConnection");
-		return conField.get(nmsPlayer);
-	}
-
-	public static void sendActionBar(Player player, String text, String color) {
-		try {
-			Object message = chatSerializer.getMethod("a", String.class)
-					.invoke(chatSerializer, "{\"text\": \"" + text + "\", \"color\": \"" + color + "\"}");
-			Object packetChat = packetPlayOutChatConstructor.newInstance(message, (byte) 2);
-
-			sendPacket.invoke(getConnection(player), packetChat);
-		} catch (Exception e) {
-			Bukkit.getLogger().log(Level.SEVERE, "[MCInfected] Error sending ActionBar message!");
-		}
+	private static void sendPacket(Player p, Packet packet) {
+		((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
 	}
 }

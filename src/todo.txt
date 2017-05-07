@@ -1,4 +1,5 @@
 TODO:
 - Fix grenades being weird
+- After grenade death, deathlistener being weird
 - Fix enchanting
 - Dying twice when falling out of map

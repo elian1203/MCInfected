@@ -68,9 +68,7 @@ public class ItemUtil {
 				Enchantment ench = Enchantment.getByName(enchantSplit[0].toUpperCase());
 				int level = enchantSplit.length == 1 ? 1 : Integer.parseInt(enchantSplit[1]);
 
-				//is.addUnsafeEnchantment(ench, level);
 				meta.addEnchant(ench, level, true);
-				//meta.addEnchant(ench, level, true);
 
 				continue;
 			}
@@ -191,13 +189,13 @@ public class ItemUtil {
 		else
 			player.getInventory().removeItem(is);
 
-		Item item = player.getWorld().dropItem(player.getLocation(), is);
+		Item item = player.getWorld().dropItem(player.getEyeLocation(), is);
 
 		Grenade grenade = Grenade.parseGrenade(p, item);
 
 		item.setPickupDelay(1000000);
 
-		item.setVelocity(player.getLocation().getDirection().normalize().multiply(1.75));
+		item.setVelocity(player.getLocation().getDirection().normalize().multiply(4));
 
 		new ItemThrown(grenade, plugin);
 	}

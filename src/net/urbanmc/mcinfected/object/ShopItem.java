@@ -32,6 +32,6 @@ public class ShopItem {
 	}
 
 	public enum ShopItemType {
-		CLOSE, RANK_UP, ITEM;
+		CLOSE, RANK_UP, ITEM, COOKIES
 	}
 }
