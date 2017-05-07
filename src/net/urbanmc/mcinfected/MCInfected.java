@@ -41,7 +41,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new GrenadeListener(this), this);
 		pm.registerEvents(new HealthRegainListener(), this);
 		pm.registerEvents(new ItemDropListener(), this);
-		pm.registerEvents(new JoinListener(), this);
+		pm.registerEvents(new JoinListener(this), this);
 		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
 	}
@@ -53,4 +53,5 @@ public class MCInfected extends JavaPlugin {
 
 		gameStart = new GameStart(this);
 	}
+
 }

@@ -60,7 +60,7 @@ public class GameStart extends BukkitRunnable {
 	public void amplePlayers() {
 		ScoreboardManager.getInstance().amplePlayers(time + 1);
 
-		time = 90;
+		time = 16; // Normally 90
 		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));
 	}
 
