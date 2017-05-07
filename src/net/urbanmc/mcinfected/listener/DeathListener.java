@@ -79,7 +79,7 @@ public class DeathListener implements Listener {
 				p.setInfected();
 				p.setKillStreak(0);
 
-				PacketUtil.removePlayerFromList(p.getOnlinePlayer());
+				PacketUtil.removePlayersFromList(p.getOnlinePlayer());
 
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
