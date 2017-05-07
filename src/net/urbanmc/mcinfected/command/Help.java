@@ -22,7 +22,8 @@ public class Help extends Command {
 				                       "\n &6/reply&f: Reply to your buddy!" +
 				                       "\n &6/shop&f: Access the amazing shop!" + "\n &6/sneak&f: Toggle sneak!" +
 				                       "\n &6/stats&f: Check out your amazing player stats!" +
-				                       "\n &6/vote&f: Vote for your favorite map!");
+				                       "\n &6/vote&f: Vote for your favorite map!" +
+				                       "\n &6/kit&F: Don't like being a zombie? Change how you look and feel when you're infected!");
 
 		messageSender(sender, message);
 	}
