@@ -20,12 +20,13 @@ public class RestartServer extends BukkitRunnable {
 
 	@Override
 	public void run() {
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+		out.writeUTF("Connect");
+		out.writeUTF("Minigames");
+
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.teleport(MapManager.getInstance().getLobby().getSpawn());
-
-			ByteArrayDataOutput out = ByteStreams.newDataOutput();
-			out.writeUTF("Connect");
-			out.writeUTF("Minigames");
 
 			player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
 		}

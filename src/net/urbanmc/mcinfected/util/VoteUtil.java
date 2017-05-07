@@ -50,6 +50,7 @@ public class VoteUtil {
 		specificMap.put(random, random.getVotes());
 
 		specificMap = sortByValue(specificMap);
+		specificMap = removeLowerKeys(specificMap);
 
 		List<Map> list = new ArrayList<>(specificMap.keySet());
 
@@ -64,6 +65,16 @@ public class VoteUtil {
 		} else {
 			return map;
 		}
+	}
+
+	private static <K, V extends Comparable<? super V>> java.util.Map<K, V> removeLowerKeys(java.util.Map<K, V> map) {
+		java.util.Map<K, V> result = new HashMap<>();
+		Entry<K, V> firstEntry = map.entrySet().iterator().next();
+
+		map.entrySet().stream().filter(e -> e.getValue() == firstEntry.getValue())
+				.forEach(e -> result.put(e.getKey(), e.getValue()));
+
+		return result;
 	}
 
 	private static <K, V extends Comparable<? super V>> java.util.Map<K, V> sortByValue(java.util.Map<K, V> map) {

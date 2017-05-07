@@ -189,13 +189,13 @@ public class ItemUtil {
 		else
 			player.getInventory().removeItem(is);
 
-		Item item = player.getWorld().dropItem(player.getEyeLocation(), is);
+		Item item = player.getWorld().dropItem(player.getEyeLocation().add(player.getLocation().getDirection()), is);
 
 		Grenade grenade = Grenade.parseGrenade(p, item);
 
 		item.setPickupDelay(1000000);
 
-		item.setVelocity(player.getLocation().getDirection().normalize().multiply(4));
+		item.setVelocity(player.getLocation().getDirection().multiply(4));
 
 		new ItemThrown(grenade, plugin);
 	}

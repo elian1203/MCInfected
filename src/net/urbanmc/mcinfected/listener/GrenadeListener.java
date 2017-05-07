@@ -27,20 +27,18 @@ public class GrenadeListener implements Listener {
 
 		ItemStack is = e.getItem();
 
-		if (is == null) {
+		if (is == null)
 			return;
-		}
 
-		if (!Grenade.isGrenade(is)) {
+		if (!Grenade.isGrenade(is))
 			return;
-		}
+
+		e.setCancelled(true);
 
 		if (!GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
 			return;
 
-
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
-		e.setCancelled(true);
 		ItemUtil.throwItem(p, is, plugin);
 	}
 }
