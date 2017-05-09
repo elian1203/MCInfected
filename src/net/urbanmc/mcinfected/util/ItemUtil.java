@@ -200,6 +200,7 @@ public class ItemUtil {
 		new ItemThrown(grenade, plugin);
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public static String getFriendlyName(ItemStack is) {
 		if (is.getItemMeta().hasDisplayName())
 			return is.getItemMeta().getDisplayName();

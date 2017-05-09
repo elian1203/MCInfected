@@ -11,10 +11,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameTimer extends BukkitRunnable {
 
+	private static GameTimer instance = new GameTimer();
+
 	private int time = 600;
 
-	GameTimer(MCInfected plugin) {
-		runTaskTimerAsynchronously(plugin, 0, 20);
+	private GameTimer() {
+	}
+
+	public static void start(MCInfected plugin) {
+		instance.runTaskTimerAsynchronously(plugin, 0, 20);
+	}
+
+	public static void stop() {
+		instance.cancel();
 	}
 
 	@Override

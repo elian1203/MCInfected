@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.manager;
 import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.runnable.GameTimer;
 import net.urbanmc.mcinfected.runnable.RestartServer;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import org.apache.commons.lang.StringUtils;
@@ -95,6 +96,7 @@ public class GameManager {
 
 	public void endGame(boolean zombiesWin, GamePlayer died) {
 		setGameState(GameState.FINISHED);
+		GameTimer.stop();
 
 		List<GamePlayer> humans = getHumans();
 

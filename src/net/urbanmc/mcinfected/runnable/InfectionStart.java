@@ -115,7 +115,7 @@ public class InfectionStart extends BukkitRunnable {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
 
-		new GameTimer(plugin);
+		GameTimer.start(plugin);
 		new SpawnInvincibility(plugin);
 	}
 }

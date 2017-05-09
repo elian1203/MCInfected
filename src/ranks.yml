@@ -93,7 +93,7 @@ ranks:
     - stone_sword
     - 'apple amount:2'
     - melon
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - leather_helmet
     - leather_chestplate
@@ -106,7 +106,7 @@ ranks:
     items:
     - stone_sword
     - 'apple amount:3'
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - leather_helmet
     - leather_chestplate
@@ -120,7 +120,7 @@ ranks:
     - stone_sword
     - 'apple amount:3'
     - melon
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -134,7 +134,7 @@ ranks:
     - stone_sword
     - 'apple amount:3'
     - melon
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -150,7 +150,7 @@ ranks:
     - melon
     - bow
     - 'arrow amount:3'
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -165,7 +165,7 @@ ranks:
     - 'apple amount:3'
     - bow
     - 'arrow amount:5'
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
   14:
     name: Lt. Colonel
     color: a
@@ -175,13 +175,12 @@ ranks:
     - 'apple amount:4'
     - bow
     - 'arrow amount:5'
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
     - leather_leggings
     - iron_boots
-    - slime_ball
   15:
     name: Colonel
     color: a
@@ -191,7 +190,7 @@ ranks:
     - 'apple amount:4'
     - bow
     - 'arrow amount:5'
-    - slime_ball
+    - 'slime_ball name:Sticky_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -207,8 +206,8 @@ ranks:
     - melon
     - bow
     - 'arrow amount:7'
-    - slime_ball
-    - snow_ball
+    - 'slime_ball name:Sticky_Grenade'
+    - 'snowball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -223,8 +222,8 @@ ranks:
     - 'apple amount:5'
     - bow
     - 'arrow amount:10'
-    - slime_ball
-    - snow_ball
+    - 'slime_ball name:Sticky_Grenade'
+    - 'snowball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -239,8 +238,8 @@ ranks:
     - 'apple amount:5'
     - bow
     - 'arrow amount:13'
-    - slime_ball
-    - snow_ball
+    - 'slime_ball name:Sticky_Grenade'
+    - 'snowball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -255,8 +254,8 @@ ranks:
     - 'apple amount:6'
     - bow
     - 'arrow amount:20'
-    - slime_ball
-    - snow_ball
+    - 'slime_ball name:Sticky_Grenade'
+    - 'snowball name:Flash_Grenade'
     armor:
     - iron_helmet
     - iron_chestplate
@@ -271,8 +270,8 @@ ranks:
     - 'apple amount:6'
     - bow
     - 'arrow amount:20'
-    - slime_ball
-    - snow_ball
+    - 'slime_ball name:Sticky_Grenade'
+    - 'snowball name:Flash_Grenade'
     armor:
     - iron_helmet
     - iron_chestplate
