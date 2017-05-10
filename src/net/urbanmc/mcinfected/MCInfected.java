@@ -15,7 +15,7 @@ public class MCInfected extends JavaPlugin {
 	}
 
 	public static int getSufficientPlayers() {
-		return 1; // Normally 8
+		return 8;
 	}
 
 	@Override
