@@ -1,8 +1,11 @@
 package net.urbanmc.mcinfected.object;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
-public class ShopItem {
+import java.util.logging.Level;
+
+public class ShopItem implements Cloneable {
 
 	private int place, cost;
 	private ItemStack item;
@@ -29,6 +32,19 @@ public class ShopItem {
 
 	public ShopItemType getType() {
 		return type;
+	}
+
+	@Override
+	public ShopItem clone() {
+		try {
+			ShopItem shopItem = (ShopItem) super.clone();
+			shopItem.item = item.clone();
+
+			return shopItem;
+		} catch (Exception ex) {
+			Bukkit.getLogger().log(Level.SEVERE, "[MCInfected] Error cloning ShopItem.", ex);
+			return null;
+		}
 	}
 
 	public enum ShopItemType {

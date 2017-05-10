@@ -27,7 +27,7 @@ public class Map {
 		float yaw = Float.parseFloat(split[3]), pitch = Float.parseFloat(split[4]);
 		World world = Bukkit.getWorld(split[5]);
 
-		return new Location(world, x, y, z, yaw, pitch);
+		return new Location(world, x, y, z, yaw, pitch).clone();
 	}
 
 	public int getVotes() {

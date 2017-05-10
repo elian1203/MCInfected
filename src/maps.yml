@@ -2,7 +2,7 @@
 
 # x/y/z/yaw/pitch/world
 lobby:
-  spawn: 0/67/0/0/0/lobby
+  spawn: 300.5/57/97.5/-90/0/lobby
 maps:
   Terminal:
     spawn: -59.5/70/100.5/0/0/terminal

@@ -207,7 +207,7 @@ ranks:
     - bow
     - 'arrow amount:7'
     - 'slime_ball name:Sticky_Grenade'
-    - 'snowball name:Flash_Grenade'
+    - 'snow_ball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -223,7 +223,7 @@ ranks:
     - bow
     - 'arrow amount:10'
     - 'slime_ball name:Sticky_Grenade'
-    - 'snowball name:Flash_Grenade'
+    - 'snow_ball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -239,7 +239,7 @@ ranks:
     - bow
     - 'arrow amount:13'
     - 'slime_ball name:Sticky_Grenade'
-    - 'snowball name:Flash_Grenade'
+    - 'snow_ball name:Flash_Grenade'
     armor:
     - iron_helmet
     - leather_chestplate
@@ -255,7 +255,7 @@ ranks:
     - bow
     - 'arrow amount:20'
     - 'slime_ball name:Sticky_Grenade'
-    - 'snowball name:Flash_Grenade'
+    - 'snow_ball name:Flash_Grenade'
     armor:
     - iron_helmet
     - iron_chestplate
@@ -271,7 +271,7 @@ ranks:
     - bow
     - 'arrow amount:20'
     - 'slime_ball name:Sticky_Grenade'
-    - 'snowball name:Flash_Grenade'
+    - 'snow_ball name:Flash_Grenade'
     armor:
     - iron_helmet
     - iron_chestplate

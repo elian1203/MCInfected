@@ -3,7 +3,7 @@ items:
     item: 'barrier name:&oClose'
     type: close
   2:
-    item: 'iron_sword name:&oRank_Up lore:&6Cost:_%amount%_Cookies'
+    item: 'iron_sword name:&oRank_Up lore:&6%rank%:_%amount%_Cookies'
     type: rank_up
   3:
     item: 'melon name:&oMelon lore:&6Cost:_10_Cookies'

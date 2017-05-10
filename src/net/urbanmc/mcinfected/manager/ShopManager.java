@@ -61,10 +61,12 @@ public class ShopManager {
 		Inventory shop = Bukkit.createInventory(null, 9, "Shop");
 
 		for (int i = 0; i < 9; i++) {
-			ShopItem item = getShopItem(i);
+			ShopItem configItem = getShopItem(i);
 
-			if (item == null)
+			if (configItem == null)
 				continue;
+
+			ShopItem item = configItem.clone();
 
 			if (item.getType().equals(ShopItemType.RANK_UP)) {
 				ItemMeta meta = item.getItem().getItemMeta();
@@ -76,7 +78,7 @@ public class ShopManager {
 				} else {
 					String cost = Long.toString(rank.getCost());
 
-					String lore = meta.getLore().get(0).replace("%amount%", cost);
+					String lore = meta.getLore().get(0).replace("%rank%", rank.getName()).replace("%amount%", cost);
 					meta.setLore(Collections.singletonList(lore));
 				}
 

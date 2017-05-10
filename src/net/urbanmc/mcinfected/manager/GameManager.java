@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.GameTimer;
 import net.urbanmc.mcinfected.runnable.RestartServer;
 import net.urbanmc.mcinfected.util.ItemUtil;
+import net.urbanmc.mcinfected.util.PacketUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -74,6 +75,8 @@ public class GameManager {
 
 				p.setInfected();
 				ItemUtil.equipPlayer(p);
+
+				PacketUtil.removePlayersFromList(p.getOnlinePlayer());
 				break;
 		}
 

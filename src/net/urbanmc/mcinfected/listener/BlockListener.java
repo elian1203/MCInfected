@@ -7,6 +7,7 @@ import net.urbanmc.mcinfected.object.GamePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Painting;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,9 @@ public class BlockListener implements Listener {
 
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
+		if (e.getPlayer().getGameMode() == GameMode.CREATIVE)
+			return;
+
 		Material type = e.getBlock().getType();
 
 		if (type.equals(Material.CAKE_BLOCK)) {
@@ -43,19 +47,26 @@ public class BlockListener implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if (!e.getAction().equals(Action.LEFT_CLICK_BLOCK))
-			return;
+		Action action = e.getAction();
 
-		Block b = e.getClickedBlock().getRelative(e.getBlockFace());
+		if (action == Action.LEFT_CLICK_BLOCK) {
+			Block b = e.getClickedBlock().getRelative(e.getBlockFace());
 
-		if (b.getType().equals(Material.FIRE)) {
-			e.setCancelled(true);
+			if (b.getType().equals(Material.FIRE)) {
+				e.setCancelled(true);
+			}
+		} else if (action == Action.RIGHT_CLICK_BLOCK) {
+			Material type = e.getClickedBlock().getType();
+
+			if (type == Material.ITEM_FRAME) {
+				e.setCancelled(true);
+			}
 		}
 	}
 
 	@EventHandler
 	public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent e) {
-		if (e.getRightClicked() instanceof Painting) {
+		if (e.getRightClicked() instanceof Painting || e.getRightClicked() instanceof ItemFrame) {
 			e.setCancelled(true);
 		}
 	}
