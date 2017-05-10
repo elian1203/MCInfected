@@ -38,7 +38,7 @@ public class JoinListener implements Listener {
 
 		GameStart gameStart = MCInfected.getGameStart();
 
-		if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= 1 /* Normally 12 */) {
+		if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= 12) {
 			gameStart.amplePlayers();
 		}
 
