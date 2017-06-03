@@ -7,6 +7,7 @@ import net.urbanmc.mcinfected.gson.GamePlayerListSerializer;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.util.PacketUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -115,6 +116,20 @@ public class GamePlayerManager {
 
 	public GamePlayer getGamePlayer(Player player) {
 		return getGamePlayer(player.getUniqueId());
+	}
+
+	public void setColoredName(GamePlayer p) {
+		Player player = p.getOnlinePlayer();
+
+		if (player.hasPermission("namecolor.aqua")) {
+			player.setCustomName(ChatColor.AQUA + player.getName());
+		} else if (player.hasPermission("namecolor.gold")) {
+			player.setCustomName(ChatColor.YELLOW + player.getName());
+		} else if (player.hasPermission("namecolor.red")) {
+			player.setCustomName(ChatColor.DARK_RED + player.getName());
+		} else {
+			player.setCustomName(player.getName());
+		}
 	}
 
 	public void giveAllScores(long scores, boolean zombies, GamePlayer... exclude) {

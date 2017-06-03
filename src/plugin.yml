@@ -2,7 +2,7 @@ main: net.urbanmc.mcinfected.MCInfected
 name: MCInfected
 version: 1.0
 authors: [Elian, Silverwolfg11]
-depend: [LibsDisguises]
+depend: [GroupManager, LibsDisguises]
 
 permissions:
   command.about:
@@ -11,6 +11,8 @@ permissions:
     default: true
   command.ignore:
     default: true
+  command.ignore.exempt:
+    default: op
   command.infected:
     default: true
   command.kit:
@@ -27,3 +29,15 @@ permissions:
     default: true
   command.vote:
     default: true
+  namecolor.aqua:
+    default: false
+  namecolor.gold:
+    default: false
+  namecolor.red:
+    default: false
+  chatcolor.pink:
+    default: false
+  chatcolor.green:
+    default: false
+  chatcolor.red:
+    default: false

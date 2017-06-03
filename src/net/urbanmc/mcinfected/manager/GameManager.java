@@ -80,6 +80,8 @@ public class GameManager {
 				break;
 		}
 
+		GamePlayerManager.getInstance().setColoredName(p);
+
 		ScoreboardManager.getInstance().addPlayersToGame(type);
 		p.getOnlinePlayer().teleport(spawn);
 	}
