@@ -24,7 +24,13 @@ public class Reply extends Command {
 		GamePlayer target = p.getLastMessenger();
 
 		if (target == null) {
-			messageSender(sender, Messages.getInstance().getString("player_not_found"));
+			messageSender(sender, Messages.getInstance().getString("no_reply"));
+			return;
+		}
+
+		if (target.getOnlinePlayer() == null) {
+			messageSender(sender, Messages.getInstance().getString("player_left"));
+			p.setLastMessenger(null);
 			return;
 		}
 
@@ -35,7 +41,7 @@ public class Reply extends Command {
 
 		String message = StringUtils.join(args, " ");
 
-		String from = p.getOnlinePlayer().getName(), to = target.getOnlinePlayer().getName();
+		String from = p.getOnlinePlayer().getCustomName(), to = target.getOnlinePlayer().getCustomName();
 
 		target.setLastMessenger(p);
 

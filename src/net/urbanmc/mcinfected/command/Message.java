@@ -45,7 +45,8 @@ public class Message extends Command {
 
 		message = message.trim();
 
-		String from = sender instanceof Player ? sender.getName() : "CONSOLE", to = targetPlayer.getName();
+		String from = sender instanceof Player ? ((Player) sender).getCustomName() : "CONSOLE", to =
+				targetPlayer.getCustomName();
 
 		if (p != null) {
 			p.setLastMessenger(target);
