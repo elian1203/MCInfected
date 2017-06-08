@@ -1,10 +1,10 @@
 package net.urbanmc.mcinfected.util;
 
-import net.minecraft.server.v1_11_R1.*;
-import net.minecraft.server.v1_11_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
+import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -17,7 +17,7 @@ public class PacketUtil {
 		String json = "{\"text\":\"" + text + "\", \"color\": \"" + color + "\"}";
 		IChatBaseComponent comp = ChatSerializer.a(json);
 
-		PacketPlayOutChat packet = new PacketPlayOutChat(comp, (byte) 2);
+		PacketPlayOutChat packet = new PacketPlayOutChat(comp, ChatMessageType.GAME_INFO);
 
 		sendPacket(p, packet);
 	}

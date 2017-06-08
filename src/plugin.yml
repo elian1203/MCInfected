@@ -2,7 +2,7 @@ main: net.urbanmc.mcinfected.MCInfected
 name: MCInfected
 version: 1.0
 authors: [Elian, Silverwolfg11]
-depend: [GroupManager, LibsDisguises]
+depend: [GroupManagerX, LibsDisguises]
 
 permissions:
   command.about:
