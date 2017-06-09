@@ -84,7 +84,7 @@ public class GameStart extends BukkitRunnable {
 		cancel();
 	}
 
-	private void mapSelection() {
+	public void mapSelection() {
 		GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
 
 		gameMap = VoteUtil.getTopVotedMap();
