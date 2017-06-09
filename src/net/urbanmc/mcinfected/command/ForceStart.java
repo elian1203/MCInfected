@@ -11,21 +11,21 @@ import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
-public class ForceStart extends Command{
+public class ForceStart extends Command {
 
 
-    public ForceStart() {
-        super("forcestart", "command.forcestart", false, Collections.singletonList("fs"));
-    }
+	public ForceStart() {
+		super("forcestart", "command.forcestart", false, Collections.singletonList("fs"));
+	}
 
-    @Override
-    public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-        if(!GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
-            messageSender(sender,Messages.getInstance().getString("game_started"));
-            return;
-        }
+	@Override
+	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
+		if (!GameManager.getInstance().getGameState().equals(GameManager.GameState.LOBBY)) {
+			messageSender(sender, Messages.getInstance().getString("game_started"));
+			return;
+		}
 
-        Bukkit.broadcastMessage(Messages.getInstance().getString("game_forcestarted"));
-        MCInfected.getGameStart().mapSelection();
-    }
+		Bukkit.broadcastMessage(Messages.getInstance().getString("game_forcestarted"));
+		MCInfected.getGameStart().forceStart();
+	}
 }

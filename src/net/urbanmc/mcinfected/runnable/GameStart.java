@@ -84,7 +84,7 @@ public class GameStart extends BukkitRunnable {
 		cancel();
 	}
 
-	public void mapSelection() {
+	private void mapSelection() {
 		GameManager.getInstance().setGameState(GameManager.GameState.COUNTDOWN);
 
 		gameMap = VoteUtil.getTopVotedMap();
@@ -93,6 +93,11 @@ public class GameStart extends BukkitRunnable {
 
 		MapManager.getInstance().loadMap(gameMap);
 		MapManager.getInstance().setGameMap(gameMap);
+	}
+
+	public void forceStart() {
+		mapSelection();
+		time = 14;
 	}
 
 	private void preInfection() {
