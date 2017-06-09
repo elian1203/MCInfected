@@ -42,6 +42,7 @@ public class CommandManager {
 		commands.add(new Sneak());
 		commands.add(new Stats());
 		commands.add(new Vote());
+		commands.add(new WorldTp());
 	}
 
 	private Command getCommandByName(String name) {

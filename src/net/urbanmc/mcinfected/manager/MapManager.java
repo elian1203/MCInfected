@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -162,5 +163,26 @@ public class MapManager {
 		}
 
 		FoodManager.getInstance().getCakes().clear();
+	}
+
+	public boolean isExistentWorld(String world) {
+		File worldDir = new File(world);
+
+		if (!worldDir.isDirectory())
+			return false;
+
+		boolean hasLevel = false;
+
+		if (worldDir.listFiles() == null)
+			return false;
+
+		for (File child : worldDir.listFiles()) {
+			if (child.getName().equals("level.dat")) {
+				hasLevel = true;
+				break;
+			}
+		}
+
+		return hasLevel;
 	}
 }
