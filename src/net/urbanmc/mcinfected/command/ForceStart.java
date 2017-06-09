@@ -14,7 +14,7 @@ import java.util.*;
 public class ForceStart extends Command{
 
 
-    public ForceStart(String name, String permission, boolean onlyPlayer, java.util.List<String> aliases) {
+    public ForceStart() {
         super("forcestart", "command.forcestart", false, Collections.singletonList("fs"));
     }
 
