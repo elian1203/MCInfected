@@ -1,0 +1,11 @@
+items:
+    #% item(s) separator: ;
+  - '9 wood_sword enchant:fireaspect'
+  - '17 slime_ball amount:3 name:Sticky_Grenade'
+  - '17 snow_ball amount:3 name:Flash_Grenade'
+  - '13 egg amount:2 name:Frag_Grenade'
+  - '13 cooked_beef amount:2'
+  - '11 cake'
+  - '7 golden_apple'
+  - '3 cookie amount:1000'
+  - '10 bow enchant:power;arrow amount:10'
