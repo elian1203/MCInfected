@@ -12,6 +12,7 @@ import net.urbanmc.mcinfected.object.Map;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -104,6 +105,7 @@ public class GameStart extends BukkitRunnable {
 		Location loc = gameMap.getSpawn();
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
+			p.setGameMode(GameMode.ADVENTURE);
 			p.teleport(loc);
 
 			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);

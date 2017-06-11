@@ -6,7 +6,7 @@
 
     <groupId>net.urbanmc</groupId>
     <artifactId>MCInfected</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>MCInfected</name>
     <url>http://urbanmc.net/</url>
