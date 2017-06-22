@@ -53,7 +53,7 @@ public class DeathListener implements Listener {
 
 		String deathMessage;
 
-		boolean entityAttack = isEntityCause(e.getCause());
+		boolean entityAttack = isEntityCause(p, e.getCause());
 
 		if (entityAttack) {
 			GamePlayer attacker = p.getLastAttacker();
@@ -62,19 +62,20 @@ public class DeathListener implements Listener {
 			KillStreakUtil.giveNextKillStreak(attacker);
 
 			deathMessage = getDeathMessage(p, attacker, e.getCause());
-		} else {
-			deathMessage = getDeathMessage(p, null, e.getCause());
 		}
+		else
+			deathMessage = getDeathMessage(p, null, e.getCause());
+
 
 		Bukkit.broadcastMessage(deathMessage);
 
-		if (entityAttack) {
+		if (entityAttack)
 			giveProperYield(p.getLastAttacker(), p, p.isInfected());
-		}
 
-		if (p.isInfected()) {
+		if (p.isInfected())
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
-		} else {
+
+		 else
 			if (!GameManager.getInstance().onHumanDeath(p)) {
 				p.setInfected();
 				p.setKillStreak(0);
@@ -83,7 +84,7 @@ public class DeathListener implements Listener {
 
 				player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
 			}
-		}
+
 
 		ItemUtil.equipPlayer(p);
 
@@ -92,9 +93,9 @@ public class DeathListener implements Listener {
 		ScoreboardManager.getInstance().updateBoard(BoardType.GAME);
 	}
 
-	private boolean isEntityCause(DamageCause cause) {
+	private boolean isEntityCause(GamePlayer p, DamageCause cause) {
 		return cause.equals(DamageCause.ENTITY_ATTACK) || cause.equals(DamageCause.ENTITY_SWEEP_ATTACK) ||
-				cause.equals(DamageCause.PROJECTILE) || cause.equals(DamageCause.CUSTOM);
+				cause.equals(DamageCause.PROJECTILE) || cause.equals(DamageCause.CUSTOM) || (p.getLastAttacker() != null && cause.equals(DamageCause.VOID));
 	}
 
 	private String getDeathMessage(GamePlayer killed, GamePlayer attacker, DamageCause cause) {

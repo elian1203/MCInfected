@@ -37,13 +37,12 @@ public class Message extends Command {
 			return;
 		}
 
-		String message = "";
+		StringBuilder message = new StringBuilder();
 
 		for (int i = 1; i < args.length; i++) {
-			message += args[i] + " ";
+			message.append(args[i]).append(" ");
 		}
 
-		message = message.trim();
 
 		String from = sender instanceof Player ? ((Player) sender).getCustomName() : "CONSOLE", to =
 				targetPlayer.getCustomName();
@@ -54,7 +53,7 @@ public class Message extends Command {
 
 		target.setLastMessenger(p);
 
-		messageSender(sender, Messages.getInstance().getString("message_to", to, message));
-		messagePlayer(target, Messages.getInstance().getString("message_from", from, message));
+		messageSender(sender, Messages.getInstance().getString("message_to", to, message.toString().trim()));
+		messagePlayer(target, Messages.getInstance().getString("message_from", from, message.toString().trim()));
 	}
 }

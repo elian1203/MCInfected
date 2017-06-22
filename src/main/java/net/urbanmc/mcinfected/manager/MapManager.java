@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -82,7 +83,7 @@ public class MapManager {
 			specific.add(map);
 		}
 
-		specific.sort((m1, m2) -> m1.getName().compareTo(m2.getName()));
+		specific.sort(Comparator.comparing(Map::getName));
 	}
 
 	private void setLobbyVars() {

@@ -101,9 +101,7 @@ public class ScoreboardManager implements Listener {
 	}
 
 	private void applyBoard() {
-		Bukkit.getOnlinePlayers().forEach(player -> {
-			player.setScoreboard(obj.getScoreboard());
-		});
+		Bukkit.getOnlinePlayers().forEach(player -> player.setScoreboard(obj.getScoreboard()));
 	}
 
 	private String formatTime(long seconds) {
