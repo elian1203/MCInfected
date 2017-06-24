@@ -18,12 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
 
-	private MCInfected plugin;
-
-	public JoinListener(MCInfected plugin) {
-		this.plugin = plugin;
-	}
-
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
@@ -59,16 +53,11 @@ public class JoinListener implements Listener {
 
 		if (GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING)) {
 
-			PacketUtil.removePlayersFromList(
-			        (Player[]) Bukkit.getOnlinePlayers().stream()
-                            .filter(p -> GamePlayerManager.getInstance().getGamePlayer(p).isInfected())
-                            .toArray()
-            );
+			PacketUtil.removePlayersFromList((Player[]) Bukkit.getOnlinePlayers().stream()
+					.filter(p -> GamePlayerManager.getInstance().getGamePlayer(p).isInfected()).toArray());
 
 			return Messages.getInstance().getString("joined_running", playerName);
-		}
-
-		else
+		} else
 			return Messages.getInstance().getString("joined_pregame",
 			                                        playerName,
 			                                        Bukkit.getOnlinePlayers().size(),
@@ -79,6 +68,7 @@ public class JoinListener implements Listener {
 		if (GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY)
 			return;
 
-		Bukkit.getScheduler().runTaskLater(plugin, () -> p.sendMessage(VoteUtil.getFormattedSpecific()), 20);
+		Bukkit.getScheduler()
+				.runTaskLater(MCInfected.getInstance(), () -> p.sendMessage(VoteUtil.getFormattedSpecific()), 20);
 	}
 }

@@ -14,12 +14,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class GrenadeListener implements Listener {
 
-	private MCInfected plugin;
-
-	public GrenadeListener(MCInfected plugin) {
-		this.plugin = plugin;
-	}
-
 	@EventHandler
 	public void onGrenadeThrow(PlayerInteractEvent e) {
 		if (!e.getAction().equals(Action.RIGHT_CLICK_AIR) && !e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
@@ -39,6 +33,6 @@ public class GrenadeListener implements Listener {
 			return;
 
 		GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(e.getPlayer());
-		ItemUtil.throwItem(p, is, plugin);
+		ItemUtil.throwItem(p, is, MCInfected.getInstance());
 	}
 }

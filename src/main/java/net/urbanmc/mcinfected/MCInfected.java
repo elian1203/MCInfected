@@ -1,7 +1,6 @@
 package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
-import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.runnable.GameStart;
 import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.plugin.PluginManager;
@@ -18,7 +17,11 @@ public class MCInfected extends JavaPlugin {
 	}
 
 	public static int getSufficientPlayers() {
-		return 8;
+		return 6;
+	}
+
+	public static MCInfected getInstance() {
+		return instance;
 	}
 
 	@Override
@@ -43,10 +46,10 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new DeathListener(), this);
 		pm.registerEvents(new FoodConsumeListener(), this);
 		pm.registerEvents(new FoodLevelListener(), this);
-		pm.registerEvents(new GrenadeListener(this), this);
+		pm.registerEvents(new GrenadeListener(), this);
 		pm.registerEvents(new HealthRegainListener(), this);
 		pm.registerEvents(new ItemDropListener(), this);
-		pm.registerEvents(new JoinListener(this), this);
+		pm.registerEvents(new JoinListener(), this);
 		pm.registerEvents(new PermissionsListener(), this);
 		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
@@ -55,13 +58,7 @@ public class MCInfected extends JavaPlugin {
 	private void registerGame() {
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-		GameManager.getInstance().setPlugin(this);
-
 		gameStart = new GameStart(this);
-	}
-
-	public static MCInfected getInstance() {
-		return instance;
 	}
 
 }
