@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MCInfected extends JavaPlugin {
 
+	private static MCInfected instance;
+
 	private static GameStart gameStart;
 
 	public static GameStart getGameStart() {
@@ -23,6 +25,8 @@ public class MCInfected extends JavaPlugin {
 	public void onEnable() {
 		registerListeners();
 		registerGame();
+
+		instance = this;
 	}
 
 	private void registerListeners() {
@@ -54,6 +58,10 @@ public class MCInfected extends JavaPlugin {
 		GameManager.getInstance().setPlugin(this);
 
 		gameStart = new GameStart(this);
+	}
+
+	public static MCInfected getInstance() {
+		return instance;
 	}
 
 }

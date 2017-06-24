@@ -36,15 +36,15 @@ public class PacketUtil {
 	public static void removePlayersFromList(Player... players) {
 		List<EntityPlayer> list = new ArrayList<>();
 
-		for (Player p : players) {
+		for (Player p : players)
 			list.add(((CraftPlayer) p).getHandle());
-		}
+
 
 		PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, list);
 
-		for (Player p : Bukkit.getOnlinePlayers()) {
+		for (Player p : Bukkit.getOnlinePlayers())
 			sendPacket(p, packet);
-		}
+
 	}
 
 	private static void sendPacket(Player p, Packet packet) {
