@@ -51,8 +51,9 @@ public class BlockListener implements Listener {
 
 		if (action == Action.LEFT_CLICK_BLOCK) {
 			Block b = e.getClickedBlock().getRelative(e.getBlockFace());
+			Material type = b.getType();
 
-			if (b.getType().equals(Material.FIRE)) {
+			if (type == Material.ITEM_FRAME || type == Material.FIRE || type == Material.PAINTING) {
 				e.setCancelled(true);
 			}
 		} else if (action == Action.RIGHT_CLICK_BLOCK) {

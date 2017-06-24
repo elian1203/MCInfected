@@ -140,9 +140,11 @@ public class ShopManager {
 			return;
 		}
 
-		p.setCookies(0);
+		p.setCookies(p.getCookies() - cost);
 
 		p.setRank(rank);
+
+		GamePlayerManager.getInstance().savePlayers();
 
 		String message = Messages.getInstance()
 				.getString("player_rank_up", p.getOnlinePlayer().getName(), rank.getColor().getChar(), rank.getName());
