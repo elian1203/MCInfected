@@ -96,10 +96,9 @@ public class GamePlayerManager {
 	}
 
 	public GamePlayer getGamePlayer(UUID uuid) {
-		for (GamePlayer p : players) {
+		for (GamePlayer p : players)
 			if (p.getUniqueId().equals(uuid))
 				return p;
-		}
 
 		return null;
 	}

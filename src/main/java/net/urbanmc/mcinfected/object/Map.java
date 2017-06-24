@@ -12,7 +12,6 @@ public class Map {
 
 	public Map(String name, String spawn) {
 		this.name = name;
-		this.world = world;
 		this.spawn = spawn;
 	}
 

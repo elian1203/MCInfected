@@ -6,6 +6,7 @@ import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.GameStart;
+import net.urbanmc.mcinfected.util.PacketUtil;
 import net.urbanmc.mcinfected.util.VoteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -56,8 +57,16 @@ public class JoinListener implements Listener {
 
 	private String getJoinMessage(String playerName) {
 
-		if (GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING))
+		if (GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING)) {
+
+			PacketUtil.removePlayersFromList(
+			        (Player[]) Bukkit.getOnlinePlayers().stream()
+                            .filter(p -> GamePlayerManager.getInstance().getGamePlayer(p).isInfected())
+                            .toArray()
+            );
+
 			return Messages.getInstance().getString("joined_running", playerName);
+		}
 
 		else
 			return Messages.getInstance().getString("joined_pregame",
@@ -70,8 +79,6 @@ public class JoinListener implements Listener {
 		if (GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY)
 			return;
 
-		Bukkit.getScheduler().runTaskLater(plugin, () -> {
-			p.sendMessage(VoteUtil.getFormattedSpecific());
-		}, 20);
+		Bukkit.getScheduler().runTaskLater(plugin, () -> p.sendMessage(VoteUtil.getFormattedSpecific()), 20);
 	}
 }

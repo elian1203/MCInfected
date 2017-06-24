@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.object;
 
 import net.urbanmc.mcinfected.manager.KitManager;
+import net.urbanmc.mcinfected.runnable.LastAttacker;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public class GamePlayer {
 	private Kit kit;
 	private boolean voted = false, sneaking = false, infected = false, motherZombie = false;
 	private GamePlayer lastAttacker, lastMessenger;
+	private LastAttacker lastAttackerRunnable;
 
 	public GamePlayer(UUID uuid, long scores, long cookies, long gamesPlayed, int kills, int deaths,
 	                  int highestKillStreak, Rank rank, List<UUID> ignoring) {
@@ -193,6 +195,11 @@ public class GamePlayer {
 
 	public void setLastAttacker(GamePlayer lastAttacker) {
 		this.lastAttacker = lastAttacker;
+
+		if(lastAttackerRunnable != null)
+			lastAttackerRunnable.cancel();
+
+		lastAttackerRunnable = new LastAttacker(this);
 	}
 
 	public GamePlayer getLastMessenger() {
@@ -202,4 +209,9 @@ public class GamePlayer {
 	public void setLastMessenger(GamePlayer lastMessenger) {
 		this.lastMessenger = lastMessenger;
 	}
+
+	public void setLastAttackerRunnable(LastAttacker runnable) {
+		this.lastAttackerRunnable = runnable;
+	}
+
 }
