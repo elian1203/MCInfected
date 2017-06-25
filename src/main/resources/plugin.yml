@@ -7,6 +7,8 @@ depend: [GroupManager, LibsDisguises]
 permissions:
   command.about:
     default: true
+  command.forcestart:
+    default: op
   command.help:
     default: true
   command.ignore:
@@ -16,6 +18,8 @@ permissions:
   command.infected:
     default: true
   command.kit:
+    default: true
+  command.list:
     default: true
   command.message:
     default: true
@@ -29,6 +33,10 @@ permissions:
     default: true
   command.vote:
     default: true
+  command.votestart:
+    default: true
+  command.worldtp:
+    default: op
   namecolor.aqua:
     default: false
   namecolor.gold:

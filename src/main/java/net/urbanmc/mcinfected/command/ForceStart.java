@@ -13,7 +13,6 @@ import java.util.*;
 
 public class ForceStart extends Command {
 
-
 	public ForceStart() {
 		super("forcestart", "command.forcestart", false, Collections.singletonList("fs"));
 	}

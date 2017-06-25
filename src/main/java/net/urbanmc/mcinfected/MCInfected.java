@@ -26,10 +26,10 @@ public class MCInfected extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		instance = this;
+
 		registerListeners();
 		registerGame();
-
-		instance = this;
 	}
 
 	private void registerListeners() {

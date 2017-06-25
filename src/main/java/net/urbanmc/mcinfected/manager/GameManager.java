@@ -21,7 +21,7 @@ public class GameManager {
 
 	private static GameManager instance = new GameManager();
 
-	private MCInfected plugin;
+	private MCInfected plugin = MCInfected.getInstance();
 
 	private GameState state;
 
