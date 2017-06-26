@@ -16,6 +16,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class JoinListener implements Listener {
 
 	@EventHandler
@@ -53,8 +57,7 @@ public class JoinListener implements Listener {
 
 		if (GameManager.getInstance().getGameState().equals(GameManager.GameState.RUNNING)) {
 
-			PacketUtil.removePlayersFromList((Player[]) Bukkit.getOnlinePlayers().stream()
-					.filter(p -> GamePlayerManager.getInstance().getGamePlayer(p).isInfected()).toArray());
+			addZombieToRunning(Bukkit.getPlayer(playerName));
 
 			return Messages.getInstance().getString("joined_running", playerName);
 		} else
@@ -70,5 +73,24 @@ public class JoinListener implements Listener {
 
 		Bukkit.getScheduler()
 				.runTaskLater(MCInfected.getInstance(), () -> p.sendMessage(VoteUtil.getFormattedSpecific()), 20);
+	}
+
+	private void addZombieToRunning(Player p) {
+		PacketUtil.removePlayerFromList(Collections.singletonList(p));
+
+		List<Player> infected = new ArrayList<>();
+		GamePlayer tempPlayer;
+
+		for(Player player : Bukkit.getOnlinePlayers()) {
+			if(player.equals(p))
+				continue;
+
+			tempPlayer = GamePlayerManager.getInstance().getGamePlayer(p);
+
+			if(tempPlayer.isInfected())
+				infected.add(player);
+		}
+
+		PacketUtil.removePlayerFromList(infected, p);
 	}
 }

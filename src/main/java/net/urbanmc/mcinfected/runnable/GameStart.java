@@ -106,6 +106,7 @@ public class GameStart extends BukkitRunnable {
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
+			p.setFallDistance(0);
 			p.teleport(loc);
 
 			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);
