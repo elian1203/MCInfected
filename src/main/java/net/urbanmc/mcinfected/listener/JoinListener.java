@@ -76,7 +76,7 @@ public class JoinListener implements Listener {
 	}
 
 	private void addZombieToRunning(Player p) {
-		PacketUtil.removePlayerFromList(Collections.singletonList(p));
+		PacketUtil.removePlayersFromList(p);
 
 		List<Player> infected = new ArrayList<>();
 		GamePlayer tempPlayer;
@@ -91,6 +91,6 @@ public class JoinListener implements Listener {
 				infected.add(player);
 		}
 
-		PacketUtil.removePlayerFromList(infected, p);
+		PacketUtil.removePlayersFromPlayerList(infected, p);
 	}
 }

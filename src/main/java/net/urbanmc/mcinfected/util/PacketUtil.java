@@ -47,23 +47,16 @@ public class PacketUtil {
 
 	}
 
-	public static void removePlayerFromList(List<Player> removed, Player... recievers) {
+	public static void removePlayersFromPlayerList(List<Player> removed, Player reciever) {
 
 		List<EntityPlayer> list = new ArrayList<>();
 
 		for (Player p : removed)
 			list.add(((CraftPlayer) p).getHandle());
 
-
 		PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, list);
 
-		if(recievers == null)
-		for (Player p : Bukkit.getOnlinePlayers())
-			sendPacket(p, packet);
-
-		else
-			for(Player p : recievers)
-				sendPacket(p, packet);
+		sendPacket(reciever, packet);
 	}
 
 	private static void sendPacket(Player p, Packet packet) {

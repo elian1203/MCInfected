@@ -31,11 +31,11 @@ streaks:
     9:
       repeats: 18
       items:
-      - 'potion effect:increase_damage'
+      - 'potion effect:increase_damage/1/30'
     10:
       repeats: 19
       items:
-      - 'splash_potion effect:poison'
+      - 'splash_potion effect:poison/1/20'
     25:
       repeats: 0
       items:
@@ -52,8 +52,8 @@ streaks:
     3:
       items:
       - 'potato name:Brainzzzzz'
-      - 'potion effect:speed'
+      - 'potion effect:speed/1/30'
     4:
       items:
       - 'potato name:Brainzzzzz'
-      - 'potion effect:increase_damage'
+      - 'potion effect:increase_damage/1/30'
