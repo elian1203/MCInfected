@@ -1,5 +1,7 @@
 package net.urbanmc.mcinfected.command;
 
+import net.urbanmc.mcinfected.manager.GameManager;
+import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.manager.KitManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.Command;
@@ -19,8 +21,10 @@ public class Kit extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
-		if (!p.isInfected()) {
-			messagePlayer(p, Messages.getInstance().getString("must_be_infected"));
+		GameState state = GameManager.getInstance().getGameState();
+
+		if (state == GameState.LOBBY || state == GameState.COUNTDOWN) {
+			messagePlayer(p, Messages.getInstance().getString("kit_cannot_use_yet"));
 			return;
 		}
 

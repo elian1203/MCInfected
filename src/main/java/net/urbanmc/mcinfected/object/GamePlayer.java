@@ -175,7 +175,9 @@ public class GamePlayer {
 	public void setInfected() {
 		infected = true;
 
-		kit = KitManager.getInstance().getZombieKit();
+		if (kit == null) {
+			kit = KitManager.getInstance().getZombieKit();
+		}
 	}
 
 	public boolean isMotherZombie() {
@@ -186,7 +188,9 @@ public class GamePlayer {
 		infected = true;
 		motherZombie = true;
 
-		kit = KitManager.getInstance().getMotherKit();
+		if (kit == null) {
+			kit = KitManager.getInstance().getMotherKit();
+		}
 	}
 
 	public GamePlayer getLastAttacker() {
@@ -196,7 +200,7 @@ public class GamePlayer {
 	public void setLastAttacker(GamePlayer lastAttacker) {
 		this.lastAttacker = lastAttacker;
 
-		if(lastAttackerRunnable != null)
+		if (lastAttackerRunnable != null)
 			lastAttackerRunnable.cancel();
 
 		lastAttackerRunnable = new LastAttacker(this);

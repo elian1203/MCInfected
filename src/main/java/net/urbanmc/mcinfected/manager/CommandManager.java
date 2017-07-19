@@ -43,7 +43,6 @@ public class CommandManager {
 		commands.add(new Stats());
 		commands.add(new Vote());
 		commands.add(new WorldTp());
-		commands.add(new VoteStart());
 	}
 
 	private Command getCommandByName(String name) {
