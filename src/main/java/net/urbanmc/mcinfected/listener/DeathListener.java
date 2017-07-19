@@ -71,7 +71,7 @@ public class DeathListener implements Listener {
 		if (entityAttack)
 			giveProperYield(p.getLastAttacker(), p, p.isInfected());
 
-		if (p.isInfected() || e.getCause().equals(DamageCause.VOID)) {
+		if (p.isInfected()) {
 			player.setFallDistance(0);
 			player.teleport(MapManager.getInstance().getGameMap().getSpawn());
 		} else if (!GameManager.getInstance().onHumanDeath(p)) {
@@ -81,6 +81,11 @@ public class DeathListener implements Listener {
 			PacketUtil.removePlayersFromList(p.getOnlinePlayer());
 
 			player.sendMessage(Messages.getInstance().getString("you_are_zombie"));
+
+			if(e.getCause().equals(DamageCause.VOID)) {
+				player.setFallDistance(0);
+				player.teleport(MapManager.getInstance().getGameMap().getSpawn());
+			}
 		}
 
 
