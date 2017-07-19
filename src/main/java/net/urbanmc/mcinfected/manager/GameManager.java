@@ -76,7 +76,9 @@ public class GameManager {
 				p.setInfected();
 				ItemUtil.equipPlayer(p);
 
-				PacketUtil.removePlayersFromList(p.getOnlinePlayer());
+				Bukkit.getServer().getScheduler().runTaskLater(MCInfected.getInstance(),
+				                                               () -> PacketUtil
+						                                               .removePlayersFromList(p.getOnlinePlayer()), 2);
 				break;
 		}
 
