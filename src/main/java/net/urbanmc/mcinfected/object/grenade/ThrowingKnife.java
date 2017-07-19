@@ -33,7 +33,7 @@ public class ThrowingKnife extends Grenade {
 
 				player.damage(damage);
 
-				PacketUtil.sendActionBar(player, "You have been hit with a throwing knife!", "dark_red");
+				PacketUtil.sendActionBar(player, "§4You have been hit with a throwing knife!");
 			}
 		}
 	}

@@ -122,10 +122,16 @@ public class DeathListener implements Listener {
 
 			int i = r.nextInt(3) + 1;
 
-			if (killed.isInfected())
+			if (killed.isInfected()) {
+				if(cause.equals(DamageCause.VOID))
+					return Messages.getInstance().getString("human_pushed_zombie", killedName, attackerName);
 				return Messages.getInstance().getString("human_killed_zombie_" + i, killedName, attackerName);
-			else
+			}
+			else {
+				if(cause.equals(DamageCause.VOID))
+					return Messages.getInstance().getString("zombie_pushed_human", killedName, attackerName);
 				return Messages.getInstance().getString("zombie_killed_human_" + i, killedName, attackerName);
+			}
 		}
 	}
 
@@ -142,7 +148,6 @@ public class DeathListener implements Listener {
 				GamePlayerManager.getInstance().giveAllCookies(2, false, killed);
 
 				GamePlayerManager.getInstance().sendBarAllTeam(Messages.getInstance().getString("human_killed_humans"),
-				                                               "green",
 				                                               false,
 				                                               killed);
 			}
@@ -151,7 +156,7 @@ public class DeathListener implements Listener {
 			GamePlayerManager.getInstance().giveAllCookies(1, true, killed);
 
 			GamePlayerManager.getInstance()
-					.sendBarAllTeam(Messages.getInstance().getString("human_killed_zombies"), "green", true);
+					.sendBarAllTeam(Messages.getInstance().getString("human_killed_zombies"), true);
 		}
 	}
 }

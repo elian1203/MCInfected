@@ -13,8 +13,8 @@ import java.util.List;
 
 public class PacketUtil {
 
-	public static void sendActionBar(Player p, String text, String color) {
-		String json = "{\"text\":\"" + text + "\", \"color\": \"" + color + "\"}";
+	public static void sendActionBar(Player p, String text) {
+		String json = "{\"text\":\"" + text + "\"}";
 		IChatBaseComponent comp = ChatSerializer.a(json);
 
 		PacketPlayOutChat packet = new PacketPlayOutChat(comp, ChatMessageType.GAME_INFO);
