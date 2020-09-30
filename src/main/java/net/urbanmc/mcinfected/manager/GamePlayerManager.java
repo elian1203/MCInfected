@@ -167,7 +167,7 @@ public class GamePlayerManager {
 		}
 	}
 
-	public void sendBarAllTeam(String message, String color, boolean zombies, GamePlayer... exclude) {
+	public void sendBarAllTeam(String message, boolean zombies, GamePlayer... exclude) {
 		Collection<? extends Player> players = new HashSet<>(Bukkit.getOnlinePlayers());
 
 		if (exclude != null) {
@@ -180,7 +180,7 @@ public class GamePlayerManager {
 			GamePlayer p = getGamePlayer(player);
 
 			if (p.isInfected() == zombies) {
-				PacketUtil.sendActionBar(p.getOnlinePlayer(), message, color);
+				PacketUtil.sendActionBar(p.getOnlinePlayer(), message);
 			}
 		}
 	}
