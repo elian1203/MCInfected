@@ -3,12 +3,12 @@ package net.urbanmc.mcinfected.listener;
 import net.urbanmc.mcinfected.manager.FoodManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Cake;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.Cake;
 
 public class CakeListener implements Listener {
 
@@ -19,10 +19,13 @@ public class CakeListener implements Listener {
 
 		Block b = e.getClickedBlock();
 
-		if (!(b.getState().getData() instanceof Cake))
+		if (b == null)
 			return;
 
-		Cake cake = (Cake) b.getState().getData();
+		if (!(b.getBlockData() instanceof Cake))
+			return;
+
+		Cake cake = (Cake) b.getBlockData();
 
 		Player player = e.getPlayer();
 
@@ -39,15 +42,13 @@ public class CakeListener implements Listener {
 
 		player.setHealth(health);
 
-		int slicesRemaining = cake.getSlicesRemaining();
+		cake.setBites(cake.getBites() + 1);
 
-		cake.setSlicesRemaining(slicesRemaining - 1);
-
-		if (cake.getSlicesRemaining() == 0) {
+		if (cake.getBites() == cake.getMaximumBites()) {
 			b.setType(Material.AIR);
 			FoodManager.getInstance().getCakes().remove(b);
 		} else {
-			b.setData(cake.getData());
+			b.setBlockData(cake);
 		}
 
 		e.setCancelled(true);

@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.manager;
 import net.urbanmc.mcinfected.manager.GameManager.GameState;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.object.Rank;
+import net.urbanmc.mcinfected.object.ShopHolder;
 import net.urbanmc.mcinfected.object.ShopItem;
 import net.urbanmc.mcinfected.object.ShopItem.ShopItemType;
 import net.urbanmc.mcinfected.util.ItemUtil;
@@ -58,7 +59,7 @@ public class ShopManager {
 	}
 
 	public Inventory getShop(GamePlayer p) {
-		Inventory shop = Bukkit.createInventory(null, 9, "Shop");
+		Inventory shop = Bukkit.createInventory(new ShopHolder(), 9, "Shop");
 
 		for (int i = 0; i < 9; i++) {
 			ShopItem configItem = getShopItem(i);
@@ -121,6 +122,8 @@ public class ShopManager {
 				purchaseItem(p, item);
 				break;
 		}
+
+		p.getOnlinePlayer().closeInventory();
 	}
 
 	private void rankupPlayer(GamePlayer p) {
@@ -185,6 +188,6 @@ public class ShopManager {
 
 		player.getInventory().addItem(is);
 		player.sendMessage(Messages.getInstance()
-				                   .getString("bought_item", is.getAmount(), ItemUtil.getFriendlyName(is), cost));
+				.getString("bought_item", is.getAmount(), ItemUtil.getFriendlyName(is), cost));
 	}
 }

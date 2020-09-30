@@ -24,7 +24,7 @@ public abstract class Grenade {
 		Material type = is.getType();
 
 		return type.equals(Material.TRIPWIRE_HOOK) || type.equals(Material.SLIME_BALL) ||
-				type.equals(Material.SNOW_BALL) || type.equals(Material.EGG);
+				type.equals(Material.SNOWBALL) || type.equals(Material.EGG);
 	}
 
 	public static Grenade parseGrenade(GamePlayer thrower, Item item) {
@@ -35,7 +35,7 @@ public abstract class Grenade {
 				return new ThrowingKnife(thrower, item);
 			case SLIME_BALL:
 				return new StickyGrenade(thrower, item);
-			case SNOW_BALL:
+			case SNOWBALL:
 				return new FlashGrenade(thrower, item);
 			case EGG:
 				return new FragGrenade(thrower, item);

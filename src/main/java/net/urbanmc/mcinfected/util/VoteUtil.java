@@ -12,7 +12,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 public class VoteUtil {
-
 	public static void addVotes(GamePlayer p, net.urbanmc.mcinfected.object.Map map, int amount) {
 		map.setVotes(map.getVotes() + amount);
 

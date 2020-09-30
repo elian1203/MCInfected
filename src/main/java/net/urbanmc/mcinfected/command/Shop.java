@@ -17,7 +17,8 @@ public class Shop extends Command {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args, GamePlayer p) {
 		if (args.length == 0) {
-			p.getOnlinePlayer().openInventory(ShopManager.getInstance().getShop(p));
+			ShopManager shopManager = ShopManager.getInstance();
+			p.getOnlinePlayer().openInventory(shopManager.getShop(p));
 			return;
 		}
 

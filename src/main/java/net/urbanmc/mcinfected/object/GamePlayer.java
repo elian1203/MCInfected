@@ -108,10 +108,10 @@ public class GamePlayer {
 	}
 
 	public String getKDR() {
-
 		double kdr;
+
 		if (deaths != 0)
-			kdr = kills / deaths;
+			kdr = (double) kills / deaths;
 		else
 			kdr = kills;
 

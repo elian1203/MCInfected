@@ -3,6 +3,7 @@ package net.urbanmc.mcinfected.listener;
 import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.ShopManager;
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.object.ShopHolder;
 import net.urbanmc.mcinfected.object.ShopItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,7 @@ public class ShopListener implements Listener {
 		if (shop == null)
 			return;
 
-		if (!shop.getTitle().equals("Shop"))
+		if (!(shop.getHolder() instanceof ShopHolder))
 			return;
 
 		GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(p);

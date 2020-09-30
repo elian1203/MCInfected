@@ -18,7 +18,7 @@ items:
     type: item
     cost: 25
   6:
-    item: 'snow_ball name:&oFlash_Grenade lore:&6Cost:_25_Cookies'
+    item: 'snowball name:&oFlash_Grenade lore:&6Cost:_25_Cookies'
     type: item
     cost: 25
   7:

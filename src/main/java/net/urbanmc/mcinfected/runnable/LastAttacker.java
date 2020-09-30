@@ -20,5 +20,4 @@ public class LastAttacker extends BukkitRunnable{
         player.setLastAttackerRunnable(null);
     }
 
-
 }

@@ -6,7 +6,6 @@ import net.urbanmc.mcinfected.manager.GamePlayerManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.object.Command;
 import net.urbanmc.mcinfected.object.GamePlayer;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,7 +29,7 @@ public class List extends Command {
 			java.util.List<String> names =
 					Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 
-			message = Messages.getInstance().getString("list_lobby", StringUtils.join(names, ", "));
+			message = Messages.getInstance().getString("list_lobby", String.join(", ", names));
 		} else {
 			GamePlayerManager manager = GamePlayerManager.getInstance();
 
@@ -42,7 +41,7 @@ public class List extends Command {
 					Bukkit.getOnlinePlayers().stream().map(manager::getGamePlayer).filter(GamePlayer::isInfected)
 							.map(gp -> gp.getOnlinePlayer().getName()).collect(Collectors.toList());
 
-			String humansJoined = StringUtils.join(humans, ", "), zombiesJoined = StringUtils.join(zombies, ", ");
+			String humansJoined = String.join(", ", humans), zombiesJoined = String.join(", ", zombies);
 
 			message = Messages.getInstance().getString("list_game", humansJoined, zombiesJoined);
 		}

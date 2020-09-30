@@ -145,7 +145,7 @@ public class ItemUtil {
 				Material.CHAINMAIL_HELMET,
 				Material.LEATHER_HELMET,
 				Material.IRON_HELMET,
-				Material.GOLD_HELMET,
+				Material.GOLDEN_HELMET,
 				Material.DIAMOND_HELMET);
 		if (!armorlist.contains(armor.get(armor.size() - 1).getType()))
 			Collections.reverse(armor);

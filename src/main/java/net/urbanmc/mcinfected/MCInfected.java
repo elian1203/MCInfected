@@ -2,7 +2,6 @@ package net.urbanmc.mcinfected;
 
 import net.urbanmc.mcinfected.listener.*;
 import net.urbanmc.mcinfected.runnable.GameStart;
-import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,7 +38,7 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new AttackListener(), this);
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new CakeListener(), this);
-		pm.registerEvents(new ChatListener(getPlugin(GroupManager.class)), this);
+		pm.registerEvents(new ChatListener(), this);
 		pm.registerEvents(new CommandListener(), this);
 		pm.registerEvents(new CreatureSpawn(), this);
 		pm.registerEvents(new DamageListener(), this);
@@ -50,7 +49,6 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new HealthRegainListener(), this);
 		pm.registerEvents(new ItemDropListener(), this);
 		pm.registerEvents(new JoinListener(), this);
-		pm.registerEvents(new PermissionsListener(), this);
 		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
 	}
