@@ -180,7 +180,7 @@ public class GamePlayerManager {
 			GamePlayer p = getGamePlayer(player);
 
 			if (p.isInfected() == zombies) {
-				PacketUtil.sendActionBar(p.getOnlinePlayer(), message);
+				PacketUtil.sendActionBar(p.getOnlinePlayer(), message, "red");
 			}
 		}
 	}

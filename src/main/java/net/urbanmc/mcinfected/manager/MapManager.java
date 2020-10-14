@@ -7,9 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,6 +17,7 @@ public class MapManager {
 
 	private static MapManager instance = new MapManager();
 
+	private File FILE = new File("plugins/MCInfected", "maps.yml");
 	private FileConfiguration data;
 
 	private Map lobby, random, current;
@@ -27,14 +26,38 @@ public class MapManager {
 	private List<Map> specific;
 
 	private MapManager() {
-		Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("maps.yml"));
-		data = YamlConfiguration.loadConfiguration(reader);
-
+		createFile();
+		loadFile();
 		loadLobby();
 		loadMaps();
 		loadRandom();
 		loadSpecific();
 		setLobbyVars();
+	}
+
+	private void createFile() {
+		if (!FILE.exists()) {
+			try {
+				if (!FILE.getParentFile().isDirectory()) {
+					FILE.getParentFile().mkdir();
+				}
+
+				FILE.createNewFile();
+
+				InputStream input = getClass().getClassLoader().getResourceAsStream("maps.yml");
+				OutputStream output = new FileOutputStream(FILE);
+				copy(input, output);
+
+				input.close();
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void loadFile() {
+		data = YamlConfiguration.loadConfiguration(FILE);
 	}
 
 	public static MapManager getInstance() {
@@ -185,5 +208,21 @@ public class MapManager {
 		}
 
 		return hasLevel;
+	}
+
+	private int copy(InputStream input, OutputStream output)
+			throws IOException {
+		byte[] buffer = new byte[1024 * 4];
+		long count = 0;
+		int n = 0;
+		while (-1 != (n = input.read(buffer))) {
+			output.write(buffer, 0, n);
+			count += n;
+		}
+
+		if (count > Integer.MAX_VALUE) {
+			return -1;
+		}
+		return (int) count;
 	}
 }
