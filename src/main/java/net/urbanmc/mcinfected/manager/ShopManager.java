@@ -48,6 +48,10 @@ public class ShopManager {
 		for (String key : sect.getKeys(false)) {
 			int place = Integer.parseInt(key), cost = sect.getInt(key + ".cost");
 			ItemStack item = ItemUtil.getItem(sect.getString(key + ".item"));
+
+			if (item == null)
+				continue;
+
 			ShopItemType type = ShopItemType.valueOf(sect.getString(key + ".type").toUpperCase());
 
 			items.add(new ShopItem(place, cost, item, type));

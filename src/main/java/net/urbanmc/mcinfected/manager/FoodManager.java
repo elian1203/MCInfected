@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.Food;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -39,7 +40,13 @@ public class FoodManager {
 		for (String string : foodStringList) {
 			String[] foodSplit = string.split(":");
 
-			Material mat = Material.valueOf(foodSplit[0].toUpperCase());
+			Material mat = Material.getMaterial(foodSplit[0].toUpperCase());
+
+			if (mat == null) {
+				Bukkit.getLogger().warning("[MCInfected] Cannot parse food '" + foodSplit[0] + "' !");
+				continue;
+			}
+
 			int healthReplenished = Integer.parseInt(foodSplit[1]);
 
 			food.add(new Food(mat, healthReplenished));

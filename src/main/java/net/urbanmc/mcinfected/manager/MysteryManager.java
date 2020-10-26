@@ -51,7 +51,10 @@ public class MysteryManager {
 			List<ItemStack> rewards = new ArrayList<>();
 
 			for (String item : split) {
-				rewards.add(ItemUtil.getItem(item));
+				ItemStack itemStack = ItemUtil.getItem(item);
+
+				if (itemStack != null)
+					rewards.add(itemStack);
 			}
 
 			this.rewards.add(new MysteryReward(rewards, chance));

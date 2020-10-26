@@ -28,14 +28,17 @@ public class ItemUtil {
 	public static ItemStack getItem(String name) {
 		String[] split = name.split(" ");
 
-		ItemStack is = new ItemStack(Material.getMaterial(split[0].toUpperCase()));
+		Material mat = Material.getMaterial(split[0].toUpperCase());
+
+		if (mat == null) {
+			Bukkit.getLogger().warning("[MCInfected] Cannot parse material '" + split[0] + "' !");
+			return null;
+		}
+
+		ItemStack is = new ItemStack(mat);
 
 		ItemMeta meta = is.getItemMeta();
 		meta.setUnbreakable(true);
-
-		if (split.length == 0) {
-			return is;
-		}
 
 		for (String arg : split) {
 			if (arg.startsWith("name:")) {
@@ -111,7 +114,10 @@ public class ItemUtil {
 		List<ItemStack> items = new ArrayList<>();
 
 		for (String s : list) {
-			items.add(getItem(s));
+			ItemStack itemStack = getItem(s);
+
+			if (itemStack != null)
+				items.add(itemStack);
 		}
 
 		return items;
