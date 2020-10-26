@@ -1,7 +1,7 @@
 zombie:
   name: Zombie
   items:
-  - wood_sword
+  - wooden_sword
   armor:
   - chainmail_helmet
   - chainmail_chestplate
@@ -11,13 +11,13 @@ zombie:
 mother:
   name: Mother
   items:
-  - 'gold_sword enchant:sharpness'
+  - 'golden_sword enchant:sharpness'
   armor:
   - chainmail_helmet
   - chainmail_chestplate
   - chainmail_leggings
   - chainmail_boots
-  disguise: pig_zombie
+  disguise: zombified_piglin
 kits:
   skeleton:
     name: Skeleton

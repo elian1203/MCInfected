@@ -15,7 +15,7 @@ streaks:
     5:
       repeats: 14, 23
       items:
-      - grilled_pork
+      - cooked_porkchop
     6:
       repeats: 15, 24
       items:
@@ -27,7 +27,7 @@ streaks:
     8:
       repeats: 17
       items:
-      - snow_ball
+      - snowball
     9:
       repeats: 18
       items:
@@ -44,11 +44,11 @@ streaks:
     1:
       items:
       - 'potato name:Brainzzzzz'
-      - grilled_pork
+      - cooked_porkchop
     2:
       items:
       - 'potato name:Brainzzzzz'
-      - 'mushroom_soup amount:2'
+      - 'mushroom_stew amount:2'
     3:
       items:
       - 'potato name:Brainzzzzz'

@@ -3,6 +3,6 @@ food:
 - 'melon:2'
 - 'apple:4'
 - 'cooked_chicken:6'
-- 'grilled_pork:8'
-- 'mushroom_soup:8'
+- 'cooked_porkchop:8'
+- 'mushroom_stew:8'
 - 'golden_apple:20'
