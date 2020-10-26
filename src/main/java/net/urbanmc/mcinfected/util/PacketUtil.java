@@ -4,16 +4,20 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_16_R1.*;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
+import net.urbanmc.mcinfected.protocol.WrapperPlayServerPlayerInfo;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class PacketUtil {
@@ -45,34 +49,38 @@ public class PacketUtil {
 		});
 	}
 
+	private static WrapperPlayServerPlayerInfo createRemovePlayersFromListPacket(Collection<Player> removePlayers) {
+		WrapperPlayServerPlayerInfo playerInfoPacket = new WrapperPlayServerPlayerInfo();
+		playerInfoPacket.setAction(EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+
+		List<PlayerInfoData> list = new ArrayList<>(removePlayers.size());
+
+		for (Player p : removePlayers) {
+			WrappedGameProfile wgp = WrappedGameProfile.fromPlayer(p);
+			WrappedChatComponent wcp = WrappedChatComponent.fromText(p.getDisplayName());
+			PlayerInfoData pid = new PlayerInfoData(wgp, 0, EnumWrappers.NativeGameMode.SURVIVAL, wcp);
+			list.add(pid);
+		}
+
+		playerInfoPacket.setData(list);
+
+		return playerInfoPacket;
+	}
+
 	public static void removePlayersFromList(Player... players) {
-		List<EntityPlayer> list = new ArrayList<>();
+		WrapperPlayServerPlayerInfo playerInfoPacket = createRemovePlayersFromListPacket(Arrays.asList(players));
 
-		for (Player p : players)
-			list.add(((CraftPlayer) p).getHandle());
-
-
-		PacketPlayOutPlayerInfo packet =
-				new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, list);
-
-		for (Player p : Bukkit.getOnlinePlayers())
-			sendPacket(p, packet);
-
+		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+		manager.broadcastServerPacket(playerInfoPacket.getHandle());
 	}
 
 	public static void removePlayersFromPlayerList(List<Player> removed, Player reciever) {
-		List<EntityPlayer> list = new ArrayList<>();
-
-		for (Player p : removed)
-			list.add(((CraftPlayer) p).getHandle());
-
-		PacketPlayOutPlayerInfo packet =
-				new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, list);
-
-		sendPacket(reciever, packet);
-	}
-
-	private static void sendPacket(Player p, Packet packet) {
-		((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+		WrapperPlayServerPlayerInfo playerInfoPacket = createRemovePlayersFromListPacket(removed);
+		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+		try {
+			manager.sendServerPacket(reciever, playerInfoPacket.getHandle());
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 }
