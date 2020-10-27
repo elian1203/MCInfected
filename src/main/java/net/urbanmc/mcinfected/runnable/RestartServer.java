@@ -23,7 +23,7 @@ public class RestartServer extends BukkitRunnable {
 		ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
 		out.writeUTF("Connect");
-		out.writeUTF("Creative");
+		out.writeUTF("creative");
 
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.teleport(MapManager.getInstance().getLobby().getSpawn());

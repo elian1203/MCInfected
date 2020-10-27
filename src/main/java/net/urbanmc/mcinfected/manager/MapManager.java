@@ -113,7 +113,7 @@ public class MapManager {
 		World world = Bukkit.getWorld("lobby");
 
 		world.setPVP(false);
-		world.setGameRuleValue("doMobSpawning", "false");
+		world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
 	}
 
 	public Map getLobby() {
@@ -168,9 +168,9 @@ public class MapManager {
 		world.setPVP(true);
 		world.setDifficulty(Difficulty.HARD);
 
-		world.setGameRuleValue("doMobSpawning", "false");
-		world.setGameRuleValue("doMobLoot", "false");
-		world.setGameRuleValue("doDaylightCycle", "false");
+		world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+		world.setGameRule(GameRule.DO_MOB_LOOT, false);
+		world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 	}
 
 	public Map getGameMap() {
