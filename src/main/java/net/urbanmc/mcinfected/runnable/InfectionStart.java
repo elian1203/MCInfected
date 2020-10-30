@@ -37,7 +37,7 @@ public class InfectionStart extends BukkitRunnable {
 			broadcastTime();
 		}
 
-		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.GAME);
+		ScoreboardManager.getInstance().minuteCountdown(time);
 
 		if (time == 0) {
 			startInfection();
@@ -114,6 +114,9 @@ public class InfectionStart extends BukkitRunnable {
 		for (Player player : motherZombies) {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
+
+		// Update infected
+		ScoreboardManager.getInstance().updatePlayersOnBoard(BoardType.GAME);
 
 		// Seconds depend on number of players.
 		GameTimer.start(plugin, 50 * Bukkit.getOnlinePlayers().size());

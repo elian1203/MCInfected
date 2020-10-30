@@ -93,7 +93,7 @@ public class DeathListener implements Listener {
 
 		p.setLastAttacker(null);
 
-		ScoreboardManager.getInstance().updateBoard(BoardType.GAME);
+		ScoreboardManager.getInstance().updatePlayersOnBoard(BoardType.GAME);
 	}
 
 	private boolean isEntityCause(GamePlayer p, DamageCause cause) {

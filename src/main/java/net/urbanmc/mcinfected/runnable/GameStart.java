@@ -39,7 +39,7 @@ public class GameStart extends BukkitRunnable {
 
 		boolean enoughPlayers = enoughPlayers();
 
-		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.LOBBY);
+		ScoreboardManager.getInstance().minuteCountdown(time);
 
 		if (time == 15 && !enoughPlayers) {
 			insufficientPlayers();
@@ -59,15 +59,13 @@ public class GameStart extends BukkitRunnable {
 	}
 
 	public void amplePlayers() {
-		ScoreboardManager.getInstance().amplePlayers(time + 1);
-
 		time = 90;
+		ScoreboardManager.getInstance().minuteCountdown(time);
+
 		Bukkit.broadcastMessage(Messages.getInstance().getString("sufficient_players"));
 	}
 
 	private void insufficientPlayers() {
-		ScoreboardManager.getInstance().insufficientPlayers();
-
 		time = 240;
 		Bukkit.broadcastMessage(Messages.getInstance().getString("insufficient_players"));
 	}
@@ -116,6 +114,7 @@ public class GameStart extends BukkitRunnable {
 		}
 
 		GameManager.getInstance().setGameState(GameManager.GameState.INFECTION);
+		ScoreboardManager.getInstance().changeBoardText(BoardType.GAME);
 
 		Bukkit.broadcastMessage(Messages.getInstance().getString("infection_start"));
 

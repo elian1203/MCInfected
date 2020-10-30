@@ -1,6 +1,7 @@
 package net.urbanmc.mcinfected.manager;
 
 import net.urbanmc.mcinfected.object.GamePlayer;
+import net.urbanmc.mcinfected.object.string.SingleInputString;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,13 +9,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public class ScoreboardManager implements Listener {
 
 	private static ScoreboardManager instance = new ScoreboardManager();
 
+	private BoardType currentType = null;
+
 	private Objective obj;
 	private int time;
+
+	// String Replacements
+	private SingleInputString playerCounterStr = SingleInputString.EMPTY;
+	private SingleInputString numInfectedStr = SingleInputString.EMPTY;
+	private SingleInputString numHumanStr = SingleInputString.EMPTY;
+	private SingleInputString timeStr = SingleInputString.EMPTY;
 
 	private ScoreboardManager() {
 		createLobbyObj();
@@ -26,34 +36,43 @@ public class ScoreboardManager implements Listener {
 
 	private void createLobbyObj() {
 		Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-		obj = board.registerNewObjective("board", "dummy");
+		obj = board.registerNewObjective("MCInfected", "board", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		obj.setDisplayName(ChatColor.RED + "MCInfected");
 
-		updateBoard(BoardType.LOBBY);
+		// Create teams for no-flicker
+		Team playerCounter = board.registerNewTeam("playerCounter");
+		playerCounter.addEntry(ChatColor.BLACK + "" + ChatColor.WHITE);
+
+		Team numInfected = board.registerNewTeam("numInfected");
+		numInfected.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+
+		Team numHuman = board.registerNewTeam("numHuman");
+		numHuman.addEntry(ChatColor.BLUE + "" + ChatColor.WHITE);
+
+		Team timeEntry = board.registerNewTeam("fTime");
+		timeEntry.addEntry(ChatColor.GOLD + "" + ChatColor.WHITE);
+
+		changeBoardText(BoardType.LOBBY);
 		applyBoard();
 	}
 
-	void addPlayersToGame(BoardType type) {
-		updateBoard(type);
-		applyBoard();
-	}
+	public void changeBoardText(BoardType type) {
+		if (currentType != null && currentType == type)
+			return;
 
-	public void updateBoard(BoardType type) {
-		String formattedTime = formatTime(time);
+		currentType = type;
 
 		String text = null;
 
 		switch (type) {
 			case LOBBY:
-				text = Messages.getInstance().getString("lobby_board", Bukkit.getOnlinePlayers().size(),
-				                                        formattedTime);
+				text = Messages.getInstance().getString("lobby_board");
 				break;
 			case GAME:
-				int[] players = sortPlayers();
 				String mapName = MapManager.getInstance().getGameMap().getName();
 
-				text = Messages.getInstance().getString("game_board", players[0], players[1], mapName, formattedTime);
+				text = Messages.getInstance().getString("game_board", mapName);
 				break;
 		}
 
@@ -61,27 +80,83 @@ public class ScoreboardManager implements Listener {
 
 		String[] split = text.split("\\r?\\n");
 
-		int lineNumber = 0, score = split.length, spaces = 0;
+		int lineNumber = 0,
+			score = split.length,
+			spaces = 0;
 
 		while (lineNumber < split.length) {
-			StringBuilder line = new StringBuilder(split[lineNumber++]);
+			String line = split[lineNumber++];
 
-			if (line.toString().equals("")) {
+			if (line.isEmpty()) {
+				StringBuilder spaceBuilder = new StringBuilder();
 				for (int i = 0; i < spaces; i++) {
-					line.append(" ");
+					spaceBuilder.append(" ");
 				}
 
 				spaces++;
+				line = spaceBuilder.toString();
+			}
+			else if(line.contains("%players%")) {
+				String[] pCountSplit = line.split("%players%");
+				playerCounterStr = new SingleInputString(pCountSplit[0],
+										pCountSplit.length == 2 ? pCountSplit[1] : "");
+				// Set to team entry
+				line = ChatColor.BLACK + "" + ChatColor.WHITE;
+			}
+			else if (line.contains("%numinfected%")) {
+				String[] infectedSplit = line.split("%numinfected%");
+				numInfectedStr = new SingleInputString(infectedSplit[0],
+						infectedSplit.length == 2 ? infectedSplit[1] : "");
+				line = ChatColor.RED + "" + ChatColor.WHITE;
+			}
+			else if (line.contains("%numhuman%")) {
+				String[] humanSplit = line.split("%numhuman%");
+				numHumanStr = new SingleInputString(humanSplit[0],
+						humanSplit.length == 2 ? humanSplit[1] : "");
+				line = ChatColor.BLUE + "" + ChatColor.WHITE;
+			}
+			else if (line.contains("%time%")) {
+				String[] timeSplit = line.split("%time%");
+				timeStr = new SingleInputString(timeSplit[0],
+						timeSplit.length == 2 ? timeSplit[1] : "");
+				line = ChatColor.GOLD + "" + ChatColor.WHITE;
 			}
 
-			obj.getScore(line.toString()).setScore(score--);
+			updatePlayersOnBoard(type);
+			updateTime();
+
+			obj.getScore(line).setScore(score--);
 		}
 	}
 
 
-	public void minuteCountdown(int time, BoardType type) {
+	public void updatePlayersOnBoard(BoardType type) {
+		Scoreboard scoreboard = obj.getScoreboard();
+		if (type == BoardType.GAME) {
+			int[] players = sortPlayers();
+			scoreboard.getTeam("numHuman").setPrefix(numHumanStr.build(""+ players[0]));
+			scoreboard.getTeam("numInfected").setPrefix(numInfectedStr.build(""+ players[1]));
+		}
+		else {
+			scoreboard.getTeam("playerCounter")
+					.setPrefix(playerCounterStr.build("" + Bukkit.getOnlinePlayers().size()));
+		}
+	}
+
+	void addPlayersToGame(BoardType type) {
+		updatePlayersOnBoard(type);
+		applyBoard();
+	}
+
+	public void minuteCountdown(int time) {
 		this.time = time;
-		updateBoard(type);
+		updateTime();
+	}
+
+	private void updateTime() {
+		final Scoreboard scoreboard = obj.getScoreboard();
+		String formattedTime = formatTime(time);
+		scoreboard.getTeam("fTime").setPrefix(timeStr.build(formattedTime));
 	}
 
 	private int[] sortPlayers() {
@@ -106,15 +181,6 @@ public class ScoreboardManager implements Listener {
 
 	private String formatTime(long seconds) {
 		return String.format("%d:%02d", seconds / 60, seconds % 60);
-	}
-
-	public void amplePlayers(int time) {
-		String formatted = formatTime(time);
-		obj.getScoreboard().resetScores(formatted);
-	}
-
-	public void insufficientPlayers() {
-		obj.getScoreboard().resetScores("0:15");
 	}
 
 	private void resetScores() {

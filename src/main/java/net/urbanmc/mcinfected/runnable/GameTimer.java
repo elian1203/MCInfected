@@ -37,7 +37,7 @@ public class GameTimer extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		ScoreboardManager.getInstance().minuteCountdown(time, BoardType.GAME);
+		ScoreboardManager.getInstance().minuteCountdown(time);
 
 		if (time == 300 || time == 60)
 			broadcastTime();
