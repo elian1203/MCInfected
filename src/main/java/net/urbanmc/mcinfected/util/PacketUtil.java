@@ -8,9 +8,11 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.urbanmc.mcinfected.protocol.WrapperPlayServerPlayerInfo;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -23,8 +25,17 @@ import java.util.List;
 public class PacketUtil {
 
 	public static void sendActionBar(Player p, String text, String color) {
-		String json = "{\"text\":\"" + text + "\", \"color\": \"" + color + "\"}";
-		TextComponent comp = new TextComponent(json);
+		ChatColor chatColor = null;
+
+		try {
+			chatColor = ChatColor.of(color);
+		} catch (Exception e) {
+			Bukkit.getLogger().warning("[MCInfected] Error parsing chatcolor '" + color + "'!");
+			chatColor = ChatColor.WHITE;
+		}
+
+		TextComponent comp = new TextComponent(text);
+		comp.setColor(chatColor);
 
 		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, comp);
 	}
