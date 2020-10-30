@@ -115,7 +115,8 @@ public class InfectionStart extends BukkitRunnable {
 			player.sendMessage(Messages.getInstance().getString("you_are_mother"));
 		}
 
-		GameTimer.start(plugin);
+		// Seconds depend on number of players.
+		GameTimer.start(plugin, 50 * Bukkit.getOnlinePlayers().size());
 		new SpawnInvincibility(plugin);
 	}
 }

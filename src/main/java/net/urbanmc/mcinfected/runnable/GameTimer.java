@@ -19,6 +19,15 @@ public class GameTimer extends BukkitRunnable {
 	}
 
 	public static void start(MCInfected plugin) {
+		start(plugin, 600);
+	}
+
+	public static void start(MCInfected plugin, int seconds) {
+		if (seconds <= 0)
+			seconds = 600;
+
+		instance.time = seconds;
+
 		instance.runTaskTimerAsynchronously(plugin, 0, 20);
 	}
 
