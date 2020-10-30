@@ -34,6 +34,7 @@ public class RestartServer extends BukkitRunnable {
 		GamePlayerManager.getInstance().savePlayers();
 		MapManager.getInstance().cleanseMap();
 
-		Bukkit.shutdown();
+		// Run two seconds after to process everything.
+		Bukkit.getScheduler().runTaskLater(plugin, Bukkit::shutdown, 40L);
 	}
 }
