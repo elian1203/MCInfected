@@ -134,12 +134,12 @@ public class ScoreboardManager implements Listener {
 		Scoreboard scoreboard = obj.getScoreboard();
 		if (type == BoardType.GAME) {
 			int[] players = sortPlayers();
-			scoreboard.getTeam("numHuman").setPrefix(numHumanStr.build(""+ players[0]));
-			scoreboard.getTeam("numInfected").setPrefix(numInfectedStr.build(""+ players[1]));
+			scoreboard.getTeam("numHuman").setPrefix(numHumanStr.build(players[0]));
+			scoreboard.getTeam("numInfected").setPrefix(numInfectedStr.build(players[1]));
 		}
 		else {
 			scoreboard.getTeam("playerCounter")
-					.setPrefix(playerCounterStr.build("" + Bukkit.getOnlinePlayers().size()));
+					.setPrefix(playerCounterStr.build(Bukkit.getOnlinePlayers().size()));
 		}
 	}
 

@@ -18,4 +18,8 @@ public class SingleInputString {
     public String build(String input) {
         return prefix + input + suffix;
     }
+
+    public String build(int i) {
+        return build(String.valueOf(i));
+    }
 }
