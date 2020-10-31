@@ -6,7 +6,7 @@ import org.bukkit.World;
 
 public class Map {
 
-	private String name, world;
+	private String name;
 	private String spawn;
 	private int votes = 0;
 

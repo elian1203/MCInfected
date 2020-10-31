@@ -35,15 +35,17 @@ public class JoinListener implements Listener {
 		player.setHealth(20);
 		player.setFoodLevel(20);
 
-		GameStart gameStart = MCInfected.getGameStart();
+		if (GameManager.getInstance().getGameState() == GameManager.GameState.LOBBY) {
+			GameStart gameStart = MCInfected.getGameStart();
 
-		if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= MCInfected.getSufficientPlayers()) {
-			gameStart.amplePlayers();
+			if (gameStart.getTime() > 90 && Bukkit.getOnlinePlayers().size() >= MCInfected.getSufficientPlayers()) {
+				gameStart.amplePlayers();
+			}
+
+			displayMaps(player);
 		}
 
 		e.setJoinMessage(getJoinMessage(e.getPlayer().getName()));
-
-		displayMaps(player);
 	}
 
 	private void disableAttackCooldown(Player p) {
@@ -68,11 +70,9 @@ public class JoinListener implements Listener {
 	}
 
 	private void displayMaps(Player p) {
-		if (GameManager.getInstance().getGameState() != GameManager.GameState.LOBBY)
-			return;
-
-		Bukkit.getScheduler()
-				.runTaskLater(MCInfected.getInstance(), () -> p.sendMessage(VoteUtil.getFormattedSpecific()), 20);
+		Bukkit.getScheduler().runTaskLater(MCInfected.getInstance(),
+				() -> p.sendMessage(VoteUtil.getFormattedSpecific()),
+				20);
 	}
 
 	private void addZombieToRunning(Player p) {

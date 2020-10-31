@@ -28,7 +28,7 @@ public class MCInfected extends JavaPlugin {
 		instance = this;
 
 		registerListeners();
-		registerGame();
+		newGameStart();
 	}
 
 	private void registerListeners() {
