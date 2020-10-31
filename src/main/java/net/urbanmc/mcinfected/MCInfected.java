@@ -49,13 +49,9 @@ public class MCInfected extends JavaPlugin {
 		pm.registerEvents(new HealthRegainListener(), this);
 		pm.registerEvents(new ItemDropListener(), this);
 		pm.registerEvents(new JoinListener(), this);
+		pm.registerEvents(new LeaveListener(), this);
 		pm.registerEvents(new ShopListener(), this);
 		pm.registerEvents(new SneakListener(), this);
-	}
-
-	private void registerGame() {
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		newGameStart();
 	}
 
 	public void newGameStart() {
