@@ -94,4 +94,35 @@ public class PacketUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static void addPlayersToPlayerList(Collection<Player> addPlayers, Collection<Player> receivers) {
+		WrapperPlayServerPlayerInfo playerInfoPacket = new WrapperPlayServerPlayerInfo();
+		playerInfoPacket.setAction(EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+
+		List<PlayerInfoData> list = new ArrayList<>(addPlayers.size());
+
+		for (Player p : addPlayers) {
+			WrappedGameProfile wgp = WrappedGameProfile.fromPlayer(p);
+			WrappedChatComponent wcp = WrappedChatComponent.fromText(p.getDisplayName());
+			PlayerInfoData pid = new PlayerInfoData(wgp, 0, EnumWrappers.NativeGameMode.SURVIVAL, wcp);
+			list.add(pid);
+		}
+
+		playerInfoPacket.setData(list);
+
+		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+
+		if (receivers == null)
+			manager.broadcastServerPacket(playerInfoPacket.getHandle());
+		else {
+			for (Player player : receivers) {
+				try {
+					manager.sendServerPacket(player, playerInfoPacket.getHandle());
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
 }

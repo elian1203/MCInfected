@@ -12,11 +12,15 @@ import java.util.UUID;
 
 public class GamePlayer {
 
+	// Persistent Variables
 	private UUID uuid;
 	private long scores, cookies, gamesPlayed;
-	private int kills, deaths, highestKillStreak, killStreak;
+	private int kills, deaths, highestKillStreak;
 	private List<UUID> ignoring;
 	private Rank rank;
+
+	// Non-Persistent Variables
+	private int killStreak;
 	private Kit kit;
 	private boolean voted = false, sneaking = false, infected = false, motherZombie = false;
 	private GamePlayer lastAttacker, lastMessenger;
@@ -216,6 +220,23 @@ public class GamePlayer {
 
 	public void setLastAttackerRunnable(LastAttacker runnable) {
 		this.lastAttackerRunnable = runnable;
+	}
+
+	public void resetGame() {
+		// Reset game variables
+		this.killStreak = 0;
+		this.infected = false;
+		this.motherZombie = false;
+		this.kit = null;
+
+		if (lastAttackerRunnable != null)
+			lastAttackerRunnable.cancel();
+
+		lastAttacker = null;
+		lastAttackerRunnable = null;
+
+		// Reset map vote
+		this.voted = false;
 	}
 
 }

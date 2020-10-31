@@ -5,14 +5,14 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.manager.ScoreboardManager;
-import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
-public class GameTimer extends BukkitRunnable {
+public class GameTimer implements Runnable {
 
-	private static GameTimer instance = new GameTimer();
+	private static final GameTimer instance = new GameTimer();
 
+	private BukkitTask task = null;
 	private int time = 600;
 
 	private GameTimer() {
@@ -28,11 +28,15 @@ public class GameTimer extends BukkitRunnable {
 
 		instance.time = seconds;
 
-		instance.runTaskTimerAsynchronously(plugin, 0, 20);
+		// Check that previous tasks are stopped
+		stop();
+
+		instance.task = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, instance, 0, 20);
 	}
 
 	public static void stop() {
-		instance.cancel();
+		if (instance.task != null && !instance.task.isCancelled())
+			instance.task.cancel();
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class GameTimer extends BukkitRunnable {
 
 		if (time == 0) {
 			GameManager.getInstance().endGame(false, null);
-			cancel();
+			stop();
 		}
 
 		time--;

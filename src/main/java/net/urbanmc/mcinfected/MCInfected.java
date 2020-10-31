@@ -55,7 +55,10 @@ public class MCInfected extends JavaPlugin {
 
 	private void registerGame() {
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		newGameStart();
+	}
 
+	public void newGameStart() {
 		gameStart = new GameStart(this);
 	}
 

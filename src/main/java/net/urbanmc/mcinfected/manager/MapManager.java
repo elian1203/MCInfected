@@ -189,6 +189,27 @@ public class MapManager {
 		FoodManager.getInstance().getCakes().clear();
 	}
 
+	public void unloadCurrentMap() {
+		World world = Bukkit.getWorld(current.getWorld());
+
+		if (world != null) {
+			Bukkit.unloadWorld(world, true);
+		}
+
+		current = null;
+	}
+
+	public void resetMapVotes() {
+		if (maps != null) {
+			for (Map map : maps) {
+				map.setVotes(0);
+			}
+		}
+
+		if (random != null)
+			random.setVotes(0);
+	}
+
 	public boolean isExistentWorld(String world) {
 		File worldDir = new File(world);
 

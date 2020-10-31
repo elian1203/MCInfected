@@ -7,7 +7,7 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-class DisguiseUtil {
+public class DisguiseUtil {
 
 	static void disguisePlayerAsEntity(Player p, EntityType type) {
 		MobDisguise disguise = new MobDisguise(DisguiseType.getType(type));
@@ -15,5 +15,9 @@ class DisguiseUtil {
 		disguise.setSelfDisguiseVisible(false);
 
 		DisguiseAPI.disguiseToAll(p, disguise);
+	}
+
+	public static void undisguisePlayer(Player player) {
+		DisguiseAPI.undisguiseToAll(player);
 	}
 }

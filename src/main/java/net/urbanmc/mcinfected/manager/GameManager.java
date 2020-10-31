@@ -4,7 +4,8 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.ScoreboardManager.BoardType;
 import net.urbanmc.mcinfected.object.GamePlayer;
 import net.urbanmc.mcinfected.runnable.GameTimer;
-import net.urbanmc.mcinfected.runnable.RestartServer;
+import net.urbanmc.mcinfected.runnable.RestartGame;
+import net.urbanmc.mcinfected.util.DisguiseUtil;
 import net.urbanmc.mcinfected.util.ItemUtil;
 import net.urbanmc.mcinfected.util.PacketUtil;
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +15,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class GameManager {
@@ -24,6 +28,8 @@ public class GameManager {
 	private MCInfected plugin = MCInfected.getInstance();
 
 	private GameState state;
+	// Track players for reset
+	private Collection<UUID> playersJoined = new HashSet<>();
 
 	private GameManager() {
 		state = GameState.LOBBY;
@@ -82,6 +88,8 @@ public class GameManager {
 				break;
 		}
 
+		playersJoined.add(p.getUniqueId());
+
 		GamePlayerManager.getInstance().setColoredName(p);
 
 		ScoreboardManager.getInstance().addPlayersToGame(type);
@@ -125,7 +133,48 @@ public class GameManager {
 
 		Bukkit.broadcastMessage(message);
 
-		new RestartServer(plugin);
+		new RestartGame(plugin);
+	}
+
+	public void resetGame() {
+		// Handles resetting all player-related things
+		Location spawn = MapManager.getInstance().getLobby().getSpawn();;
+
+		List<Player> infectedPlayers = new ArrayList<>();
+
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			playersJoined.remove(player.getUniqueId());
+
+			// Clear armor
+			player.getInventory().clear();
+			player.getInventory().setArmorContents(null);
+
+			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(player);
+
+			if (gamePlayer.isInfected()) {
+				infectedPlayers.add(player);
+				// Undisguise infected players
+				DisguiseUtil.undisguisePlayer(player);
+			}
+
+			gamePlayer.resetGame();
+
+			// Teleport to spawn
+			if (!player.teleport(spawn)) {
+				Bukkit.getLogger().warning("[MCInfected] Unable to teleport " + player.getName() + " to spawn. Kicking...");
+				player.kickPlayer("Could not teleport to lobby!");
+			}
+		}
+
+		// Reset gameplayer state for players who left and didn't come back.
+		for (UUID playerID : playersJoined) {
+			GamePlayer gamePlayer = GamePlayerManager.getInstance().getGamePlayer(playerID);
+			gamePlayer.resetGame();
+		}
+		playersJoined.clear();
+
+		// Add infected players back to player list
+		PacketUtil.addPlayersToPlayerList(infectedPlayers, null);
 	}
 
 	public List<GamePlayer> getHumans() {

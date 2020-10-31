@@ -90,7 +90,7 @@ public class InfectionStart extends BukkitRunnable {
 		try {
 			motherZombies = selectMotherZombies();
 		} catch (Exception ex) {
-			new RestartServer(plugin);
+			new RestartGame(plugin);
 			ex.printStackTrace();
 			return;
 		}
