@@ -5,7 +5,10 @@ import net.urbanmc.mcinfected.MCInfected;
 import net.urbanmc.mcinfected.manager.GameManager;
 import net.urbanmc.mcinfected.manager.Messages;
 import net.urbanmc.mcinfected.manager.ScoreboardManager;
+import net.urbanmc.mcinfected.util.PacketUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 public class GameTimer implements Runnable {
@@ -49,9 +52,22 @@ public class GameTimer implements Runnable {
 		if (time == 0) {
 			GameManager.getInstance().endGame(false, null);
 			stop();
+			return;
 		}
 
 		time--;
+
+		// Do this after decrement so no items are given immediately
+		checkHumanSurvival();
+	}
+
+	private void checkHumanSurvival() {
+		if (time > 0 && (time % 60 == 0)) {
+			GameManager.getInstance().onTeam(true, (p, gp) -> {
+				p.getInventory().addItem(new ItemStack(Material.MELON, 1));
+				PacketUtil.sendActionBar(p, Messages.getInstance().getString("human_survived_minute"), "white");
+			});
+		}
 	}
 
 	private void broadcastTime() {

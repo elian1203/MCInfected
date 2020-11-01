@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class GameManager {
@@ -177,18 +179,32 @@ public class GameManager {
 		PacketUtil.addPlayersToPlayerList(infectedPlayers, null);
 	}
 
-	public List<GamePlayer> getHumans() {
-		List<GamePlayer> team = new ArrayList<>();
-
+	public void onTeam(boolean humans, BiConsumer<Player, GamePlayer> playerConsumer) {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			GamePlayer p = GamePlayerManager.getInstance().getGamePlayer(player);
 
-			if (!p.isInfected()) {
-				team.add(p);
+			if ((!humans && p.isInfected()) || (humans && !p.isInfected())) {
+				playerConsumer.accept(player, p);
 			}
 		}
+	}
+
+	private List<GamePlayer> getPlayersOnSide(final boolean humans) {
+		final List<GamePlayer> team = new ArrayList<>();
+
+		onTeam(humans, (p, gp) -> {
+			team.add(gp);
+		});
 
 		return team;
+	}
+
+	public List<GamePlayer> getHumans() {
+		return getPlayersOnSide(true);
+	}
+
+	public List<GamePlayer> getInfected() {
+		return getPlayersOnSide(false);
 	}
 
 	public enum GameState {

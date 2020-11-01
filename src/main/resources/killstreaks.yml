@@ -1,9 +1,12 @@
 streaks:
   human:
+    1:
+      items:
+        - melon
     2:
       repeats: 11, 20
       items:
-      - melon
+      - 'melon amount:2'
     3:
       repeats: 12, 21
       items:
